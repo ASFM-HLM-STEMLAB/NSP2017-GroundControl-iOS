@@ -7,17 +7,48 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		005C5C981FCBD01B0055B110 /* Starscream.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 005C5C961FCBD01B0055B110 /* Starscream.framework */; };
+		005C5C991FCBD01B0055B110 /* Starscream.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 005C5C961FCBD01B0055B110 /* Starscream.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		005C5C9A1FCBD01B0055B110 /* SocketIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 005C5C971FCBD01B0055B110 /* SocketIO.framework */; };
+		005C5C9B1FCBD01B0055B110 /* SocketIO.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 005C5C971FCBD01B0055B110 /* SocketIO.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		005C5C9D1FCBD0480055B110 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 005C5C9C1FCBD0480055B110 /* MapViewController.swift */; };
+		005C5C9F1FCBD1EF0055B110 /* Report.swift in Sources */ = {isa = PBXBuildFile; fileRef = 005C5C9E1FCBD1EF0055B110 /* Report.swift */; };
+		005C5CA21FCBD8EB0055B110 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 005C5CA11FCBD8E20055B110 /* CoreLocation.framework */; };
+		005C5CA41FCBDD6D0055B110 /* ReportInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 005C5CA31FCBDD6D0055B110 /* ReportInfoViewController.swift */; };
+		005C5CA61FCBEB190055B110 /* SocketCenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 005C5CA51FCBEB190055B110 /* SocketCenter.swift */; };
+		00B12CE81FCE2D62001151B9 /* GraphicalIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00B12CE71FCE2D62001151B9 /* GraphicalIndicator.swift */; };
 		00DEF2EF1FCBCD0C00F1F393 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00DEF2EE1FCBCD0C00F1F393 /* AppDelegate.swift */; };
-		00DEF2F11FCBCD0C00F1F393 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00DEF2F01FCBCD0C00F1F393 /* ViewController.swift */; };
 		00DEF2F41FCBCD0C00F1F393 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 00DEF2F21FCBCD0C00F1F393 /* Main.storyboard */; };
 		00DEF2F61FCBCD0C00F1F393 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 00DEF2F51FCBCD0C00F1F393 /* Assets.xcassets */; };
 		00DEF2F91FCBCD0C00F1F393 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 00DEF2F71FCBCD0C00F1F393 /* LaunchScreen.storyboard */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		00DEF3061FCBCF4A00F1F393 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				005C5C991FCBD01B0055B110 /* Starscream.framework in Embed Frameworks */,
+				005C5C9B1FCBD01B0055B110 /* SocketIO.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		005C5C961FCBD01B0055B110 /* Starscream.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Starscream.framework; path = GroundControl/Carthage/Build/iOS/Starscream.framework; sourceTree = "<group>"; };
+		005C5C971FCBD01B0055B110 /* SocketIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SocketIO.framework; path = GroundControl/Carthage/Build/iOS/SocketIO.framework; sourceTree = "<group>"; };
+		005C5C9C1FCBD0480055B110 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
+		005C5C9E1FCBD1EF0055B110 /* Report.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Report.swift; sourceTree = "<group>"; };
+		005C5CA11FCBD8E20055B110 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		005C5CA31FCBDD6D0055B110 /* ReportInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportInfoViewController.swift; sourceTree = "<group>"; };
+		005C5CA51FCBEB190055B110 /* SocketCenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocketCenter.swift; sourceTree = "<group>"; };
+		00B12CE71FCE2D62001151B9 /* GraphicalIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphicalIndicator.swift; sourceTree = "<group>"; };
 		00DEF2EB1FCBCD0C00F1F393 /* GroundControl.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GroundControl.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		00DEF2EE1FCBCD0C00F1F393 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		00DEF2F01FCBCD0C00F1F393 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		00DEF2F31FCBCD0C00F1F393 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		00DEF2F51FCBCD0C00F1F393 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		00DEF2F81FCBCD0C00F1F393 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -29,17 +60,64 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				005C5CA21FCBD8EB0055B110 /* CoreLocation.framework in Frameworks */,
+				005C5C981FCBD01B0055B110 /* Starscream.framework in Frameworks */,
+				005C5C9A1FCBD01B0055B110 /* SocketIO.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		000A8DBA1FFD69C900322310 /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				005C5CA51FCBEB190055B110 /* SocketCenter.swift */,
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
+		000A8DBB1FFD6FB900322310 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				005C5C9C1FCBD0480055B110 /* MapViewController.swift */,
+				005C5CA31FCBDD6D0055B110 /* ReportInfoViewController.swift */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		000A8DBC1FFD6FD100322310 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				005C5C9E1FCBD1EF0055B110 /* Report.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		000A8DBD1FFD728700322310 /* Custom UI Indicators  */ = {
+			isa = PBXGroup;
+			children = (
+				00B12CE71FCE2D62001151B9 /* GraphicalIndicator.swift */,
+			);
+			path = "Custom UI Indicators ";
+			sourceTree = "<group>";
+		};
+		005C5CA01FCBD8E10055B110 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				005C5CA11FCBD8E20055B110 /* CoreLocation.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		00DEF2E21FCBCD0C00F1F393 = {
 			isa = PBXGroup;
 			children = (
 				00DEF2ED1FCBCD0C00F1F393 /* GroundControl */,
+				005C5C971FCBD01B0055B110 /* SocketIO.framework */,
+				005C5C961FCBD01B0055B110 /* Starscream.framework */,
 				00DEF2EC1FCBCD0C00F1F393 /* Products */,
+				005C5CA01FCBD8E10055B110 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -55,8 +133,11 @@
 			isa = PBXGroup;
 			children = (
 				00DEF2EE1FCBCD0C00F1F393 /* AppDelegate.swift */,
-				00DEF2F01FCBCD0C00F1F393 /* ViewController.swift */,
 				00DEF2F21FCBCD0C00F1F393 /* Main.storyboard */,
+				000A8DBB1FFD6FB900322310 /* ViewControllers */,
+				000A8DBC1FFD6FD100322310 /* Models */,
+				000A8DBA1FFD69C900322310 /* Network */,
+				000A8DBD1FFD728700322310 /* Custom UI Indicators  */,
 				00DEF2F51FCBCD0C00F1F393 /* Assets.xcassets */,
 				00DEF2F71FCBCD0C00F1F393 /* LaunchScreen.storyboard */,
 				00DEF2FA1FCBCD0C00F1F393 /* Info.plist */,
@@ -74,6 +155,7 @@
 				00DEF2E71FCBCD0C00F1F393 /* Sources */,
 				00DEF2E81FCBCD0C00F1F393 /* Frameworks */,
 				00DEF2E91FCBCD0C00F1F393 /* Resources */,
+				00DEF3061FCBCF4A00F1F393 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -136,8 +218,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				00DEF2F11FCBCD0C00F1F393 /* ViewController.swift in Sources */,
+				005C5CA41FCBDD6D0055B110 /* ReportInfoViewController.swift in Sources */,
+				005C5C9D1FCBD0480055B110 /* MapViewController.swift in Sources */,
 				00DEF2EF1FCBCD0C00F1F393 /* AppDelegate.swift in Sources */,
+				005C5CA61FCBEB190055B110 /* SocketCenter.swift in Sources */,
+				005C5C9F1FCBD1EF0055B110 /* Report.swift in Sources */,
+				00B12CE81FCE2D62001151B9 /* GraphicalIndicator.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -275,7 +361,12 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = E92H7P5GDX;
+				DEVELOPMENT_TEAM = DZSBS2TEB3;
+				ENABLE_BITCODE = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/GroundControl/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = GroundControl/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.grupomovic.GroundControl;
@@ -290,7 +381,12 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = E92H7P5GDX;
+				DEVELOPMENT_TEAM = DZSBS2TEB3;
+				ENABLE_BITCODE = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/GroundControl/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = GroundControl/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.grupomovic.GroundControl;
