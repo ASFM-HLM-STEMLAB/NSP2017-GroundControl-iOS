@@ -6,6 +6,8 @@
 //  Copyright © 2017 Movic Technologies. All rights reserved.
 //
 
+// Start by seeing MapViewController. That is the basic view that shows the map and the report.
+
 import UIKit
 
 @UIApplicationMain
