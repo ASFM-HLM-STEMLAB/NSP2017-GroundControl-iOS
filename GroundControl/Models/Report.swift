@@ -1,0 +1,218 @@
+//
+//  Report.swift
+//  GroundControl
+//
+//  Created by Francisco Lobo on 11/26/17.
+//  Copyright © 2017 Movic Technologies. All rights reserved.
+//
+
+import Foundation
+import MapKit
+
+
+// The capsule will transmit report messages either from a cellular model source or a sattelite modem source, this message will be delivered to a server (movic.io for now), so that the server will collect all data regardless if this app is connected or not, so the server is always listening for this messages 24x7. Anytime the capsule transmit the server will receive and store in a database. At the same time if there is client (an app like this one) connected to the server [see SocketCenter] it will notify the connected apps of the latest messages.
+//
+//
+//
+// In summary, everytime an app (this app) connects to the server, the server will transmit a bunch of past messages [history] to the app so the app can plot old messages too. And from that moment on, the server will notify of any new messages in push fashion (no need to keep polling the server for new data, as soon as the server gets messages it will push that message to all ground station app clients like this one. [See SocketCenter.swift for more info.
+
+// Technical details of the capsule message as of Jan 2018.
+// The message the capsule sends to the server has the following format:
+//      SAMPLE:
+//      cell,S,024145,25.6428,-100.3589,2114,0,98,5,158,9,0,G
+//      cell,X,205759,25.6596,-100.4477,2113
+//
+//      The server adds some more information (timestamping according to the server time) and stores it
+//      and sends it to the app in the following raw format:
+//            2017-11-28T07:37:53.808Z | cel,S,073751,25.6428,-100.3588,2084,0,204,6,116,8,0,C
+//            2017-11-28T07:38:09.443Z | cel,X,073806,25.6428,-100.3588,2084
+//       This are the values:
+//            |--   SERVER TIMESTAMP --||-- THIS DATA COMES FROM THE CAPSULE -----------------|
+//                                        source, kind of msg (S) , timestamp, lat, lon, alt
+//                                        source, kind of msg (X) , timestamp, lat, lon, alt, speed, course, horizontal prec, gps sats,
+//                                             battery level, sat signal, internal temp.
+//
+// This protocol messages can evolve and the server app and this app should evolve accordingly!
+
+
+// Report MODEL
+//ENUMS
+enum Originator {
+    case satellite
+    case cellular
+    case unknown
+}
+
+enum ReportKind {
+    case pulse
+    case telemetry
+    case unknown
+}
+
+enum MissionStage {
+    case ground
+    case climb
+    case descent
+    case recovery
+    case unknown
+}
+
+// Comform MapAnnotation to MKAnnotation protocol for mapkit annotations (pins, and position shown in map).
+class MapAnnotation: NSObject, MKAnnotation {
+    var title: String?
+    var subtitle: String?
+    var coordinate: CLLocationCoordinate2D = CLLocationCoordinate2D(latitude: 0.0, longitude: 0.0)
+}
+
+// Report model struct
+// Every message gathered from the server [capsule] will be a Report
+struct Report  {
+//    let gpsTimeStampRaw:String
+    let gpsTimeStamp:Date
+    let rawReport:String
+    var originator:Originator = .unknown
+    var reportType:ReportKind = .unknown
+    var index:Int = -1
+    
+    var latitude:Double = 0.0
+    var longitude:Double = 0.0
+    var altitude:Int = 0
+    
+    var course:Int = 0
+    var speed:Int = 0
+    var satellitesInView:Int = 0
+    var horizontalPrecision:Int = 0
+    var batteryLevel:Int = 0
+    var satModemSignal:Int = 0
+    var internalTempC:Int = 0
+    var missionStage:MissionStage = .unknown
+    
+//    var mapAnnotationTitle:String = ""
+//    var mapAnnotationSubTitle:String = ""
+    private var _mapAnnotation = MapAnnotation()
+}
+
+
+extension Report { // To Map Coordinate for use in the MKMAp (to make a report show on the map)
+    var coordinate: CLLocationCoordinate2D {
+        get {
+            return CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+        }
+    }
+    
+    var mapAnnotation: MapAnnotation {
+        get {
+            _mapAnnotation.title = String(format: "[%i] @ %ift", index, altitude)
+            _mapAnnotation.subtitle = gpsTimeStamp.toReadableString()
+            _mapAnnotation.coordinate = coordinate
+            return _mapAnnotation
+        }
+    }
+}
+
+//          This extension will provide an initializer to parse or assign all values to appropriate fields in the model.
+extension Report {
+    init(rawString:String) {
+        rawReport = rawString
+        
+        let validateTS = rawString.components(separatedBy: "|")
+        let validateDT = rawString.components(separatedBy: ",")
+        
+        if validateTS.count < 2 || validateDT.count < 5  {
+            gpsTimeStamp = Date()
+            originator  = .unknown
+            reportType = .unknown
+            longitude = 0.0
+            latitude = 0.0
+            altitude = -1
+            return
+        }
+        
+        let dataFields = rawString.components(separatedBy: "|")[1]
+        let _ = rawString.components(separatedBy: "|")[0]
+        
+        
+        
+        //Originator
+        if dataFields.components(separatedBy: ",")[0] == "cel" {
+            originator = .cellular
+        }
+        if dataFields.components(separatedBy: ",")[0] == "sat" {
+            originator = .satellite
+        }
+        
+        //Report Kind [See Capsule SourceCode for values]
+        if dataFields.components(separatedBy: ",")[1] == "S" {
+            reportType = .pulse
+        }
+        if dataFields.components(separatedBy: ",")[1] == "X" {
+            reportType = .telemetry
+        }
+        
+        let gpsTimeStampString = dataFields.components(separatedBy: ",")[2]
+        gpsTimeStamp = Date.fromGPSString(gpsTimeStampString)        
+        
+        let rawLat = dataFields.components(separatedBy: ",")[3]
+        let rawLon = dataFields.components(separatedBy: ",")[4]
+        let rawAlt = dataFields.components(separatedBy: ",")[5]
+        
+        latitude = Double(rawLat) ?? 0.0
+        longitude = Double(rawLon) ?? 0.0
+        altitude = Int(rawAlt) ?? 0
+        
+        //Assign data for .pulse type
+        if (reportType == .pulse) {
+            speed = Int(dataFields.components(separatedBy: ",")[6]) ?? 0
+            course = Int(dataFields.components(separatedBy: ",")[7]) ?? 0
+            horizontalPrecision = Int(dataFields.components(separatedBy: ",")[8]) ?? 0
+            satellitesInView = Int(dataFields.components(separatedBy: ",")[9]) ?? 0
+            batteryLevel =  Int(dataFields.components(separatedBy: ",")[10]) ?? 0
+            satModemSignal =  Int(dataFields.components(separatedBy: ",")[11]) ?? 0
+            internalTempC =  Int(dataFields.components(separatedBy: ",")[12]) ?? 0
+            
+            let rawMissionStage = dataFields.components(separatedBy: ",")[13]
+            switch rawMissionStage {
+            case "G":
+                missionStage = .ground
+            case "C":
+                missionStage = .climb
+            case "D":
+                missionStage = .descent
+            case "R":
+                missionStage = .recovery
+            default:
+                missionStage = .unknown
+            }
+        }
+        
+        //Computed Assignments
+        _mapAnnotation.subtitle = gpsTimeStamp.toReadableString()
+        _mapAnnotation.coordinate = coordinate        
+    }
+}
+
+
+//This extension to Date type will convert from GPS raw timestamp to something we can use in iOS
+extension Date {
+    static func fromGPSString(_ gpsTime: String) -> Date {
+        let dateFormatter = DateFormatter()
+        let stringFormatter = DateFormatter()
+        
+        stringFormatter.dateFormat = "HH:mm:ss"
+        dateFormatter.dateFormat = "HHmmss"
+        
+        dateFormatter.timeZone = NSTimeZone(abbreviation: "UTC") as TimeZone?
+        if let date = dateFormatter.date(from: gpsTime) {
+            return date
+        } else {
+            return Date()
+        }
+    }
+    
+     func toReadableString() -> String {
+            let stringFormatter = DateFormatter()
+            stringFormatter.dateFormat = "HH:mm:ss"
+            let dateString = stringFormatter.string(from: self)
+            return dateString
+    }
+}
