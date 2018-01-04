@@ -6,19 +6,27 @@
 //  Copyright © 2017 Movic Technologies. All rights reserved.
 //
 
-// Start by seeing MapViewController. That is the basic view that shows the map and the report.
+// ASFM - Near Space Program - Capsule Ground Control APP.
+//
+// This APP is used to get data from the NSP Server, See SocketCenter for more details.
+//
+// --> MAIN FILE DESCRIPTIONS:
+// MapViewController.swift = Display individual report locations in a UiMapKit View.
+// ReportInfoViewController.swift = Shows the data of the latest report.
+//
+// Report.swift = Struct [Model] to abstract all report data in an easy to read, write and display object.
+// SocketCenter.swift = Singleton class used to encapsulate and centralize all network communications.
+//
 
 import UIKit
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
-    let socketCenter = SocketCenter()    
+    let socketCenter = SocketCenter()     //Instantiate the singleton used for network communications.
 
     var window: UIWindow?
 
-
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        
         return true
     }
 

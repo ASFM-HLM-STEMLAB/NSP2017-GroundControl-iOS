@@ -26,14 +26,16 @@ class MapViewController: UIViewController  {
     var reports = [Report]()
     let notificationCenter = NotificationCenter.default
     
+    //IBOutlets (represent a view)
     @IBOutlet weak var reportInfoView: UIView!
     @IBOutlet weak var mapView: MKMapView!
-    @IBOutlet weak var infoButton: UIButton!
+    @IBOutlet weak var infoButton: UIButton! //Used to open or close the extended ReportInfoView
     @IBOutlet weak var distanceLabel: UILabel!
     @IBOutlet weak var lastUpdatedLabel: UILabel!
     
     // ======================================================
     override func viewDidLoad() {
+        //Let's setup everything for the VC
         super.viewDidLoad()
         mapView.delegate = self;
         
@@ -42,34 +44,43 @@ class MapViewController: UIViewController  {
             mapView.userTrackingMode = .followWithHeading
         }
         
+        //Only call this once for every instance of this VC
         subscribeForSystemNotifications()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         hideDetails()
+        getAllReports()
     }
     
     func subscribeForSystemNotifications() {
+        //Let's subscribe to events we care for this particular VC
+        
+        //Everytime we receive a new message we:
         notificationCenter.addObserver(forName:SocketCenter.newMessageNotification, object: nil, queue: nil) { (notification) in
             if var report = notification.userInfo?["report"] as? Report {
                 report.index = self.reports.count
+                //Add a report to the report array and show the details)
                 self.addReport(report)
                 self.updateLastReportTime()
             }
         }
         
+        //Everytime we connect we change the connection label to let the user know we are connected.
+        // AND WE GET ALL THE REPORTS in the history.
         notificationCenter.addObserver(forName:SocketCenter.socketConnectedNotification, object: nil, queue: nil) { (notification) in
             self.reportDetailViewController?.setServerStatus(.connected)
             self.getAllReports()
         }
         
+        //When we disconnect we change the label to let the user know.
         notificationCenter.addObserver(forName:SocketCenter.socketDisconnectedNotification, object: nil, queue: nil) { (notification) in
             self.reportDetailViewController?.setServerStatus(.disconnected)
         }                
         
+        //When we get a .response type of message we show it in the terminal as a raw string with a < to signify incoming.
         notificationCenter.addObserver(forName:SocketCenter.socketResponseNotification, object: nil, queue: nil) { (notification) in
-            
             if let response = notification.userInfo?["response"] as? String {
                 self.reportDetailViewController?.addLineToTerminal("< \(response)")
             }
@@ -94,7 +105,7 @@ class MapViewController: UIViewController  {
 // ---------------------------------------------------
 // MARK: InfoPanel Methods and animations
 extension MapViewController {
-    func showDetails() {
+    func showDetails() {  //Animate the ReportInfoView panel up.
         self.view.layoutIfNeeded()
         
         let top = CGAffineTransform(translationX: 0, y: 0)
@@ -106,7 +117,7 @@ extension MapViewController {
         }, completion: nil)
     }
     
-    func hideDetails() {
+    func hideDetails() { //Animate the ReportInfoView panel down.
         self.view.layoutIfNeeded()
         self.reportInfoView.updateConstraintsIfNeeded()
         let top = CGAffineTransform(translationX: 0, y: reportInfoView.bounds.height-40)
@@ -122,7 +133,7 @@ extension MapViewController {
 
 
 // ---------------------------------------------------
-// MARK: MKMapViewDelegate Methods
+// MARK: MKMapViewDelegate Methods (Conforming to the delegate to allow us to show pins in the map)
 extension MapViewController: MKMapViewDelegate {
     func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
         let polylineRenderer = MKPolylineRenderer(overlay: overlay)
@@ -135,6 +146,7 @@ extension MapViewController: MKMapViewDelegate {
     }
     
     func mapView(_ mapView: MKMapView, didUpdate userLocation: MKUserLocation) {
+        //Everytime the map is updated we call the following method to update our distance (device) to the capsule coord.
         updateDistanceLabel()
     }
 }
@@ -181,6 +193,7 @@ extension MapViewController {
     }
     
     func plotReportsInMap() {
+        //Remove all annotations from the map (pins) and redraw them all from the array and draw a line between them (dashed line)
         mapView.removeAnnotations(mapView.annotations)
         self.mapView.removeOverlays(mapView.overlays)
         
@@ -204,8 +217,8 @@ extension MapViewController {
     }
     
     func getAllReports() {
-        self.reports = [Report]()
-        SocketCenter.getAllReports { (data) in
+        self.reports = [Report]() //Initialize the array with a blank one.
+        SocketCenter.getAllReports { (data) in //Ask the SocketCenter singleton to get all past reports.
             if let reports = data as? [Report] {
                 self.reports = reports
                 self.plotReportsInMap()
@@ -218,6 +231,7 @@ extension MapViewController {
         }
     }
     
+    //Use math to calculate distance of device (GPS) to last report location.
     func calculateDistanceFromLastPoint() -> CLLocationDistance {
         let l1 = self.mapView.userLocation.coordinate
         if let l2 = self.reports.last?.mapAnnotation.coordinate {
@@ -245,7 +259,7 @@ extension MapViewController {
     }
     
     func updateLastReportTime() {
-        if let lastTimeStamp = self.reports.last?.gpsTimeStamp {
+        if let lastTimeStamp =  self.reports.last?.gpsTimeStamp {
             self.lastUpdatedLabel.text = lastTimeStamp.toReadableString()
         }
     }

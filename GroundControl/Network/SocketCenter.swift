@@ -6,16 +6,31 @@
 //  Copyright © 2017 Movic Technologies. All rights reserved.
 //
 
-// This class is used as a central repository to control comunication to and from the server that holds the data from the capsule.
+// Comunications to Server:
+// This class is used as a central class to manage comunications to/from the server that in turn talks to the capsule.
+// We use this 3 part paradigm so that we have a central repository that holds all the information sent by the capsule at all times.
+// We then connect using this app to the server to pull that information and to ask the server to relay messages to the capsule.
+//
 
-// How does it work:
-// The capsule talks to the server by sending a message either thru cellular modem or satellite modem. Every message sent to the server (Movic.io) is stored in a database for later retrieval and also relayed to all active GroundControl apps connected to the server.
+// How does it work (in detail):
+// The capsule talks to the server by sending a message either thru cellular modem or satellite modem at defined intervals.
+// Every message sent to the server (Movic.io) is stored/presisted in a file for log keeping and also relayed to all active GroundControl apps that are connected to the server at that moment.
+// In this fashion we will pull the history upon connecting and then listen to new messages as the arrive.
+//
+// The server is always listening for new messsages form the capsule. Once it receives a new message it saves it, and broadcast it to every ground control station that is connected to the server.
+//
+// So the server is capable of receiving messages from the capsule and also managing multiple connections from ground control apps.
 //
 //
+// We use Sockets as a low level way to talk to the server instead of the classic REST (PUT/PUSH/GET) methods used in stateless applications.
+// This method allows for a more robust realtime/push comunication protocol instead of polling every N seconds or so for new messages. This is similar like whatsapp and other chat services work. In this kind of applications this is far more efficient method for bi directional communications in real time. Socket coding is a bit more challenging because it is not stateless so we have to know where we are in the communication process at all times to react accordingly. For instance if a disconnect happens we need to try to reconnect to restablish communications and keep retrying until we connect. Also we need to know what we requested so that when the server responds we have some conext of what it is saying to us.
 //
-// We use Sockets to talk to the server instead of the classic REST method. So we use a more robust realtime/push comunication protocol instead of polling every N seconds or so new messages. So this is far more efficient way of bi directional communications. Socket coding is a bit more challenging because it is not stateless so we have to know where we are in the communication process at all times. So say we want to ask for the latest message, we ask the server for it but we have to remember what we asked for, so when the server responds we know that message corresponds to that request.
-//
-// Socket.io is a framework that helps us simplify that process by adding abstraction layers to it to simplify the process. This class uses that framework to talk to and from the server. We then leverage the iOS notification framework to notify any part of the app that wants to be notified of any interested events.
+// To simplify this process we use a library/framework called Socket.io.
+// Socket.io abstracts and simplifies the whole socket com process by adding methods and boiler plate code that help us concentrate on the business logic rather than on the tiny details of the protocol implementation. This class [SocketCenter] concentrates and encapsulates all networking and communication methods in one place and uses SIO (Socket.io) framework to talk to and from the server. We then leverage the iOS notification framework to notify any part of the app that wants to be made aware of any interesting events.
+
+// [SatCom] <---> (RockBlock Server) <---> (GroundControl Server) <--> (GroundControl Apps)
+// [CellCom] <---> (Particle.io Server) <---> (GroundControl Server) <--> (GroundControl Apps)
+
 
 
 import Foundation
@@ -23,10 +38,14 @@ import SocketIO
 
 
 class SocketCenter {
-    let socket: SocketIOClient
+    let socket: SocketIOClient //Instantiate the SocketIOClient class from the official framework.
     private let manager = SocketManager(socketURL: URL(string: "http://movic.io:4200")!, config: [.log(false), .compress])
-    private let notificationCenter = NotificationCenter.default
-    static let sharedInstance = SocketCenter()
+    
+    private let notificationCenter = NotificationCenter.default //Get the default iOS NotificationCenter
+    
+    static let sharedInstance = SocketCenter() //Singleton (Only one instantiation allowed)
+    
+    //Abstraction of the notification flags for easy referal.
     static let newMessageNotification = Notification.Name("com.GroundControl.Socket.NewMessage")
     static let socketConnectedNotification = Notification.Name("com.GroundControl.Socket.Connected")
     static let socketDisconnectedNotification = Notification.Name("com.GroundControl.Socket.Discconnected")
@@ -35,23 +54,30 @@ class SocketCenter {
     typealias CompletionHandler = ([Any]) -> Void
     
     init() {
+        //When we instantiate this class, this method is executed to setup everything. (See AppDelegate.swift)
+        // This method only executes once since it is a singleton so it can only be initialized once and only once in the whole application.
         print("[SocketCenter] Initializing...")
+        
+        
+        
+        // Once we get a reference to the manager singleton from Socket.io framework, we setup everything and attempt to connect:
         socket = manager.defaultSocket
         
-        //Every socket.on line bellow registers for a given type of message from the server and executes the code in the closure.
-        //
-        // So when we .connect we:
+        // Setup events:
+        // --------[PROTOCOL SPECIFIC EVENTS]-------------
+        // When we [.connect] we:
         socket.on(clientEvent: .connect) {data, ack in
             print("[SocketCenter] Connected...")
-            //Send a notification in the iOS notification system to anyone that registered for it.
+            //..Broadcast a notification to anyone that cares and subscribed to it.
             self.notificationCenter.post(name:SocketCenter.socketConnectedNotification,
                                          object: nil,
                                          userInfo: nil)
         }
         //
-        //Or when we reconnect, we:
+        //Or when we [.reconnect], we:
         self.socket.on(clientEvent: .reconnectAttempt) {data, ack in
             print("[SocketCenter] Interruption Detected - Retrying")
+            //Also notify everyone as on [.connect]
             self.notificationCenter.post(name:SocketCenter.socketDisconnectedNotification,
                                          object: nil,
                                          userInfo: nil)
@@ -63,11 +89,17 @@ class SocketCenter {
             self.notificationCenter.post(name:SocketCenter.socketDisconnectedNotification,
                                          object: nil,
                                          userInfo: nil)
+            //[.disconnect] only happens gracefuly. Meaning that is user requests to disconnect, so we wont attempt reconnect.
         }
         
-        //Or when we get a new fresh report from the capsule and the server let us know:
-        // NOTE: Server reported a new message [New report] We use this one when we are already connected to the server and already got the full logFile (see bellow getAllReports) so once an event happens in realtime the server reports this message to us to append to the message history for plotting.
+        
+        // --------[SERVER OR CUSTOM EVENTS]-------------
+        //
+        //When we get a new fresh report from the capsule and the server relays it to us we:
+        // NOTE: This is only used for new messages arriving in realtime to the server (see getAllReports for history).
+        //       We defined "c" in the server, we can change it in the server and have to change it here to identify this type of messages.
         socket.on("c") {data, ack in
+            //
             //We interpret the message and create the report
             guard let rawData = data[0] as? String else { return }
             print("[SocketCenter] New Message Arrived: \(rawData)")
