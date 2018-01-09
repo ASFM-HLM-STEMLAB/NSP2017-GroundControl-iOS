@@ -8,7 +8,8 @@ ASFM Near Space Program 2017 - Ground Station and Control for iOS (iPhone/iPad)
 ## How does it work?
 ### Comunications to Server: 
  We use a 3 party paradigm so that we can have a central repository that holds all the reports ever sent by the capsule.
- The capsule talks to the server (see the server code in the github repository for more info), and this app talks to the server. 
+ 
+ The capsule talks to the server thru either a Cellular Modem or a Satellite modem thru the vendor services (see the server code in the github repository for more info), and this app talks to the server. 
  
  The capsule sends messages to the servder either thru cellular modem or satellite modem at defined intervals. Each service uses it's own handler from it's own service provider to talk to the internet. In the case of the sat modem we have to use RockBlock relay service for this to work and in the case of the cellular data we use Particle.io service for the same porpouse. The latter is optional but makes coding easier and they have great data plans. 
  
