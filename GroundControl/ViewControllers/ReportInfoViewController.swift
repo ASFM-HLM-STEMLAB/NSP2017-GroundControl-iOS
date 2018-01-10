@@ -16,6 +16,8 @@ import UIKit
 
 protocol ReportInfoDelegate {
     func shouldTogglePanelView()
+    func shouldShowPanelView()
+    func shouldHidePanelView()
 }
 
 class ReportInfoViewController: UIViewController {
@@ -23,6 +25,9 @@ class ReportInfoViewController: UIViewController {
         case cellular
         case sattelite
     }
+    
+  
+ 
     
     @IBOutlet weak var transmitModeButton: UIButton!
     @IBOutlet weak var serverStatusLabel: UILabel!
@@ -162,6 +167,20 @@ extension ReportInfoViewController {
     
     @IBAction func hideButtonToggle(_ sender: Any) {
         delegate?.shouldTogglePanelView()
+    }
+    
+    @IBAction func didPan(_ gesture: UIPanGestureRecognizer) {
+        if gesture.state == .ended {
+            if let dir = gesture.direction {
+                if dir == .Up {
+                    delegate?.shouldShowPanelView()
+                }
+                
+                if dir == .Down {
+                    delegate?.shouldHidePanelView()
+                }
+            }
+        }
     }
     
 }

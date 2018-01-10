@@ -608,6 +608,7 @@
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <gestureRecognizers/>
                         <constraints>
                             <constraint firstItem="gRL-6L-rfu" firstAttribute="leading" secondItem="Gef-kk-vCx" secondAttribute="trailing" constant="2.5" id="0Wj-xq-cOS"/>
                             <constraint firstItem="FE5-bI-zkm" firstAttribute="bottom" secondItem="PKD-Nd-JAn" secondAttribute="bottom" id="1Xv-Vd-H4h"/>
@@ -781,6 +782,9 @@
                             <constraint firstItem="u1O-TA-ZNN" firstAttribute="centerX" secondItem="vj0-QZ-nUZ" secondAttribute="centerX" id="zqT-fh-1p4"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="jUf-EM-2jf"/>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="Tm4-nC-IQO" appends="YES" id="7Lc-n6-Q8f"/>
+                        </connections>
                     </view>
                     <connections>
                         <outlet property="altitudeLabel" destination="PKD-Nd-JAn" id="Wfe-di-jgi"/>
@@ -803,6 +807,11 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mJV-UH-WxA" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <panGestureRecognizer minimumNumberOfTouches="1" id="Tm4-nC-IQO">
+                    <connections>
+                        <action selector="didPan:" destination="4uT-EQ-YDX" id="uTb-M5-T12"/>
+                    </connections>
+                </panGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="-991.40625" y="1119.43359375"/>
         </scene>

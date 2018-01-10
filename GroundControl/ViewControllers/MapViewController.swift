@@ -381,6 +381,14 @@ extension MapViewController: ReportInfoDelegate {
     func shouldTogglePanelView() {
         toggleDetails()
     }
+    
+    func shouldHidePanelView() {
+        hideDetails()
+    }
+    
+    func shouldShowPanelView() {
+        showDetails()
+    }
 }
 
 
