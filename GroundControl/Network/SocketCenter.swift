@@ -124,7 +124,10 @@ class SocketCenter {
         
         
         print("[SocketCenter] Connecting...")
-        socket.connect()
+    }
+    
+    static func connect() {
+        sharedInstance.socket.connect()
     }
     
     //Request all reports from the server and run a completion handler when we get them.
@@ -133,6 +136,12 @@ class SocketCenter {
         sharedInstance.socket.emitWithAck("GETLOGFILE", with: ["test"]) .timingOut(after: 10) { (data) in
             
             guard let rawData = data[0] as? String else { return }
+            
+            if (rawData == "NO ACK") {
+                print("[SocketCenter] Request TimedOut");
+                return
+            }
+            
             print("[SocketCenter] LogFile Arrived")
             
             //We get all the contents in the logFile from the server and we separate each line of the file \n in an array logFileByLine
@@ -159,3 +168,4 @@ class SocketCenter {
     
     
 }
+

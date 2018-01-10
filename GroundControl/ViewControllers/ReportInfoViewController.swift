@@ -13,6 +13,11 @@ import UIKit
 
 // TODO:
 // Abstract responsability in multiple controllers [NO MASSIVE VIEW CONTROLLER]!!
+
+protocol ReportInfoDelegate {
+    func shouldTogglePanelView()
+}
+
 class ReportInfoViewController: UIViewController {
     enum TransmitMode {
         case cellular
@@ -31,15 +36,15 @@ class ReportInfoViewController: UIViewController {
     @IBOutlet weak var sonarDistanceLabel: UILabel!
     @IBOutlet weak var gpsSignalLabel: UILabel!
     @IBOutlet weak var satcomSignalLabel: UILabel!
-    
-    
     @IBOutlet weak var terminalInput: UITextField!
-    private var previousAltitude:Int = 0
-    
     @IBOutlet weak var terminalTextView: UITextView!
     @IBOutlet weak var tempIndicator: GraphicalIndicator!
     @IBOutlet weak var climbIndicator: GraphicalIndicator!
     @IBOutlet weak var battIndicator: GraphicalIndicator!
+    
+    
+    private var previousAltitude:Int = 0
+    var delegate: ReportInfoDelegate?
     
     private var transmitMode = TransmitMode.cellular {
         didSet {
@@ -154,6 +159,11 @@ extension ReportInfoViewController {
     @IBAction func smuteButtonPressed(_ sender: Any) {
         sendMessageToSocket(message:"satmute")
     }
+    
+    @IBAction func hideButtonToggle(_ sender: Any) {
+        delegate?.shouldTogglePanelView()
+    }
+    
 }
 
 
@@ -161,7 +171,7 @@ extension ReportInfoViewController {
     public func setReport(_ report:Report) {
         altitudeLabel.text = String(report.altitude)
         print("RAW: \(report.rawReport)")
-            print("RT: \(report.reportType)")
+        print("RT: \(report.reportType)")
         
         if (report.reportType == .pulse) {
             speedLabel.text = String(report.speed)

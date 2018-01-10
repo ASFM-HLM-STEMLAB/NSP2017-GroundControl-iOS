@@ -51,7 +51,7 @@ class MapViewController: UIViewController  {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         hideDetails()
-        getAllReports()
+        SocketCenter.connect()
     }
     
     func subscribeForSystemNotifications() {
@@ -96,6 +96,7 @@ class MapViewController: UIViewController  {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if (segue.identifier == "reportDetailView") {
             reportDetailViewController = segue.destination as? ReportInfoViewController
+            reportDetailViewController?.delegate = self
         }
     }
     
@@ -120,14 +121,21 @@ extension MapViewController {
     func hideDetails() { //Animate the ReportInfoView panel down.
         self.view.layoutIfNeeded()
         self.reportInfoView.updateConstraintsIfNeeded()
-        let top = CGAffineTransform(translationX: 0, y: reportInfoView.bounds.height-40)
+        let top = CGAffineTransform(translationX: 0, y: reportInfoView.bounds.height-65)
         infoViewShowed = false
         UIView.animate(withDuration: infoViewAnimationTime, delay: 0, usingSpringWithDamping: 0.4, initialSpringVelocity: 0.2, options: [], animations: {
             self.reportInfoView.transform = top
             self.view.layoutIfNeeded()
             self.reportInfoView.updateConstraintsIfNeeded()
         }, completion: nil)
-        
+    }
+    
+    func toggleDetails() {
+        if infoViewShowed {
+            self.hideDetails()
+        } else {
+            self.showDetails()
+        }
     }
 }
 
@@ -155,11 +163,13 @@ extension MapViewController: MKMapViewDelegate {
 // ---------------------------------------------------
 // MARK: MAP Plotting Methods and Helpers
 extension MapViewController {
-    func addReport(_ report:Report) {
-        reports.append(report)
-        plotAppendReportsInMap()
-        self.reportDetailViewController?.setMessageCount(reports.count)
-        self.reportDetailViewController?.setReport(report)
+    func addReport(_ report:Report) {        
+        if report.reportType != .unknown {
+            reports.append(report)
+            plotAppendReportsInMap()
+            self.reportDetailViewController?.setMessageCount(reports.count)
+            self.reportDetailViewController?.setReport(report)
+        }
     }
     
     func plotAppendReportsInMap() {
@@ -305,6 +315,12 @@ extension MapViewController {
         getAllReports()
     }
     
+}
+
+extension MapViewController: ReportInfoDelegate {
+    func shouldTogglePanelView() {
+        toggleDetails()
+    }
 }
 
 
