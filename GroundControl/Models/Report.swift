@@ -67,8 +67,9 @@ class MapAnnotation: NSObject, MKAnnotation {
 // Report model struct
 // Every message gathered from the server [capsule] will be a Report
 struct Report  {
-//    let gpsTimeStampRaw:String
+    //    TODO: use Optionals to validate data.    
     let gpsTimeStamp:Date
+    let serverTimeStamp:Date
     let rawReport:String
     var originator:Originator = .unknown
     var reportType:ReportKind = .unknown
@@ -103,7 +104,7 @@ extension Report { // To Map Coordinate for use in the MKMAp (to make a report s
     var mapAnnotation: MapAnnotation {
         get {
             _mapAnnotation.title = String(format: "[%i] @ %ift", index, altitude)
-            _mapAnnotation.subtitle = gpsTimeStamp.toReadableString()
+            _mapAnnotation.subtitle = gpsTimeStamp.toTimeReadableString()
             _mapAnnotation.coordinate = coordinate
             return _mapAnnotation
         }
@@ -120,6 +121,7 @@ extension Report {
         
         if validateTS.count < 2 || validateDT.count < 5  {
             gpsTimeStamp = Date()
+            serverTimeStamp = Date()
             originator  = .unknown
             reportType = .unknown
             longitude = 0.0
@@ -129,9 +131,15 @@ extension Report {
         }
         
         let dataFields = rawString.components(separatedBy: "|")[1]
-        let _ = rawString.components(separatedBy: "|")[0]
+        let serverTimeStampString = rawString.components(separatedBy: "|")[0]
         
-        
+        //Parse the server timestamp
+        if let serverTime = Date.fromServerString(serverTimeStampString) {
+            serverTimeStamp = serverTime
+        } else {
+            print("[Report] Invalid server timestamp format. Falling back to current time")
+            serverTimeStamp = Date()
+        }
         
         //Originator
         if dataFields.components(separatedBy: ",")[0] == "cel" {
@@ -186,7 +194,7 @@ extension Report {
         }
         
         //Computed Assignments
-        _mapAnnotation.subtitle = gpsTimeStamp.toReadableString()
+        _mapAnnotation.subtitle = gpsTimeStamp.toTimeReadableString()
         _mapAnnotation.coordinate = coordinate        
     }
 }
@@ -201,7 +209,7 @@ extension Date {
         stringFormatter.dateFormat = "HH:mm:ss"
         dateFormatter.dateFormat = "HHmmss"
         
-        dateFormatter.timeZone = NSTimeZone(abbreviation: "UTC") as TimeZone?
+        dateFormatter.timeZone = TimeZone(abbreviation: "UTC") as TimeZone?
         if let date = dateFormatter.date(from: gpsTime) {
             return date
         } else {
@@ -209,7 +217,21 @@ extension Date {
         }
     }
     
-     func toReadableString() -> String {
+    static func fromServerString(_ serverTime: String) -> Date? {
+        let trimmedIsoString = serverTime.replacingOccurrences(of: "\\.\\d+", with: "", options: .regularExpression)
+        let isoFormatter = ISO8601DateFormatter()
+        let date = isoFormatter.date(from: trimmedIsoString)
+        return date
+    }
+    
+    func toDateTimeReadableString() -> String {
+        let stringFormatter = DateFormatter()
+        stringFormatter.dateFormat = "MMM d, h:mm a"
+        let dateString = stringFormatter.string(from: self)
+        return dateString
+    }
+    
+     func toTimeReadableString() -> String {
             let stringFormatter = DateFormatter()
             stringFormatter.dateFormat = "HH:mm:ss"
             let dateString = stringFormatter.string(from: self)

@@ -12,8 +12,7 @@ import CoreLocation
 
 // ---------------------------------------------------
 // MARK: UIViewController LifeCycle and Default Methods
-class MapViewController: UIViewController  {
-    
+class MapViewController: UIViewController  {    
     
     //SETTINGS
     let regionRadius: CLLocationDistance = 1000
@@ -33,6 +32,8 @@ class MapViewController: UIViewController  {
     @IBOutlet weak var distanceLabel: UILabel!
     @IBOutlet weak var lastUpdatedLabel: UILabel!
     
+    @IBOutlet weak var onlineStatusLabel: UILabel!
+    @IBOutlet weak var lastUpdatedGPSLabel: UILabel!
     // ======================================================
     override func viewDidLoad() {
         //Let's setup everything for the VC
@@ -50,6 +51,8 @@ class MapViewController: UIViewController  {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        self.onlineStatusLabel.text = "CONNECTING..."
+        self.onlineStatusLabel.textColor = UIColor(red: 0.9, green:0.71, blue:0.01, alpha:1)
         hideDetails()
         SocketCenter.connect()
     }
@@ -71,13 +74,18 @@ class MapViewController: UIViewController  {
         // AND WE GET ALL THE REPORTS in the history.
         notificationCenter.addObserver(forName:SocketCenter.socketConnectedNotification, object: nil, queue: nil) { (notification) in
             self.reportDetailViewController?.setServerStatus(.connected)
+            self.onlineStatusLabel.text = "ONLINE"
+            self.onlineStatusLabel.textColor = UIColor(red: 0.2, green:0.8, blue:0.2, alpha:1)
             self.getAllReports()
         }
         
         //When we disconnect we change the label to let the user know.
         notificationCenter.addObserver(forName:SocketCenter.socketDisconnectedNotification, object: nil, queue: nil) { (notification) in
             self.reportDetailViewController?.setServerStatus(.disconnected)
-        }                
+            self.onlineStatusLabel.text = "OFFLINE"
+            self.onlineStatusLabel.textColor = UIColor(red: 1, green:0.2, blue:0.2, alpha:1)
+        }
+        
         
         //When we get a .response type of message we show it in the terminal as a raw string with a < to signify incoming.
         notificationCenter.addObserver(forName:SocketCenter.socketResponseNotification, object: nil, queue: nil) { (notification) in
@@ -156,6 +164,46 @@ extension MapViewController: MKMapViewDelegate {
     func mapView(_ mapView: MKMapView, didUpdate userLocation: MKUserLocation) {
         //Everytime the map is updated we call the following method to update our distance (device) to the capsule coord.
         updateDistanceLabel()
+    }
+    
+    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
+        
+        if let annotation = view.annotation {
+           
+            
+            let idx = self.reports.index  { $0.mapAnnotation as MKAnnotation === annotation }
+            if let index = idx {
+                let report = reports[index]
+                
+                let title = "[\(index)] STS: \(report.serverTimeStamp.toDateTimeReadableString()) - GTS: \(report.gpsTimeStamp.toTimeReadableString())"
+                
+                let formattedDistance = formatDistanceToMetric(from: calculateDistance(from: report.mapAnnotation))
+                
+                
+                var kind = "Other"
+                if (report.reportType == .pulse) {
+                    kind = "Pulse"
+                }
+                
+                var source = "Cell"
+                if (report.originator == .satellite) {
+                    source = "Sat"
+                }
+                
+                
+                let body = "Lat: \(report.latitude) - Lon: \(report.longitude) \n Alt: \(report.altitude) ft - Dis: \(formattedDistance) \n Hdg: \(report.course)° - Spd: \(report.speed) kts \n Typ: \(kind) - Ogn: \(source)"
+                
+                let alert = UIAlertController(title: title, message: body, preferredStyle: .actionSheet)
+                
+                alert.modalPresentationStyle = .overCurrentContext
+                alert.popoverPresentationController?.sourceView = view
+                self.present(alert, animated: true, completion: nil)
+            }
+            
+        }
+        
+       
+        
     }
 }
 
@@ -243,34 +291,46 @@ extension MapViewController {
     
     //Use math to calculate distance of device (GPS) to last report location.
     func calculateDistanceFromLastPoint() -> CLLocationDistance {
-        let l1 = self.mapView.userLocation.coordinate
-        if let l2 = self.reports.last?.mapAnnotation.coordinate {
-            let loc1 = CLLocation(latitude: l1.latitude, longitude: l1.longitude)
-            let loc2 = CLLocation(latitude: l2.latitude, longitude: l2.longitude)
-            let distance = loc2.distance(from: loc1)
-            return distance
+        if let lastAnnotation = self.reports.last?.mapAnnotation {
+            return calculateDistance(from: lastAnnotation)
         }
-        
         return 0
     }
     
-    func updateDistanceLabel() {
+    func calculateDistance(from mapAnnotation:MapAnnotation) -> CLLocationDistance {
+        let l1 = self.mapView.userLocation.coordinate
+        let l2 = mapAnnotation.coordinate
+        let loc1 = CLLocation(latitude: l1.latitude, longitude: l1.longitude)
+        let loc2 = CLLocation(latitude: l2.latitude, longitude: l2.longitude)
+        let distance = loc2.distance(from: loc1)
+        return distance
+    }
+    
+    
+    func formatDistanceToMetric(from meters: Double) -> String
+    {
         var units = "m"
-        let distanceInMeters = calculateDistanceFromLastPoint()
-        var finalDistance = distanceInMeters
+        var finalDistance = meters
         
-        if distanceInMeters >= 1000 {
+        if meters >= 1000 {
             units = "km"
-            finalDistance = distanceInMeters / 1000
+            finalDistance = meters / 1000
         }
         
-        let labeltext = String(format: "%.0f %@", finalDistance, units)        
-        self.distanceLabel.text = labeltext
+        return String(format: "%.0f %@", finalDistance, units)
+    }
+    
+    func updateDistanceLabel() {
+        self.distanceLabel.text = formatDistanceToMetric(from: calculateDistanceFromLastPoint())
     }
     
     func updateLastReportTime() {
-        if let lastTimeStamp =  self.reports.last?.gpsTimeStamp {
-            self.lastUpdatedLabel.text = lastTimeStamp.toReadableString()
+        if let lastTimeStamp =  self.reports.last?.serverTimeStamp {
+            self.lastUpdatedLabel.text = "STS: \(lastTimeStamp.timeAgo().uppercased())"
+        }
+        
+        if let lastTimeGPS =  self.reports.last?.gpsTimeStamp {
+            self.lastUpdatedGPSLabel.text = "GTS: \(lastTimeGPS.toTimeReadableString())"
         }
     }
 }

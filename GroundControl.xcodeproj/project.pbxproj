@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		00220A3F2005D3BC000B12DF /* TimeAgo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00220A3E2005D3BC000B12DF /* TimeAgo.swift */; };
 		005C5C981FCBD01B0055B110 /* Starscream.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 005C5C961FCBD01B0055B110 /* Starscream.framework */; };
 		005C5C991FCBD01B0055B110 /* Starscream.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 005C5C961FCBD01B0055B110 /* Starscream.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		005C5C9A1FCBD01B0055B110 /* SocketIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 005C5C971FCBD01B0055B110 /* SocketIO.framework */; };
@@ -39,6 +40,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		00220A3E2005D3BC000B12DF /* TimeAgo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeAgo.swift; sourceTree = "<group>"; };
 		005C5C961FCBD01B0055B110 /* Starscream.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Starscream.framework; path = GroundControl/Carthage/Build/iOS/Starscream.framework; sourceTree = "<group>"; };
 		005C5C971FCBD01B0055B110 /* SocketIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SocketIO.framework; path = GroundControl/Carthage/Build/iOS/SocketIO.framework; sourceTree = "<group>"; };
 		005C5C9C1FCBD0480055B110 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
@@ -102,6 +104,14 @@
 			path = "Custom UI Indicators ";
 			sourceTree = "<group>";
 		};
+		00220A3D2005D3A1000B12DF /* Time Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				00220A3E2005D3BC000B12DF /* TimeAgo.swift */,
+			);
+			path = "Time Extensions";
+			sourceTree = "<group>";
+		};
 		005C5CA01FCBD8E10055B110 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -132,6 +142,7 @@
 		00DEF2ED1FCBCD0C00F1F393 /* GroundControl */ = {
 			isa = PBXGroup;
 			children = (
+				00220A3D2005D3A1000B12DF /* Time Extensions */,
 				00DEF2EE1FCBCD0C00F1F393 /* AppDelegate.swift */,
 				00DEF2F21FCBCD0C00F1F393 /* Main.storyboard */,
 				000A8DBB1FFD6FB900322310 /* ViewControllers */,
@@ -220,6 +231,7 @@
 			files = (
 				005C5CA41FCBDD6D0055B110 /* ReportInfoViewController.swift in Sources */,
 				005C5C9D1FCBD0480055B110 /* MapViewController.swift in Sources */,
+				00220A3F2005D3BC000B12DF /* TimeAgo.swift in Sources */,
 				00DEF2EF1FCBCD0C00F1F393 /* AppDelegate.swift in Sources */,
 				005C5CA61FCBEB190055B110 /* SocketCenter.swift in Sources */,
 				005C5C9F1FCBD1EF0055B110 /* Report.swift in Sources */,
