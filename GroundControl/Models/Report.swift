@@ -142,10 +142,11 @@ extension Report {
         }
         
         //Originator
-        if dataFields.components(separatedBy: ",")[0] == "cel" {
+        let originatorRaw = dataFields.components(separatedBy: ",")[0].trimmingCharacters(in: .whitespaces)
+        if originatorRaw == "cel" {
             originator = .cellular
         }
-        if dataFields.components(separatedBy: ",")[0] == "sat" {
+        if originatorRaw == "sat" {
             originator = .satellite
         }
         

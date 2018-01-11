@@ -222,13 +222,22 @@ extension MapViewController {
     
     func plotAppendReportsInMap() {
         
-        let annotations = reports.map { (report) -> MapAnnotation in
+        let annotations = reports.flatMap { (report) -> MapAnnotation? in
+            if (report.coordinate.latitude == 0 || report.coordinate.longitude == 0) {
+                return nil
+            }
+            
             return report.mapAnnotation
         }
         
-        let coordinates = reports.map { (report) -> CLLocationCoordinate2D in
+        let coordinates = reports.flatMap { (report) -> CLLocationCoordinate2D? in
+            if (report.coordinate.latitude == 0 || report.coordinate.longitude == 0) {
+                return nil
+            }
             return report.mapAnnotation.coordinate
         }
+        
+        
         
         if let lastAnnotation = annotations.last {
             mapView.addAnnotation(lastAnnotation)
@@ -255,11 +264,18 @@ extension MapViewController {
         mapView.removeAnnotations(mapView.annotations)
         self.mapView.removeOverlays(mapView.overlays)
         
-        let annotations = reports.map { (report) -> MapAnnotation in
-            return report.mapAnnotation
+        let annotations = reports.flatMap { (report) -> MapAnnotation? in
+            if (report.coordinate.latitude == 0 || report.coordinate.longitude == 0) {
+              return nil
+            }
+               return report.mapAnnotation
         }
         
-        let coordinates = reports.map { (report) -> CLLocationCoordinate2D in
+        
+        let coordinates = reports.flatMap { (report) -> CLLocationCoordinate2D? in
+            if (report.coordinate.latitude == 0 || report.coordinate.longitude == 0) {
+                return nil
+            }
             return report.mapAnnotation.coordinate
         }
         
@@ -283,9 +299,18 @@ extension MapViewController {
                 self.reportDetailViewController?.setMessageCount(reports.count)
                 if let lastReport = reports.last {
                     self.reportDetailViewController?.setReport(lastReport)
+                    if (lastReport.reportType != .pulse) {
+                        for aReport in reports {
+                            if aReport.reportType == .pulse {
+                                self.reportDetailViewController?.setReport(aReport)
+                            }
+                        }
+                    }
                 }
+                
                 self.updateLastReportTime()
             }
+            
         }
     }
     
@@ -348,7 +373,11 @@ extension MapViewController {
     }
     
     @IBAction func allButtonPressed(_ sender: Any) {
-        let annotations = reports.map { (report) -> MapAnnotation in
+        let annotations = reports.flatMap { (report) -> MapAnnotation? in
+            if (report.coordinate.latitude == 0 || report.coordinate.longitude == 0) {
+                return nil
+            }
+            
             return report.mapAnnotation
         }
         
