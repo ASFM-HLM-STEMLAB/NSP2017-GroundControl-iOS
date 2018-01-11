@@ -16,6 +16,9 @@
 // Report.swift = Struct [Model] to abstract all report data in an easy to read, write and display object.
 // SocketCenter.swift = Singleton class used to encapsulate and centralize all network communications.
 //
+// TODO : Sort incoming messages by timestamp to prevent sat delays on arrival with both messages.
+// TODO : Update timeago clock in realtime to know how old is our last message.
+// TODO : Show last telemetry .pulse data age.
 
 import UIKit
 import CoreLocation
