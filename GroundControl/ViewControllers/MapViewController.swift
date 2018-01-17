@@ -169,10 +169,10 @@ extension MapViewController: MKMapViewDelegate {
     //
      func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         
-        guard !annotation.isKind(of: MKUserLocation.self) else {
+        
+        if annotation.isKind(of: MKUserLocation.self) {
             return nil
         }
-        
         
         var annotationIdentifier = ""
         let rep = getReport(from: annotation)
@@ -190,11 +190,9 @@ extension MapViewController: MKMapViewDelegate {
             annotationView = MKAnnotationView(annotation: annotation, reuseIdentifier: annotationIdentifier)
             if (annotationIdentifier == "Cell") {
                 let image = UIImage(named: "MapPinCell")
-                annotationView?.transform = transform
                 annotationView?.image = image
             } else {
                 let image = UIImage(named: "MapPinSat")
-                annotationView?.transform = transform
                 annotationView?.image = image
             }
         }
@@ -202,6 +200,7 @@ extension MapViewController: MKMapViewDelegate {
             annotationView?.annotation = annotation
         }
         
+        annotationView?.transform = transform
         annotationView?.canShowCallout = true
         
         
@@ -357,13 +356,13 @@ extension MapViewController {
     
     func getAllReports() {
         self.reports = [Report]() //Initialize the array with a blank one.
+        
         SocketCenter.getAllReports { (data) in //Ask the SocketCenter singleton to get all past reports.
             if let reports = data as? [Report] {
                 self.reports = reports
                 self.sortReportList()
                 self.reports = self.withoudDuplicates(from: reports)
                 
-                self.plotReportsInMap()
                 self.reportDetailViewController?.setMessageCount(reports.count)
                 if let lastReport = reports.last {
                     self.reportDetailViewController?.setReport(lastReport)
@@ -377,6 +376,7 @@ extension MapViewController {
                 }
                 
                 self.updateLastReportTime()
+                self.plotReportsInMap()
             }
             
         }
