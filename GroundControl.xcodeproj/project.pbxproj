@@ -23,6 +23,7 @@
 		00DEF2F41FCBCD0C00F1F393 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 00DEF2F21FCBCD0C00F1F393 /* Main.storyboard */; };
 		00DEF2F61FCBCD0C00F1F393 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 00DEF2F51FCBCD0C00F1F393 /* Assets.xcassets */; };
 		00DEF2F91FCBCD0C00F1F393 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 00DEF2F71FCBCD0C00F1F393 /* LaunchScreen.storyboard */; };
+		00E35FA1200F0DF9006BB8CD /* AttributedString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00E35FA0200F0DF9006BB8CD /* AttributedString.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -57,6 +58,7 @@
 		00DEF2F51FCBCD0C00F1F393 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		00DEF2F81FCBCD0C00F1F393 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		00DEF2FA1FCBCD0C00F1F393 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		00E35FA0200F0DF9006BB8CD /* AttributedString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttributedString.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -106,12 +108,13 @@
 			path = "Custom UI Indicators ";
 			sourceTree = "<group>";
 		};
-		00220A3D2005D3A1000B12DF /* Time Extensions */ = {
+		00220A3D2005D3A1000B12DF /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
 				00220A3E2005D3BC000B12DF /* TimeAgo.swift */,
+				00E35FA0200F0DF9006BB8CD /* AttributedString.swift */,
 			);
-			path = "Time Extensions";
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 		00220A402005F61D000B12DF /* Gesture Extensions */ = {
@@ -153,7 +156,7 @@
 			isa = PBXGroup;
 			children = (
 				00220A402005F61D000B12DF /* Gesture Extensions */,
-				00220A3D2005D3A1000B12DF /* Time Extensions */,
+				00220A3D2005D3A1000B12DF /* Extensions */,
 				00DEF2EE1FCBCD0C00F1F393 /* AppDelegate.swift */,
 				00DEF2F21FCBCD0C00F1F393 /* Main.storyboard */,
 				000A8DBB1FFD6FB900322310 /* ViewControllers */,
@@ -243,6 +246,7 @@
 				005C5CA41FCBDD6D0055B110 /* ReportInfoViewController.swift in Sources */,
 				005C5C9D1FCBD0480055B110 /* MapViewController.swift in Sources */,
 				00220A3F2005D3BC000B12DF /* TimeAgo.swift in Sources */,
+				00E35FA1200F0DF9006BB8CD /* AttributedString.swift in Sources */,
 				00220A422005F639000B12DF /* PanGestureRecognizer.swift in Sources */,
 				00DEF2EF1FCBCD0C00F1F393 /* AppDelegate.swift in Sources */,
 				005C5CA61FCBEB190055B110 /* SocketCenter.swift in Sources */,

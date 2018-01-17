@@ -103,14 +103,40 @@ extension Report { // To Map Coordinate for use in the MKMAp (to make a report s
     
     var mapAnnotation: MapAnnotation {
         get {
-            _mapAnnotation.title = String(format: "[%i] @ %ift", index, altitude)
-            _mapAnnotation.subtitle = gpsTimeStamp.toTimeReadableString()
+            if self.originator == .cellular {
+                _mapAnnotation.title = String(format: "       CELL MSG - IDX: %i", index)
+            } else {
+                _mapAnnotation.title = String(format: "       SAT MSG - IDX: %i", index)
+            }
             _mapAnnotation.coordinate = coordinate
             return _mapAnnotation
         }
     }
 }
 
+extension Report {
+    func isLocationSame(as latitude: Double, longitude: Double) -> Bool {
+        if self.latitude == latitude && self.longitude == latitude {
+            return true
+        }
+        return false
+    }
+}
+
+extension Report: Hashable
+{
+    var hashValue: Int {
+        return Int(self.latitude + self.longitude)
+    }
+    
+    static func ==(lhs: Report, rhs: Report) -> Bool {
+        if lhs.latitude == rhs.latitude && lhs.longitude == rhs.longitude {
+            return true
+        }
+        
+        return false
+    }
+}
 //          This extension will provide an initializer to parse or assign all values to appropriate fields in the model.
 extension Report {
     init(rawString:String) {

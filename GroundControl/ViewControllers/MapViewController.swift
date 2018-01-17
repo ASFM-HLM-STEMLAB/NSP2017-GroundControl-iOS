@@ -166,17 +166,74 @@ extension MapViewController: MKMapViewDelegate {
         updateDistanceLabel()
     }
     
+    //
+     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        
+        guard !annotation.isKind(of: MKUserLocation.self) else {
+            return nil
+        }
+        
+        
+        var annotationIdentifier = ""
+        let rep = getReport(from: annotation)
+        if let report = rep {
+            if report.originator == .cellular {
+                annotationIdentifier = "Cell"
+            } else {
+                annotationIdentifier = "Sat"
+            }
+        }
+        
+        var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: annotationIdentifier)
+        let transform = CGAffineTransform.init(scaleX: 0.4, y: 0.4)
+        if annotationView == nil {
+            annotationView = MKAnnotationView(annotation: annotation, reuseIdentifier: annotationIdentifier)
+            if (annotationIdentifier == "Cell") {
+                let image = UIImage(named: "MapPinCell")
+                annotationView?.transform = transform
+                annotationView?.image = image
+            } else {
+                let image = UIImage(named: "MapPinSat")
+                annotationView?.transform = transform
+                annotationView?.image = image
+            }
+        }
+        else {
+            annotationView?.annotation = annotation
+        }
+        
+        annotationView?.canShowCallout = true
+        
+        
+
+    
+        return annotationView
+        
+    }
+    
+    func mapView(_ mapView: MKMapView, didDeselect view: MKAnnotationView) {
+        let transform = CGAffineTransform.init(scaleX: 0.4, y: 0.4)
+        UIView.animate(withDuration: 0.2) {
+            view.transform = transform
+        }
+        
+    }
+        
+        
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
         
+        let transform = CGAffineTransform.init(scaleX: 0.6, y: 0.6)
+        UIView.animate(withDuration: 0.2) {
+            view.transform = transform
+        }
+        
         if let annotation = view.annotation {
-           
+            
             
             let idx = self.reports.index  { $0.mapAnnotation as MKAnnotation === annotation }
             if let index = idx {
                 let report = reports[index]
-                
-                let title = "[\(index)] STS: \(report.serverTimeStamp.toDateTimeReadableString()) - GTS: \(report.gpsTimeStamp.toTimeReadableString())"
-                
+                                
                 let formattedDistance = formatDistanceToMetric(from: calculateDistance(from: report.mapAnnotation))
                 
                 
@@ -191,13 +248,20 @@ extension MapViewController: MKMapViewDelegate {
                 }
                 
                 
-                let body = "Lat: \(report.latitude) - Lon: \(report.longitude) \n Alt: \(report.altitude) ft - Dis: \(formattedDistance) \n Hdg: \(report.course)° - Spd: \(report.speed) kts \n Typ: \(kind) - Ogn: \(source)"
+                let body = """
+                    Lat: \(report.latitude) - Lon: \(report.longitude)
+                    Alt: \(report.altitude) ft - Dis: \(formattedDistance)
+                    Hdg: \(report.course)° - Spd: \(report.speed) kts
+                    Typ: \(kind) - Ogn: \(source)
+                    """
                 
-                let alert = UIAlertController(title: title, message: body, preferredStyle: .actionSheet)
                 
-                alert.modalPresentationStyle = .overCurrentContext
-                alert.popoverPresentationController?.sourceView = view
-                self.present(alert, animated: true, completion: nil)
+                let label = UILabel(frame: CGRect(x: 0, y: 0, width: 1000, height: 0))
+                label.numberOfLines = 0
+                label.text = body
+                view.detailCalloutAccessoryView = label
+                label.sizeToFit()
+
             }
             
         }
@@ -259,6 +323,7 @@ extension MapViewController {
         updateDistanceLabel()
     }
     
+    
     func plotReportsInMap() {
         //Remove all annotations from the map (pins) and redraw them all from the array and draw a line between them (dashed line)
         mapView.removeAnnotations(mapView.annotations)
@@ -295,6 +360,9 @@ extension MapViewController {
         SocketCenter.getAllReports { (data) in //Ask the SocketCenter singleton to get all past reports.
             if let reports = data as? [Report] {
                 self.reports = reports
+                self.sortReportList()
+                self.reports = self.withoudDuplicates(from: reports)
+                
                 self.plotReportsInMap()
                 self.reportDetailViewController?.setMessageCount(reports.count)
                 if let lastReport = reports.last {
@@ -313,6 +381,38 @@ extension MapViewController {
             
         }
     }
+    
+    func getReport(from annotation: MKAnnotation) -> Report? {
+        let idx = self.reports.index  { $0.mapAnnotation as MKAnnotation === annotation }
+        if let index = idx {
+            let report = reports[index]
+            return report
+        }
+        
+        return nil
+    }
+    
+    func sortReportList() {
+        self.reports = self.reports.sorted(by: {
+            if ($0.gpsTimeStamp < $1.gpsTimeStamp) {
+                return true;
+            }
+                return false;
+            })
+    }
+    
+    func withoudDuplicates(from reports:[Report]) -> [Report] {
+        var newReports = [Report]()
+        
+        for report in self.reports {
+            if !newReports.contains(report) {
+                newReports.append(report)
+            }
+        }
+        
+        return newReports
+    }
+    
     
     //Use math to calculate distance of device (GPS) to last report location.
     func calculateDistanceFromLastPoint() -> CLLocationDistance {

@@ -47,6 +47,7 @@ class SocketCenter {
     
     //Abstraction of the notification flags for easy referal.
     static let newMessageNotification = Notification.Name("com.GroundControl.Socket.NewMessage")
+    static let socketGotAllMessageNotification = Notification.Name("com.GroundControl.Socket.gotAllMessageNotification")
     static let socketConnectedNotification = Notification.Name("com.GroundControl.Socket.Connected")
     static let socketDisconnectedNotification = Notification.Name("com.GroundControl.Socket.Discconnected")
     static let socketResponseNotification = Notification.Name("com.GroundControl.Socket.NewResponse")
@@ -157,6 +158,8 @@ class SocketCenter {
             
             //We run the completion handler closure and pass the reports array containing all Report structs parsed and initialized.
             onCompletion(reports)
+            
+            
         }
         
     }
