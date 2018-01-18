@@ -18,7 +18,7 @@
 //
 // TODO : Sort incoming messages by timestamp to prevent sat delays on arrival with both messages.
 // TODO : Update timeago clock in realtime to know how old is our last message.
-// TODO : Show last telemetry .pulse data age.
+// TODO : Show last telemetry .pulse data age.   dfasdf
 
 import UIKit
 import CoreLocation
