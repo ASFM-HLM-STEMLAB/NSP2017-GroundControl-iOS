@@ -18,12 +18,17 @@ class MapViewController: UIViewController  {
     let regionRadius: CLLocationDistance = 1000
     var ownshipTrackingEnabled = true
     let infoViewAnimationTime = 0.3
-    var reportDetailViewController:ReportInfoViewController?
+    let locationManager = CLLocationManager()
     
     //IVars
     var infoViewShowed = true
     var reports = [Report]()
     let notificationCenter = NotificationCenter.default
+    var ownshipLine: MKPolyline?
+    var reportDetailViewController:ReportInfoViewController?
+    
+    var drawingOwnShipPlot = false //Keep track of what we are rendering on the screen to select the type of line we are going to draw
+    
     
     //IBOutlets (represent a view)
     @IBOutlet weak var reportInfoView: UIView!
@@ -34,6 +39,7 @@ class MapViewController: UIViewController  {
     
     @IBOutlet weak var onlineStatusLabel: UILabel!
     @IBOutlet weak var lastUpdatedGPSLabel: UILabel!
+    
     // ======================================================
     override func viewDidLoad() {
         //Let's setup everything for the VC
@@ -55,6 +61,8 @@ class MapViewController: UIViewController  {
         self.onlineStatusLabel.textColor = UIColor(red: 0.9, green:0.71, blue:0.01, alpha:1)
         hideDetails()
         SocketCenter.connect()
+        //iOS Devices need user permission for app to access device locations
+        locationManager.requestAlwaysAuthorization()
     }
     
     func subscribeForSystemNotifications() {
@@ -97,7 +105,7 @@ class MapViewController: UIViewController  {
         
     }
     
-    deinit {
+    deinit { //Should not happen, but just in case we clear any weak refs.
         notificationCenter.removeObserver(self)
     }
     
@@ -153,61 +161,76 @@ extension MapViewController {
 extension MapViewController: MKMapViewDelegate {
     func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
         let polylineRenderer = MKPolylineRenderer(overlay: overlay)
-        polylineRenderer.strokeColor = UIColor.blue
-        polylineRenderer.alpha = 0.3
-        polylineRenderer.lineWidth = 2
-        polylineRenderer.lineDashPattern = [2,5]
-        
+        if drawingOwnShipPlot == false {
+            polylineRenderer.strokeColor = UIColor.blue
+            polylineRenderer.alpha = 0.3
+            polylineRenderer.lineWidth = 2.5
+            polylineRenderer.lineDashPattern = [2,5]
+        } else {
+            polylineRenderer.strokeColor = UIColor.lightGray
+            polylineRenderer.alpha = 0.5
+            polylineRenderer.lineWidth = 0.5
+        }
         return polylineRenderer        
+    }
+    
+    func getAnnotationIdentifier(forReport report:Report) -> String {
+        var annotationIdentifier = "PinDotBlue"
+        
+        if report == self.reports.last {
+            switch report.missionStage
+            {
+            case .climb:
+                annotationIdentifier = "PinCapsuleBalloon"
+            case .descent:
+                annotationIdentifier = "PinCapsuleParachute"
+            case .recovery:
+                annotationIdentifier = "PinCapsuleRecovery"
+            case .ground:
+                annotationIdentifier = "PinCapsuleParachute"
+            case .unknown:
+                annotationIdentifier = "PinCapsuleBalloon"
+            }
+        } else if report == self.reports.first {
+            annotationIdentifier = "PinDotRed"
+        }
+        
+        return annotationIdentifier
     }
     
     func mapView(_ mapView: MKMapView, didUpdate userLocation: MKUserLocation) {
         //Everytime the map is updated we call the following method to update our distance (device) to the capsule coord.
         updateDistanceLabel()
+        updatePlotToOwnShip()
     }
     
-    //
-     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-        
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         
         if annotation.isKind(of: MKUserLocation.self) {
             return nil
         }
         
-        var annotationIdentifier = ""
-        let rep = getReport(from: annotation)
-        if let report = rep {
-            if report.originator == .cellular {
-                annotationIdentifier = "Cell"
-            } else {
-                annotationIdentifier = "Sat"
-            }
+        
+        guard let report = getReport(from: annotation) else {
+            return nil
         }
         
+        let annotationIdentifier = getAnnotationIdentifier(forReport: report)
         var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: annotationIdentifier)
-        let transform = CGAffineTransform.init(scaleX: 0.4, y: 0.4)
+        
         if annotationView == nil {
             annotationView = MKAnnotationView(annotation: annotation, reuseIdentifier: annotationIdentifier)
-            if (annotationIdentifier == "Cell") {
-                let image = UIImage(named: "MapPinCell")
-                annotationView?.image = image
-            } else {
-                let image = UIImage(named: "MapPinSat")
-                annotationView?.image = image
-            }
-        }
-        else {
+            let image = UIImage(named: annotationIdentifier)
+            annotationView?.image = image
+        } else {
             annotationView?.annotation = annotation
         }
         
+        let transform = CGAffineTransform.init(scaleX: 0.4, y: 0.4)
         annotationView?.transform = transform
         annotationView?.canShowCallout = true
         
-        
-
-    
         return annotationView
-        
     }
     
     func mapView(_ mapView: MKMapView, didDeselect view: MKAnnotationView) {
@@ -217,8 +240,8 @@ extension MapViewController: MKMapViewDelegate {
         }
         
     }
-        
-        
+    
+    
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
         
         let transform = CGAffineTransform.init(scaleX: 0.6, y: 0.6)
@@ -232,7 +255,7 @@ extension MapViewController: MKMapViewDelegate {
             let idx = self.reports.index  { $0.mapAnnotation as MKAnnotation === annotation }
             if let index = idx {
                 let report = reports[index]
-                                
+                
                 let formattedDistance = formatDistanceToMetric(from: calculateDistance(from: report.mapAnnotation))
                 
                 
@@ -248,11 +271,11 @@ extension MapViewController: MKMapViewDelegate {
                 
                 
                 let body = """
-                    Lat: \(report.latitude) - Lon: \(report.longitude)
-                    Alt: \(report.altitude) ft - Dis: \(formattedDistance)
-                    Hdg: \(report.course)° - Spd: \(report.speed) kts
-                    Typ: \(kind) - Ogn: \(source)
-                    """
+                Lat: \(report.latitude) - Lon: \(report.longitude)
+                Alt: \(report.altitude) ft - Dis: \(formattedDistance)
+                Hdg: \(report.course)° - Spd: \(report.speed) kts
+                Typ: \(kind) - Ogn: \(source)
+                """
                 
                 
                 let label = UILabel(frame: CGRect(x: 0, y: 0, width: 1000, height: 0))
@@ -260,12 +283,12 @@ extension MapViewController: MKMapViewDelegate {
                 label.text = body
                 view.detailCalloutAccessoryView = label
                 label.sizeToFit()
-
+                
             }
             
         }
         
-       
+        
         
     }
 }
@@ -274,9 +297,13 @@ extension MapViewController: MKMapViewDelegate {
 // ---------------------------------------------------
 // MARK: MAP Plotting Methods and Helpers
 extension MapViewController {
-    func addReport(_ report:Report) {        
+    func addReport(_ report:Report) {
         if report.reportType != .unknown {
             reports.append(report)
+            
+            sortReportList()
+            reports = self.withoudDuplicates(from: reports)
+            
             plotAppendReportsInMap()
             self.reportDetailViewController?.setMessageCount(reports.count)
             self.reportDetailViewController?.setReport(report)
@@ -300,10 +327,8 @@ extension MapViewController {
             return report.mapAnnotation.coordinate
         }
         
-        
-        
-        if let lastAnnotation = annotations.last {
-            mapView.addAnnotation(lastAnnotation)
+        if let newAnnotation = annotations.last {
+            mapView.addAnnotation(newAnnotation)
         }
         
         if coordinates.count >= 2 {
@@ -313,12 +338,21 @@ extension MapViewController {
             self.mapView.add(polyline, level: .aboveRoads)
         }
         
+        if reports.count > 1 {
+            let lastTwoReports = reports.suffix(2)
+            
+            let oldLastAnnotationView = self.mapView.view(for: lastTwoReports.first!.mapAnnotation)
+            let newLastAnnotationView = self.mapView.view(for: lastTwoReports.last!.mapAnnotation)
+            
+            oldLastAnnotationView?.image = UIImage(named:"PinDotBlue")
+            newLastAnnotationView?.image = UIImage(named:getAnnotationIdentifier(forReport:lastTwoReports.last!))
+        }
+        
         if annotations.count >= 3 {
             mapView.showAnnotations(Array(annotations.suffix(3)), animated: true)
         } else {
             mapView.showAnnotations(annotations, animated: true)
         }
-        
         updateDistanceLabel()
     }
     
@@ -328,13 +362,15 @@ extension MapViewController {
         mapView.removeAnnotations(mapView.annotations)
         self.mapView.removeOverlays(mapView.overlays)
         
+        sortReportList()
+        reports = self.withoudDuplicates(from: reports)
+        
         let annotations = reports.flatMap { (report) -> MapAnnotation? in
             if (report.coordinate.latitude == 0 || report.coordinate.longitude == 0) {
-              return nil
+                return nil
             }
-               return report.mapAnnotation
+            return report.mapAnnotation
         }
-        
         
         let coordinates = reports.flatMap { (report) -> CLLocationCoordinate2D? in
             if (report.coordinate.latitude == 0 || report.coordinate.longitude == 0) {
@@ -348,11 +384,26 @@ extension MapViewController {
         let polyline = MKPolyline(coordinates: coordinates, count: coordinates.count)
         self.mapView.add(polyline, level: .aboveRoads)
         
-        
         mapView.showAnnotations(annotations, animated: true)
         updateDistanceLabel()
-        
+        updatePlotToOwnShip()
     }
+    
+    func updatePlotToOwnShip() {
+        //jump
+        if (self.reports.count > 0) {
+            drawingOwnShipPlot = true
+            if let ownShipLine = self.ownshipLine {
+                mapView.remove(ownShipLine)
+            }
+            
+            let coordinates = [self.reports.last!.coordinate, mapView.userLocation.coordinate]
+            ownshipLine = MKPolyline(coordinates: coordinates, count: coordinates.count)
+            mapView.add(ownshipLine!, level: .aboveRoads)
+            drawingOwnShipPlot = false
+        }
+    }
+    
     
     func getAllReports() {
         self.reports = [Report]() //Initialize the array with a blank one.
@@ -397,8 +448,8 @@ extension MapViewController {
             if ($0.gpsTimeStamp < $1.gpsTimeStamp) {
                 return true;
             }
-                return false;
-            })
+            return false;
+        })
     }
     
     func withoudDuplicates(from reports:[Report]) -> [Report] {
@@ -485,18 +536,18 @@ extension MapViewController {
     }
     
     @IBAction func meButtonPressed(_ sender: Any) {
-        
         let region = MKCoordinateRegionMakeWithDistance(self.mapView.userLocation.coordinate, regionRadius, regionRadius)
         mapView.setRegion(region, animated: true)
     }
+    
     @IBAction func mapButtonPressed(_ sender: Any) {
         if mapView.mapType == .standard {
             mapView.mapType = .satellite
         } else {
             mapView.mapType = .standard
         }
-        
     }
+    
     @IBAction func reloadButtonPressed(_ sender: Any) {
         
         self.mapView.removeOverlays(self.mapView.overlays)
