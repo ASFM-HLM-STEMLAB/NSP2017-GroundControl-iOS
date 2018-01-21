@@ -18,7 +18,7 @@
 //
 // TODO : Sort incoming messages by timestamp to prevent sat delays on arrival with both messages.
 // TODO : Update timeago clock in realtime to know how old is our last message.
-// TODO : Show last telemetry .pulse data age.   dfasdf
+
 
 import UIKit
 import CoreLocation
@@ -31,9 +31,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        
-        //iOS Devices need user permission for app to access device locations
-        self .requestOwnShipPermissions()
+                
         return true
     }
 

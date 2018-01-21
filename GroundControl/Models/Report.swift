@@ -156,6 +156,8 @@ extension Report {
             return
         }
         
+        
+        
         let dataFields = rawString.components(separatedBy: "|")[1]
         let serverTimeStampString = rawString.components(separatedBy: "|")[0]
         
