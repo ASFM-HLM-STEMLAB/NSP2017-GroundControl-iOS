@@ -29,7 +29,6 @@ class MapViewController: UIViewController  {
     
     var drawingOwnShipPlot = false //Keep track of what we are rendering on the screen to select the type of line we are going to draw
     
-    
     //IBOutlets (represent a view)
     @IBOutlet weak var reportInfoView: UIView!
     @IBOutlet weak var mapView: MKMapView!
