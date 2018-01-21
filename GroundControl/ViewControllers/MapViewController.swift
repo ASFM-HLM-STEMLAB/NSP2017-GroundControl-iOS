@@ -216,6 +216,8 @@ extension MapViewController: MKMapViewDelegate {
         
         let annotationIdentifier = getAnnotationIdentifier(forReport: report)
         var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: annotationIdentifier)
+        annotationView?.collisionMode = .circle
+        annotationView?.displayPriority = .defaultLow
         
         if annotationView == nil {
             annotationView = MKAnnotationView(annotation: annotation, reuseIdentifier: annotationIdentifier)
