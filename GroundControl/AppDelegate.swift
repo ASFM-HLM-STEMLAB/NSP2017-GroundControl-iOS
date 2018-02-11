@@ -16,8 +16,14 @@
 // Report.swift = Struct [Model] to abstract all report data in an easy to read, write and display object.
 // SocketCenter.swift = Singleton class used to encapsulate and centralize all network communications.
 //
-// TODO : Sort incoming messages by timestamp to prevent sat delays on arrival with both messages.
-// TODO : Update timeago clock in realtime to know how old is our last message.
+// TODO : DONE
+// TODO : DONE
+// TODO : Include telemetry values in InfoView
+// TODO : Test load history vs new values
+// TODO : Test Mission Stage Changing
+// TODO : Update bottom commands to more useful ones.
+// TODO : Implement in server sending messages thru satcom
+
 
 
 import UIKit
