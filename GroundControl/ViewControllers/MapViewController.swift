@@ -283,14 +283,9 @@ extension MapViewController: MKMapViewDelegate {
                 label.numberOfLines = 0
                 label.text = body
                 view.detailCalloutAccessoryView = label
-                label.sizeToFit()
-                
+                label.sizeToFit()                
             }
-            
         }
-        
-        
-        
     }
 }
 

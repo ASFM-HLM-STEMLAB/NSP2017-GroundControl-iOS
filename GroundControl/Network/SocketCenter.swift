@@ -98,8 +98,8 @@ class SocketCenter {
         //
         //When we get a new fresh report from the capsule and the server relays it to us we:
         // NOTE: This is only used for new messages arriving in realtime to the server (see getAllReports for history).
-        //       We defined "c" in the server, we can change it in the server and have to change it here to identify this type of messages.
-        socket.on("c") {data, ack in
+        //       We defined "RAW" in the server, we can change it in the server and have to change it here to identify this type of messages.
+        socket.on("RAW") {data, ack in
             //
             //We interpret the message and create the report
             guard let rawData = data[0] as? String else { return }

@@ -179,15 +179,20 @@ extension Report {
         }
         
         //Report Kind [See Capsule SourceCode for values]
-        if dataFields.components(separatedBy: ",")[1] == "S" {
+        if dataFields.components(separatedBy: ",")[1] == "A" {
             reportType = .pulse
         }
-        if dataFields.components(separatedBy: ",")[1] == "X" {
+        if dataFields.components(separatedBy: ",")[1] == "B" {
             reportType = .telemetry
         }
         
         let gpsTimeStampString = dataFields.components(separatedBy: ",")[2]
-        gpsTimeStamp = Date.fromGPSString(gpsTimeStampString)        
+        gpsTimeStamp = Date.fromGPSString(gpsTimeStampString)
+        print("Testing<<<<<");
+        print(gpsTimeStampString)
+        print("---")
+        print(gpsTimeStamp)
+        
         
         let rawLat = dataFields.components(separatedBy: ",")[3]
         let rawLon = dataFields.components(separatedBy: ",")[4]
@@ -232,15 +237,18 @@ extension Report {
 //This extension to Date type will convert from GPS raw timestamp to something we can use in iOS
 extension Date {
     static func fromGPSString(_ gpsTime: String) -> Date {
+        //Format transmitted: DDMMHHMMSS
         let dateFormatter = DateFormatter()
-        let stringFormatter = DateFormatter()
-        
-        stringFormatter.dateFormat = "HH:mm:ss"
-        dateFormatter.dateFormat = "HHmmss"
-        
+        dateFormatter.dateFormat = "ddMMHHmmss"
         dateFormatter.timeZone = TimeZone(abbreviation: "UTC") as TimeZone?
-        if let date = dateFormatter.date(from: gpsTime) {
-            return date
+        
+        if let date = dateFormatter.date(from: String(gpsTime)) {
+            let calendar = Calendar.current
+            var dateComponents: DateComponents? = calendar.dateComponents([.hour, .minute, .second, .month, .day, .year], from: date)
+            
+            dateComponents?.year =  calendar.component(.year, from: Date())
+            
+            return calendar.date(from: dateComponents!)!;
         } else {
             return Date()
         }
