@@ -146,8 +146,8 @@ extension Report {
         let validateDT = rawString.components(separatedBy: ",")
         
         if validateTS.count < 2 || validateDT.count < 5  {
-            gpsTimeStamp = Date()
-            serverTimeStamp = Date()
+            gpsTimeStamp = Date(timeIntervalSince1970: 0)
+            serverTimeStamp = Date(timeIntervalSince1970: 0)
             originator  = .unknown
             reportType = .unknown
             longitude = 0.0
@@ -166,7 +166,7 @@ extension Report {
             serverTimeStamp = serverTime
         } else {
             print("[Report] Invalid server timestamp format. Falling back to current time")
-            serverTimeStamp = Date()
+            serverTimeStamp = Date(timeIntervalSince1970:0)
         }
         
         //Originator
@@ -187,12 +187,7 @@ extension Report {
         }
         
         let gpsTimeStampString = dataFields.components(separatedBy: ",")[2]
-        gpsTimeStamp = Date.fromGPSString(gpsTimeStampString)
-        print("Testing<<<<<");
-        print(gpsTimeStampString)
-        print("---")
-        print(gpsTimeStamp)
-        
+        gpsTimeStamp = Date.fromGPSString(gpsTimeStampString)                
         
         let rawLat = dataFields.components(separatedBy: ",")[3]
         let rawLon = dataFields.components(separatedBy: ",")[4]
