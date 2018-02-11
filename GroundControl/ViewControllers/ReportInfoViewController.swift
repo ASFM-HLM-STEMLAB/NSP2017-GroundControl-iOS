@@ -41,11 +41,16 @@ class ReportInfoViewController: UIViewController {
     @IBOutlet weak var sonarDistanceLabel: UILabel!
     @IBOutlet weak var gpsSignalLabel: UILabel!
     @IBOutlet weak var satcomSignalLabel: UILabel!
+    @IBOutlet weak var stageLabel: UILabel!
+    @IBOutlet weak var extTempLabel: UILabel!
+    @IBOutlet weak var humidityLabel: UILabel!
+    @IBOutlet weak var pressureLabel: UILabel!
     @IBOutlet weak var terminalInput: UITextField!
     @IBOutlet weak var terminalTextView: UITextView!
     @IBOutlet weak var tempIndicator: GraphicalIndicator!
     @IBOutlet weak var climbIndicator: GraphicalIndicator!
     @IBOutlet weak var battIndicator: GraphicalIndicator!
+    
     
     
     private var previousAltitude:Int = 0
@@ -200,9 +205,23 @@ extension ReportInfoViewController {
             sonarDistanceLabel.text = "-"
             gpsSignalLabel.text = "\(report.horizontalPrecision)"
             satcomSignalLabel.text = "\(report.satModemSignal)"
-            
+            stageLabel.text = report.missionStage.stringValue()
             self.battIndicator.value = report.batteryLevel * 10
             self.tempIndicator.value = report.internalTempC
+            
+            if (previousAltitude == 0) {
+                previousAltitude = report.altitude
+            }
+            climbIndicator.value = report.altitude - previousAltitude
+            previousAltitude = report.altitude
+        }
+        
+        if (report.reportType == .telemetry) {
+            //TODO
+            self.extTempLabel.text = "0°C"
+            self.humidityLabel.text = "0"
+            self.pressureLabel.text = "0"
+            
             
             if (previousAltitude == 0) {
                 previousAltitude = report.altitude
