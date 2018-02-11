@@ -15,17 +15,20 @@ import CoreLocation
 class MapViewController: UIViewController  {    
     
     //SETTINGS
-    let regionRadius: CLLocationDistance = 1000
-    var ownshipTrackingEnabled = true
-    let infoViewAnimationTime = 0.3
-    let locationManager = CLLocationManager()
+    let regionRadius: CLLocationDistance = 1000 //Miles
+    var ownshipTrackingEnabled = true //Show our position in map
+    let infoViewAnimationTime = 0.3 //Seconds
+    let refreshTimeReportsEvery:TimeInterval = 10 //seconds
     
     //IVars
+    let locationManager = CLLocationManager()
     var infoViewShowed = true
     var reports = [Report]()
     let notificationCenter = NotificationCenter.default
     var ownshipLine: MKPolyline?
     var reportDetailViewController:ReportInfoViewController?
+    
+    var refreshTimer:Timer?
     
     var drawingOwnShipPlot = false //Keep track of what we are rendering on the screen to select the type of line we are going to draw
     
@@ -62,6 +65,14 @@ class MapViewController: UIViewController  {
         SocketCenter.connect()
         //iOS Devices need user permission for app to access device locations
         locationManager.requestAlwaysAuthorization()
+        
+        refreshTimer = Timer(timeInterval: refreshTimeReportsEvery, target: self, selector: #selector(updateLastReportTime), userInfo: [], repeats: true)
+        RunLoop.main.add(refreshTimer!, forMode: RunLoopMode.commonModes)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        refreshTimer!.invalidate()
     }
     
     func subscribeForSystemNotifications() {
@@ -496,13 +507,13 @@ extension MapViewController {
         self.distanceLabel.text = formatDistanceToMetric(from: calculateDistanceFromLastPoint())
     }
     
-    func updateLastReportTime() {
+    @objc func updateLastReportTime() {
         if let lastTimeStamp =  self.reports.last?.serverTimeStamp {
-            self.lastUpdatedLabel.text = "STS: \(lastTimeStamp.timeAgo().uppercased())"
+            self.lastUpdatedLabel.text = "STS: \(lastTimeStamp.toTimeReadableString()) [\(lastTimeStamp.timeAgo().uppercased())]"
         }
         
         if let lastTimeGPS =  self.reports.last?.gpsTimeStamp {
-            self.lastUpdatedGPSLabel.text = "GTS: \(lastTimeGPS.toTimeReadableString())"
+            self.lastUpdatedGPSLabel.text = "GTS: \(lastTimeGPS.toTimeReadableString()) [\(lastTimeGPS.timeAgo().uppercased())]"
         }
     }
 }
