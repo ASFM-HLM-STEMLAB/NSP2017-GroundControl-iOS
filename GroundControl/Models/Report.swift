@@ -55,6 +55,21 @@ enum MissionStage {
     case descent
     case recovery
     case unknown
+    
+    func stringValue() -> String {
+        switch self {
+        case .ground:
+            return "Ground"
+        case .climb:
+            return "Climb"
+        case .descent:
+            return "Descent"
+        case .recovery:
+            return "Recovery"
+        case .unknown:
+            return "Unknown"
+        }
+    }
 }
 
 // Comform MapAnnotation to MKAnnotation protocol for mapkit annotations (pins, and position shown in map).
