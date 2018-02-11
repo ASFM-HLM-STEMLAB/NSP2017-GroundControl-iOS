@@ -18,7 +18,7 @@ class MapViewController: UIViewController  {
     let regionRadius: CLLocationDistance = 1000 //Miles
     var ownshipTrackingEnabled = true //Show our position in map
     let infoViewAnimationTime = 0.3 //Seconds
-    let refreshTimeReportsEvery:TimeInterval = 10 //seconds
+    let refreshTimeReportsEvery:TimeInterval = 1 //seconds
     
     //IVars
     let locationManager = CLLocationManager()
