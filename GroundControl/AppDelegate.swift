@@ -24,6 +24,52 @@
 // TODO : Update bottom commands to more useful ones.
 // TODO : Implement in server sending messages thru satcom
 
+//COMPUTER.println("-------------------------.--------------------------");
+//COMPUTER.println("Status Sentence (1hz):");
+//COMPUTER.println("TIME,LAT,LON,ALT,SPEED,COURSE,SATS,HDOP,BATT,SAT,STAGE");
+//COMPUTER.println("-------------------------.--------------------------");
+//COMPUTER.println("deboff = Debug Off");
+//COMPUTER.println("debon = Debug On");
+//COMPUTER.println("simon = Start Simulation");
+//COMPUTER.println("simoff = Stop Simulation");
+//COMPUTER.println("reset = Set mission to ground mode");
+//COMPUTER.println("reboot = Reboot Flight Computer");
+//COMPUTER.println("simon = Start Simulation");
+//COMPUTER.println("cellon = Cell Modem On");
+//COMPUTER.println("celloff = Cell Modem Off");
+//COMPUTER.println("cellmute = Toggle Cell Reporting");
+//COMPUTER.println("satmute = Toggle Sat Reporting");
+//COMPUTER.println("saton = SAT Modem ON");
+//COMPUTER.println("satoff = SAT Modem Off");
+//COMPUTER.println("comoff = All Comunication systems OFF [cell + sat]");
+//COMPUTER.println("comon = All Comunication systems ON [cell + sat]");
+//COMPUTER.println("gpsdump = GPS Serial Dump to computer toggle");
+//COMPUTER.println("satdump = SATCOM Serial Dump to computer toggle");
+//COMPUTER.println("querysatsignal = Send a request to the satelite modem to get sat signal");
+//COMPUTER.println("querycellsignal = Send a request to the cellular modem to get RSSI signal");
+//COMPUTER.println("buzzeron = Turn Buzzer ON");
+//COMPUTER.println("buzzeroff = Turn Buzzer ON");
+//COMPUTER.println("buzzerchirp = Chirp the buzzer");
+//COMPUTER.println("resetinitialaltitude = Set the initial altitude to current altitude");
+//COMPUTER.println("preflight? = Go no Go for launch");
+//COMPUTER.println("initialaltitude? = Get the initial altitude set uppon gps fix");
+//COMPUTER.println("vsi? = Vertical Speed?");
+//COMPUTER.println("alt? = Altitude in feet?");
+//COMPUTER.println("cell? = Cell Status?");
+//COMPUTER.println("cellconnecting? = Cell Modem attempting to connect?");
+//COMPUTER.println("cellsignal? = Cell Signal Strength [RSSI,QUAL] ?");
+//COMPUTER.println("cloud? = Is cloud available?");
+//COMPUTER.println("satsignal? = 0-5 Satcom signal strength?");
+//COMPUTER.println("satenabled? = Is the sat modem enabled?");
+//COMPUTER.println("bat? = Get battery level?");
+//COMPUTER.println("gpsfix? = Get GpsFix ValueType? (0=NoFix,1=Fix,2=DGPSFix)");
+//COMPUTER.println("sonar? = Get the sonar distance in meters. (cm for cell)");
+//COMPUTER.println("temp? = Get the internal (onboard) temperature in C");
+//COMPUTER.println("fwversion? = OS Firmware Version?");
+//COMPUTER.println("$ = Print status string");
+//COMPUTER.println("$$ = Print and send to CELL cloud status string");
+//COMPUTER.println("$$$ = Print and send to SAT cloud status string");
+//COMPUTER.println("-------------------------.--------------------------");
 
 
 import UIKit

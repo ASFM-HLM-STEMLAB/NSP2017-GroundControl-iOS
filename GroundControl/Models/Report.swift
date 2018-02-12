@@ -141,14 +141,16 @@ extension Report {
 extension Report: Hashable
 {
     var hashValue: Int {
-        return Int(self.latitude + self.longitude)
+        return Int(self.latitude + self.longitude + gpsTimeStamp.timeIntervalSince1970)
     }
     
     static func ==(lhs: Report, rhs: Report) -> Bool {
-        if lhs.latitude == rhs.latitude && lhs.longitude == rhs.longitude {
+        
+        if (lhs.missionStage == rhs.missionStage)  &&  (lhs.reportType == rhs.reportType) && (lhs.latitude == rhs.latitude && lhs.longitude == rhs.longitude) && (lhs.gpsTimeStamp == rhs.gpsTimeStamp) {
             return true
         }
         
+
         return false
     }
 }
@@ -202,7 +204,7 @@ extension Report {
         }
         
         let gpsTimeStampString = dataFields.components(separatedBy: ",")[2]
-        gpsTimeStamp = Date.fromGPSString(gpsTimeStampString)                
+        gpsTimeStamp = Date.fromGPSString(gpsTimeStampString)        
         
         let rawLat = dataFields.components(separatedBy: ",")[3]
         let rawLon = dataFields.components(separatedBy: ",")[4]
@@ -260,7 +262,7 @@ extension Date {
             
             return calendar.date(from: dateComponents!)!;
         } else {
-            return Date()
+            return Date(timeIntervalSince1970:0)
         }
     }
     

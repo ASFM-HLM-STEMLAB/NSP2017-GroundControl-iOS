@@ -197,7 +197,7 @@ extension MapViewController: MKMapViewDelegate {
             case .recovery:
                 annotationIdentifier = "PinCapsuleRecovery"
             case .ground:
-                annotationIdentifier = "PinCapsuleParachute"
+                annotationIdentifier = "PinCapsuleBalloon"
             case .unknown:
                 annotationIdentifier = "PinCapsuleBalloon"
             }
@@ -271,7 +271,7 @@ extension MapViewController: MKMapViewDelegate {
                 let formattedDistance = formatDistanceToMetric(from: calculateDistance(from: report.mapAnnotation))
                 
                 
-                var kind = "Other"
+                var kind = "Telemetry"
                 if (report.reportType == .pulse) {
                     kind = "Pulse"
                 }
@@ -287,6 +287,7 @@ extension MapViewController: MKMapViewDelegate {
                 Alt: \(report.altitude) ft - Dis: \(formattedDistance)
                 Hdg: \(report.course)° - Spd: \(report.speed) kts
                 Typ: \(kind) - Ogn: \(source)
+                Stg: \(report.missionStage.stringValue())
                 """
                 
                 
@@ -305,20 +306,35 @@ extension MapViewController: MKMapViewDelegate {
 // MARK: MAP Plotting Methods and Helpers
 extension MapViewController {
     func addReport(_ report:Report) {
+        var report = report
+            
         if report.reportType != .unknown {
-            reports.append(report)
             
-            sortReportList()
-            reports = self.withoudDuplicates(from: reports)
+            if (report.missionStage == .unknown) {
+                for rep in reports.reversed() {
+                    if rep.missionStage != .unknown {
+                        report.missionStage = rep.missionStage
+                        break
+                    }
+                }
+            }
             
-            plotAppendReportsInMap()
-            self.reportDetailViewController?.setMessageCount(reports.count)
-            self.reportDetailViewController?.setReport(report)
+            
+            if reports.last == report {
+                reports.removeLast()
+                reports.append(report)
+            } else {
+                reports.append(report)
+            }
         }
+        sortReportList()
+        plotAppendReportsInMap()
+        self.reportDetailViewController?.setMessageCount(reports.count)
+        self.reportDetailViewController?.setReport(report)
     }
     
+    
     func plotAppendReportsInMap() {
-        
         let annotations = reports.flatMap { (report) -> MapAnnotation? in
             if (report.coordinate.latitude == 0 || report.coordinate.longitude == 0) {
                 return nil
@@ -370,7 +386,7 @@ extension MapViewController {
         self.mapView.removeOverlays(mapView.overlays)
         
         sortReportList()
-        reports = self.withoudDuplicates(from: reports)
+//        reports = self.withoudDuplicates(from: reports)
         
         let annotations = reports.flatMap { (report) -> MapAnnotation? in
             if (report.coordinate.latitude == 0 || report.coordinate.longitude == 0) {
@@ -419,19 +435,35 @@ extension MapViewController {
             if let reports = data as? [Report] {
                 self.reports = reports
                 self.sortReportList()
-                self.reports = self.withoudDuplicates(from: reports)
+//                self.reports = self.withoudDuplicates(from: reports)
                 
                 self.reportDetailViewController?.setMessageCount(reports.count)
-                if let lastReport = reports.last {
+                if var lastReport = reports.last {
                     self.reportDetailViewController?.setReport(lastReport)
                     if (lastReport.reportType != .pulse) {
-                        for aReport in reports {
+                        for aReport in reports.reversed() {
                             if aReport.reportType == .pulse {
                                 self.reportDetailViewController?.setReport(aReport)
+                                break
                             }
                         }
                     }
+                    
+                    var aMissionStage:MissionStage = .unknown
+                    if (lastReport.missionStage == .unknown) {
+                        for aReport in reports.reversed() {
+                            if aReport.missionStage != .unknown {
+                                aMissionStage = aReport.missionStage
+                                break
+                            }
+                        }
+                        self.reports.removeLast()
+                        lastReport.missionStage = aMissionStage
+                        self.reports.append(lastReport)
+                    }
                 }
+                
+                
                 
                 self.updateLastReportTime()
                 self.plotReportsInMap()
@@ -468,6 +500,13 @@ extension MapViewController {
             }
         }
         
+        
+        print("------------------")
+        for r in newReports {
+            print(r.gpsTimeStamp)
+        }
+        
+        print("------------------")
         return newReports
     }
     

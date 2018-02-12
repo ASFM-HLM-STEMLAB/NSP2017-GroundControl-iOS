@@ -164,7 +164,13 @@ extension ReportInfoViewController {
     @IBAction func cmuteButtonPressed(_ sender: Any) {
            sendMessageToSocket(message:"cellmute")
     }
-    @IBAction func heatButtonPressed(_ sender: Any) {
+    @IBAction func forceReportButtonPressed(_ sender: Any) {
+        if self.transmitMode == .cellular {
+           sendMessageToSocket(message:"$$")
+        } else {
+            //TODO: Send it thru SAT not CELL
+           sendMessageToSocket(message:"$$$")
+        }
     }
     @IBAction func smuteButtonPressed(_ sender: Any) {
         sendMessageToSocket(message:"satmute")
