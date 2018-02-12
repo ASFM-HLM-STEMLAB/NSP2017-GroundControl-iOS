@@ -224,6 +224,16 @@ extension Report {
             satModemSignal =  Int(dataFields.components(separatedBy: ",")[11]) ?? 0
             internalTempC =  Int(dataFields.components(separatedBy: ",")[12]) ?? 0
             
+            print("-------VARIABLES INCOMING---------")
+            print(speed)
+            print(course)
+            print(horizontalPrecision)
+            print(satellitesInView)
+            print(batteryLevel)
+            print(satModemSignal)
+            print(internalTempC)
+            
+            
             let rawMissionStage = dataFields.components(separatedBy: ",")[13]
             switch rawMissionStage {
             case "G":

@@ -26,7 +26,7 @@ class MapViewController: UIViewController  {
     var reports = [Report]()
     let notificationCenter = NotificationCenter.default
     var ownshipLine: MKPolyline?
-    var reportDetailViewController:ReportInfoViewController?
+    var dashboardViewController:DashboardViewController?
     
     var refreshTimer:Timer?
     
@@ -46,7 +46,7 @@ class MapViewController: UIViewController  {
     override func viewDidLoad() {
         //Let's setup everything for the VC
         super.viewDidLoad()
-        mapView.delegate = self;
+        mapView.delegate = self
         
         mapView.showsUserLocation = true
         if ownshipTrackingEnabled {
@@ -91,7 +91,7 @@ class MapViewController: UIViewController  {
         //Everytime we connect we change the connection label to let the user know we are connected.
         // AND WE GET ALL THE REPORTS in the history.
         notificationCenter.addObserver(forName:SocketCenter.socketConnectedNotification, object: nil, queue: nil) { (notification) in
-            self.reportDetailViewController?.setServerStatus(.connected)
+            self.dashboardViewController?.setServerStatus(.connected)
             self.onlineStatusLabel.text = "ONLINE"
             self.onlineStatusLabel.textColor = UIColor(red: 0.2, green:0.8, blue:0.2, alpha:1)
             self.getAllReports()
@@ -99,7 +99,7 @@ class MapViewController: UIViewController  {
         
         //When we disconnect we change the label to let the user know.
         notificationCenter.addObserver(forName:SocketCenter.socketDisconnectedNotification, object: nil, queue: nil) { (notification) in
-            self.reportDetailViewController?.setServerStatus(.disconnected)
+            self.dashboardViewController?.setServerStatus(.disconnected)
             self.onlineStatusLabel.text = "OFFLINE"
             self.onlineStatusLabel.textColor = UIColor(red: 1, green:0.2, blue:0.2, alpha:1)
         }
@@ -108,7 +108,7 @@ class MapViewController: UIViewController  {
         //When we get a .response type of message we show it in the terminal as a raw string with a < to signify incoming.
         notificationCenter.addObserver(forName:SocketCenter.socketResponseNotification, object: nil, queue: nil) { (notification) in
             if let response = notification.userInfo?["response"] as? String {
-                self.reportDetailViewController?.addLineToTerminal("< \(response)")
+                // self.dashboardViewController?.addLineToTerminal("< \(response)")
             }
         }
         
@@ -120,9 +120,9 @@ class MapViewController: UIViewController  {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if (segue.identifier == "reportDetailView") {
-            reportDetailViewController = segue.destination as? ReportInfoViewController
-            reportDetailViewController?.delegate = self
+        if (segue.identifier == "dashboardSegue") {
+            dashboardViewController = segue.destination as? DashboardViewController
+            dashboardViewController?.delegate = self
         }
     }
     
@@ -132,7 +132,7 @@ class MapViewController: UIViewController  {
 // ---------------------------------------------------
 // MARK: InfoPanel Methods and animations
 extension MapViewController {
-    func showDetails() {  //Animate the ReportInfoView panel up.
+    func showDetails() {  //Animate the DashboardViewController panel up.
         self.view.layoutIfNeeded()
         
         let top = CGAffineTransform(translationX: 0, y: 0)
@@ -320,12 +320,18 @@ extension MapViewController {
             }
             
             
+<<<<<<< Updated upstream
             if reports.last == report {
                 reports.removeLast()
                 reports.append(report)
             } else {
                 reports.append(report)
             }
+=======
+            plotAppendReportsInMap()
+            self.dashboardViewController?.setMessageCount(reports.count)
+            self.dashboardViewController?.setReport(report)
+>>>>>>> Stashed changes
         }
         sortReportList()
         plotAppendReportsInMap()
@@ -437,14 +443,24 @@ extension MapViewController {
                 self.sortReportList()
 //                self.reports = self.withoudDuplicates(from: reports)
                 
+<<<<<<< Updated upstream
                 self.reportDetailViewController?.setMessageCount(reports.count)
                 if var lastReport = reports.last {
                     self.reportDetailViewController?.setReport(lastReport)
+=======
+                self.dashboardViewController?.setMessageCount(reports.count)
+                if let lastReport = reports.last {
+                    self.dashboardViewController?.setReport(lastReport)
+>>>>>>> Stashed changes
                     if (lastReport.reportType != .pulse) {
                         for aReport in reports.reversed() {
                             if aReport.reportType == .pulse {
+<<<<<<< Updated upstream
                                 self.reportDetailViewController?.setReport(aReport)
                                 break
+=======
+                                self.dashboardViewController?.setReport(aReport)
+>>>>>>> Stashed changes
                             }
                         }
                     }
@@ -603,7 +619,7 @@ extension MapViewController {
     
 }
 
-extension MapViewController: ReportInfoDelegate {
+extension MapViewController: DashboardDelegate {
     func shouldTogglePanelView() {
         toggleDetails()
     }

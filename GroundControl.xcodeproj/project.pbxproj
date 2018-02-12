@@ -24,6 +24,9 @@
 		00DEF2F61FCBCD0C00F1F393 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 00DEF2F51FCBCD0C00F1F393 /* Assets.xcassets */; };
 		00DEF2F91FCBCD0C00F1F393 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 00DEF2F71FCBCD0C00F1F393 /* LaunchScreen.storyboard */; };
 		00E35FA1200F0DF9006BB8CD /* AttributedString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00E35FA0200F0DF9006BB8CD /* AttributedString.swift */; };
+		C2518A93202EB88C00FDECE7 /* DashboardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2518A92202EB88C00FDECE7 /* DashboardViewController.swift */; };
+		C2518A95202EBAFD00FDECE7 /* DashboardPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2518A94202EBAFD00FDECE7 /* DashboardPage.swift */; };
+		C2518A97202EBB9600FDECE7 /* DashboardSubsection.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2518A96202EBB9600FDECE7 /* DashboardSubsection.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -59,6 +62,9 @@
 		00DEF2F81FCBCD0C00F1F393 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		00DEF2FA1FCBCD0C00F1F393 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E35FA0200F0DF9006BB8CD /* AttributedString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttributedString.swift; sourceTree = "<group>"; };
+		C2518A92202EB88C00FDECE7 /* DashboardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardViewController.swift; sourceTree = "<group>"; };
+		C2518A94202EBAFD00FDECE7 /* DashboardPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardPage.swift; sourceTree = "<group>"; };
+		C2518A96202EBB9600FDECE7 /* DashboardSubsection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardSubsection.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -88,6 +94,9 @@
 			children = (
 				005C5C9C1FCBD0480055B110 /* MapViewController.swift */,
 				005C5CA31FCBDD6D0055B110 /* ReportInfoViewController.swift */,
+				C2518A92202EB88C00FDECE7 /* DashboardViewController.swift */,
+				C2518A94202EBAFD00FDECE7 /* DashboardPage.swift */,
+				C2518A96202EBB9600FDECE7 /* DashboardSubsection.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -246,10 +255,13 @@
 				005C5CA41FCBDD6D0055B110 /* ReportInfoViewController.swift in Sources */,
 				005C5C9D1FCBD0480055B110 /* MapViewController.swift in Sources */,
 				00220A3F2005D3BC000B12DF /* TimeAgo.swift in Sources */,
+				C2518A97202EBB9600FDECE7 /* DashboardSubsection.swift in Sources */,
+				C2518A95202EBAFD00FDECE7 /* DashboardPage.swift in Sources */,
 				00E35FA1200F0DF9006BB8CD /* AttributedString.swift in Sources */,
 				00220A422005F639000B12DF /* PanGestureRecognizer.swift in Sources */,
 				00DEF2EF1FCBCD0C00F1F393 /* AppDelegate.swift in Sources */,
 				005C5CA61FCBEB190055B110 /* SocketCenter.swift in Sources */,
+				C2518A93202EB88C00FDECE7 /* DashboardViewController.swift in Sources */,
 				005C5C9F1FCBD1EF0055B110 /* Report.swift in Sources */,
 				00B12CE81FCE2D62001151B9 /* GraphicalIndicator.swift in Sources */,
 			);
@@ -389,7 +401,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = DZSBS2TEB3;
+				DEVELOPMENT_TEAM = HSZTC8Z4L4;
 				ENABLE_BITCODE = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -409,7 +421,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = DZSBS2TEB3;
+				DEVELOPMENT_TEAM = HSZTC8Z4L4;
 				ENABLE_BITCODE = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
