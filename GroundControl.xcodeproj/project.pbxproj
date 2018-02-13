@@ -95,8 +95,8 @@
 				005C5C9C1FCBD0480055B110 /* MapViewController.swift */,
 				00C622932032C59F00F09BE2 /* MapViewDelegate.swift */,
 				00C622952032C63700F09BE2 /* MapViewReportPlot.swift */,
-				005C5CA31FCBDD6D0055B110 /* ReportInfoViewController.swift */,
 				00C622972032C68000F09BE2 /* MapViewDashboardController.swift */,
+				005C5CA31FCBDD6D0055B110 /* ReportInfoViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";

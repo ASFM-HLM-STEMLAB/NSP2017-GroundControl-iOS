@@ -84,6 +84,8 @@ class MapViewController: UIViewController  {
                 report.index = self.reports.count
                 //Add a report to the report array and show the details)
                 self.addReportToMap(report: report)
+                self.reportDetailViewController?.setReport(report)
+                self.reportDetailViewController?.setMessageCount(self.reports.count)
             }
         }
         
@@ -195,6 +197,7 @@ extension MapViewController {
     }
     
     @objc func updateLastReportTime() {
+        
         if let lastTimeStamp =  self.reports.last?.serverTimeStamp {
             self.lastUpdatedLabel.text = "STS: \(lastTimeStamp.toTimeReadableString()) [\(lastTimeStamp.timeAgo().uppercased())]"
         }

@@ -25,6 +25,8 @@ extension MapViewController {
                 let sortedReports = Report.sortReportsByAge(from: inReports)
                 for report in sortedReports {
                     self.addReportToMap(report: report)
+                    self.reportDetailViewController?.setReport(report)
+                    self.reportDetailViewController?.setMessageCount(self.reports.count)
                 }
             }
             self.focusOnAllReportsOnMap()
