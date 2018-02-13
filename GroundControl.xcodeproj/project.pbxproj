@@ -92,10 +92,7 @@
 		000A8DBB1FFD6FB900322310 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				005C5C9C1FCBD0480055B110 /* MapViewController.swift */,
-				00C622932032C59F00F09BE2 /* MapViewDelegate.swift */,
-				00C622952032C63700F09BE2 /* MapViewReportPlot.swift */,
-				00C622972032C68000F09BE2 /* MapViewDashboardController.swift */,
+				00C622992032D62200F09BE2 /* MapView */,
 				005C5CA31FCBDD6D0055B110 /* ReportInfoViewController.swift */,
 			);
 			path = ViewControllers;
@@ -140,6 +137,17 @@
 				005C5CA11FCBD8E20055B110 /* CoreLocation.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		00C622992032D62200F09BE2 /* MapView */ = {
+			isa = PBXGroup;
+			children = (
+				005C5C9C1FCBD0480055B110 /* MapViewController.swift */,
+				00C622932032C59F00F09BE2 /* MapViewDelegate.swift */,
+				00C622952032C63700F09BE2 /* MapViewReportPlot.swift */,
+				00C622972032C68000F09BE2 /* MapViewDashboardController.swift */,
+			);
+			path = MapView;
 			sourceTree = "<group>";
 		};
 		00DEF2E21FCBCD0C00F1F393 = {
