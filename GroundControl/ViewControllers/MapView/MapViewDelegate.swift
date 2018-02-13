@@ -72,6 +72,8 @@ extension MapViewController: MKMapViewDelegate {
             annotationIdentifier = report.annotationIdentifierForStage()
         } else if report == self.reports.first {
             annotationIdentifier = "PinDotRed"
+        } else if report.missionStage == .descent {
+            annotationIdentifier = "PinDotOrange"
         }
         
         return annotationIdentifier

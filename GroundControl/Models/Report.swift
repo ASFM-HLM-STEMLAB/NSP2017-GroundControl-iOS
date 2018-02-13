@@ -273,7 +273,7 @@ extension Report {
         case .recovery:
             annotationIdentifier = "PinCapsuleRecovery"
         case .ground:
-            annotationIdentifier = "PinCapsuleBalloon"
+            annotationIdentifier = "PinCapsuleGround"
         case .unknown:
             annotationIdentifier = "PinCapsuleBalloon"
         }
