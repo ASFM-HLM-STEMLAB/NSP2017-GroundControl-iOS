@@ -19,6 +19,9 @@
 		005C5CA41FCBDD6D0055B110 /* ReportInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 005C5CA31FCBDD6D0055B110 /* ReportInfoViewController.swift */; };
 		005C5CA61FCBEB190055B110 /* SocketCenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 005C5CA51FCBEB190055B110 /* SocketCenter.swift */; };
 		00B12CE81FCE2D62001151B9 /* GraphicalIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00B12CE71FCE2D62001151B9 /* GraphicalIndicator.swift */; };
+		00C622942032C5A000F09BE2 /* MapViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00C622932032C59F00F09BE2 /* MapViewDelegate.swift */; };
+		00C622962032C63700F09BE2 /* MapViewReportPlot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00C622952032C63700F09BE2 /* MapViewReportPlot.swift */; };
+		00C622982032C68000F09BE2 /* MapViewDashboardController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00C622972032C68000F09BE2 /* MapViewDashboardController.swift */; };
 		00DEF2EF1FCBCD0C00F1F393 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00DEF2EE1FCBCD0C00F1F393 /* AppDelegate.swift */; };
 		00DEF2F41FCBCD0C00F1F393 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 00DEF2F21FCBCD0C00F1F393 /* Main.storyboard */; };
 		00DEF2F61FCBCD0C00F1F393 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 00DEF2F51FCBCD0C00F1F393 /* Assets.xcassets */; };
@@ -52,6 +55,9 @@
 		005C5CA31FCBDD6D0055B110 /* ReportInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportInfoViewController.swift; sourceTree = "<group>"; };
 		005C5CA51FCBEB190055B110 /* SocketCenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocketCenter.swift; sourceTree = "<group>"; };
 		00B12CE71FCE2D62001151B9 /* GraphicalIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphicalIndicator.swift; sourceTree = "<group>"; };
+		00C622932032C59F00F09BE2 /* MapViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewDelegate.swift; sourceTree = "<group>"; };
+		00C622952032C63700F09BE2 /* MapViewReportPlot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewReportPlot.swift; sourceTree = "<group>"; };
+		00C622972032C68000F09BE2 /* MapViewDashboardController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewDashboardController.swift; sourceTree = "<group>"; };
 		00DEF2EB1FCBCD0C00F1F393 /* GroundControl.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GroundControl.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		00DEF2EE1FCBCD0C00F1F393 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		00DEF2F31FCBCD0C00F1F393 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -87,7 +93,10 @@
 			isa = PBXGroup;
 			children = (
 				005C5C9C1FCBD0480055B110 /* MapViewController.swift */,
+				00C622932032C59F00F09BE2 /* MapViewDelegate.swift */,
+				00C622952032C63700F09BE2 /* MapViewReportPlot.swift */,
 				005C5CA31FCBDD6D0055B110 /* ReportInfoViewController.swift */,
+				00C622972032C68000F09BE2 /* MapViewDashboardController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -249,8 +258,11 @@
 				00E35FA1200F0DF9006BB8CD /* AttributedString.swift in Sources */,
 				00220A422005F639000B12DF /* PanGestureRecognizer.swift in Sources */,
 				00DEF2EF1FCBCD0C00F1F393 /* AppDelegate.swift in Sources */,
+				00C622982032C68000F09BE2 /* MapViewDashboardController.swift in Sources */,
+				00C622942032C5A000F09BE2 /* MapViewDelegate.swift in Sources */,
 				005C5CA61FCBEB190055B110 /* SocketCenter.swift in Sources */,
 				005C5C9F1FCBD1EF0055B110 /* Report.swift in Sources */,
+				00C622962032C63700F09BE2 /* MapViewReportPlot.swift in Sources */,
 				00B12CE81FCE2D62001151B9 /* GraphicalIndicator.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
