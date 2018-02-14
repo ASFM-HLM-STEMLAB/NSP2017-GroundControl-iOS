@@ -28,8 +28,7 @@ struct Time {
         }
     }
     
-    init(epoch: TimeInterval) {
-        print("Epoch: \(epoch)")
+    init(epoch: TimeInterval) {        
         self.epoch = epoch
         let intEpoch = UInt(abs(epoch))
         
