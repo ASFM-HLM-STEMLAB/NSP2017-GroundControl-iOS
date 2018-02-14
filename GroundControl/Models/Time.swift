@@ -6,6 +6,8 @@
 //  Copyright © 2018 Movic Technologies. All rights reserved.
 //
 
+//Used to store mission stopwatch-timer values.
+
 import Foundation
 
 struct Time {
@@ -22,9 +24,7 @@ struct Time {
     var timeString:String {
         get {
             let sign = negative ? "-" : ""
-            
-            return "T\(sign)\(self.intToDblDigitStr(hour)):\(self.intToDblDigitStr(minute)):\(self.intToDblDigitStr(second))"
-            
+            return "\(sign)\(self.intToDblDigitStr(hour)):\(self.intToDblDigitStr(minute)):\(self.intToDblDigitStr(second))"
         }
     }
     
