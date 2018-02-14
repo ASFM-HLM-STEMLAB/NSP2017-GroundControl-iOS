@@ -42,6 +42,7 @@ class MapViewController: UIViewController  {
     @IBOutlet weak var onlineStatusLabel: UILabel!
     @IBOutlet weak var lastUpdatedGPSLabel: UILabel!
     
+    @IBOutlet weak var missionTimerLabel: UILabel!
     // ======================================================
     override func viewDidLoad() {
         //Let's setup everything for the VC
@@ -95,6 +96,7 @@ class MapViewController: UIViewController  {
             self.reportDetailViewController?.setServerStatus(.connected)
             self.onlineStatusLabel.text = "ONLINE"
             self.onlineStatusLabel.textColor = UIColor(red: 0.2, green:0.8, blue:0.2, alpha:1)
+            self.missionTimerLabel.textColor = UIColor(red: 0.310, green: 0.447, blue: 0.788, alpha: 1.00)
             self.getAllReports()
         }
         
@@ -103,15 +105,21 @@ class MapViewController: UIViewController  {
             self.reportDetailViewController?.setServerStatus(.disconnected)
             self.onlineStatusLabel.text = "OFFLINE"
             self.onlineStatusLabel.textColor = UIColor(red: 1, green:0.2, blue:0.2, alpha:1)
+            self.missionTimerLabel.textColor = UIColor(red: 0.310, green: 0.447, blue: 0.788, alpha: 0.50)
         }
-        
         
         //When we get a .response type of message we show it in the terminal as a raw string with a < to signify incoming.
         notificationCenter.addObserver(forName:SocketCenter.socketResponseNotification, object: nil, queue: nil) { (notification) in
             if let response = notification.userInfo?["response"] as? String {
                 self.reportDetailViewController?.addLineToTerminal("< \(response)")
             }
-        }                
+        }
+        
+        notificationCenter.addObserver(forName:SocketCenter.timeSyncNotification, object: nil, queue: nil) { (notification) in
+            if let time = notification.userInfo?["time"] as? Time {
+               self.missionTimerLabel.text = time.timeString
+            }
+        }
     }
     
     deinit { //Should not happen, but just in case we clear any weak refs.
