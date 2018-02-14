@@ -319,24 +319,15 @@ extension MapViewController {
                 }
             }
             
-            
-<<<<<<< Updated upstream
-            if reports.last == report {
-                reports.removeLast()
-                reports.append(report)
-            } else {
-                reports.append(report)
-            }
-=======
             plotAppendReportsInMap()
             self.dashboardViewController?.setMessageCount(reports.count)
             self.dashboardViewController?.setReport(report)
->>>>>>> Stashed changes
         }
+        
         sortReportList()
         plotAppendReportsInMap()
-        self.reportDetailViewController?.setMessageCount(reports.count)
-        self.reportDetailViewController?.setReport(report)
+        self.dashboardViewController?.setMessageCount(reports.count)
+        self.dashboardViewController?.setReport(report)
     }
     
     
@@ -443,24 +434,14 @@ extension MapViewController {
                 self.sortReportList()
 //                self.reports = self.withoudDuplicates(from: reports)
                 
-<<<<<<< Updated upstream
-                self.reportDetailViewController?.setMessageCount(reports.count)
-                if var lastReport = reports.last {
-                    self.reportDetailViewController?.setReport(lastReport)
-=======
                 self.dashboardViewController?.setMessageCount(reports.count)
-                if let lastReport = reports.last {
+                if var lastReport = reports.last {
                     self.dashboardViewController?.setReport(lastReport)
->>>>>>> Stashed changes
+                    
                     if (lastReport.reportType != .pulse) {
                         for aReport in reports.reversed() {
                             if aReport.reportType == .pulse {
-<<<<<<< Updated upstream
-                                self.reportDetailViewController?.setReport(aReport)
-                                break
-=======
                                 self.dashboardViewController?.setReport(aReport)
->>>>>>> Stashed changes
                             }
                         }
                     }

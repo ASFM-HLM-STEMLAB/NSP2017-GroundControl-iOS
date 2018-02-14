@@ -160,11 +160,8 @@
             <objects>
                 <viewController id="4uT-EQ-YDX" customClass="ReportInfoViewController" customModule="GroundControl" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" alpha="0.90000000000000002" contentMode="scaleToFill" id="Z7f-Eb-wMU">
-<<<<<<< Updated upstream
-                        <rect key="frame" x="0.0" y="0.0" width="1112" height="400.5"/>
-=======
+
                         <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
->>>>>>> Stashed changes
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QnZ-rI-il8" userLabel="Separator">
@@ -270,21 +267,13 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AVa-9E-is7" userLabel="BottomBackDrop">
-<<<<<<< Updated upstream
-                                <rect key="frame" x="0.0" y="376.5" width="1112" height="25"/>
-=======
                                 <rect key="frame" x="0.0" y="1000" width="768" height="25"/>
->>>>>>> Stashed changes
                                 <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <variation key="heightClass=compact-widthClass=compact" hidden="YES"/>
                                 <variation key="heightClass=compact-widthClass=regular" hidden="YES"/>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="CONNECTING" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fkS-ru-vH7">
-<<<<<<< Updated upstream
-                                <rect key="frame" x="1007" y="379.5" width="102" height="18"/>
-=======
                                 <rect key="frame" x="663" y="1003" width="102" height="18"/>
->>>>>>> Stashed changes
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                 <color key="textColor" red="0.79917559199999999" green="0.79917559199999999" blue="0.79917559199999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <nil key="highlightedColor"/>
@@ -292,11 +281,7 @@
                                 <variation key="heightClass=compact-widthClass=regular" hidden="YES"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0 ✉️" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="i5M-Cw-6wE">
-<<<<<<< Updated upstream
-                                <rect key="frame" x="538.5" y="379" width="35" height="18"/>
-=======
                                 <rect key="frame" x="366.5" y="1002.5" width="35" height="18"/>
->>>>>>> Stashed changes
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                 <color key="textColor" red="0.79917559199999999" green="0.79917559199999999" blue="0.79917559199999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <nil key="highlightedColor"/>
@@ -304,11 +289,7 @@
                                 <variation key="heightClass=compact-widthClass=regular" hidden="YES"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RkH-60-4PC">
-<<<<<<< Updated upstream
-                                <rect key="frame" x="-3.5" y="336.5" width="222.5" height="40"/>
-=======
                                 <rect key="frame" x="-4" y="960" width="153.5" height="40"/>
->>>>>>> Stashed changes
                                 <color key="backgroundColor" red="0.47016410739999998" green="0.46052548339999999" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <state key="normal" title="BUZZER">
                                     <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -320,11 +301,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wYG-0M-JTP">
-<<<<<<< Updated upstream
-                                <rect key="frame" x="220" y="336.5" width="222" height="40"/>
-=======
                                 <rect key="frame" x="150.5" y="960" width="153.5" height="40"/>
->>>>>>> Stashed changes
                                 <color key="backgroundColor" red="0.47016410739999998" green="0.46052548339999999" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <state key="normal" title="CMUTE">
                                     <color key="titleColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -336,11 +313,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Cpk-PG-Iv1">
-<<<<<<< Updated upstream
-                                <rect key="frame" x="443" y="336.5" width="222.5" height="40"/>
-=======
                                 <rect key="frame" x="305" y="960" width="154" height="40"/>
->>>>>>> Stashed changes
                                 <color key="backgroundColor" red="0.47016410739999998" green="0.46052548339999999" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <state key="normal" title="SMUTE">
                                     <color key="titleColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -352,11 +325,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hpq-o5-Iuu">
-<<<<<<< Updated upstream
-                                <rect key="frame" x="666.5" y="336.5" width="222" height="40"/>
-=======
                                 <rect key="frame" x="460" y="960" width="153.5" height="40"/>
->>>>>>> Stashed changes
                                 <color key="backgroundColor" red="0.47016410739999998" green="0.46052548339999999" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <state key="normal" title="FORCE">
                                     <color key="titleColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -368,11 +337,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="94B-8m-lgm">
-<<<<<<< Updated upstream
-                                <rect key="frame" x="889.5" y="336.5" width="222.5" height="40"/>
-=======
                                 <rect key="frame" x="614.5" y="960" width="153.5" height="40"/>
->>>>>>> Stashed changes
                                 <color key="backgroundColor" red="0.47016410739999998" green="0.46052548339999999" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="qQa-Nw-VGJ"/>
@@ -465,13 +430,8 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DK9-A8-tqL" customClass="GraphicalIndicator" customModule="GroundControl" customModuleProvider="target">
-<<<<<<< Updated upstream
-                                <rect key="frame" x="0.0" y="206" width="20" height="122.5"/>
-                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-=======
                                 <rect key="frame" x="0.0" y="273" width="20" height="679"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
->>>>>>> Stashed changes
                                 <constraints>
                                     <constraint firstAttribute="width" constant="20" id="R8j-RP-Kjp"/>
                                 </constraints>
@@ -489,11 +449,7 @@
                                 <variation key="heightClass=regular-widthClass=regular" hidden="NO"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0 FPM" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XpD-EV-iuW">
-<<<<<<< Updated upstream
-                                <rect key="frame" x="20" y="249.5" width="31" height="12"/>
-=======
                                 <rect key="frame" x="22" y="606.5" width="31" height="12"/>
->>>>>>> Stashed changes
                                 <fontDescription key="fontDescription" type="system" pointSize="10"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -502,11 +458,7 @@
                                 <variation key="heightClass=regular-widthClass=regular" hidden="NO"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="- 3000" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qkZ-hA-Rh4">
-<<<<<<< Updated upstream
-                                <rect key="frame" x="22" y="316.5" width="33.5" height="12"/>
-=======
                                 <rect key="frame" x="22" y="940" width="33.5" height="12"/>
->>>>>>> Stashed changes
                                 <fontDescription key="fontDescription" type="system" pointSize="10"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -515,11 +467,7 @@
                                 <variation key="heightClass=regular-widthClass=regular" hidden="NO"/>
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kgy-3S-HKG">
-<<<<<<< Updated upstream
-                                <rect key="frame" x="62" y="206" width="3" height="122.5"/>
-=======
                                 <rect key="frame" x="62" y="273" width="3" height="679"/>
->>>>>>> Stashed changes
                                 <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="3" id="NZJ-RT-Es6"/>
@@ -528,10 +476,6 @@
                                 <variation key="heightClass=compact-widthClass=regular" hidden="YES"/>
                                 <variation key="heightClass=regular-widthClass=regular" hidden="NO"/>
                             </view>
-<<<<<<< Updated upstream
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" indicatorStyle="white" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="pGS-IW-4yf">
-                                <rect key="frame" x="70" y="206" width="1033" height="97.5"/>
-=======
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rso-0u-P06">
                                 <rect key="frame" x="55" y="594.5" width="7" height="36"/>
                                 <attributedString key="attributedText">
@@ -549,7 +493,6 @@
                             </label>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" indicatorStyle="white" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="pGS-IW-4yf">
                                 <rect key="frame" x="70" y="273" width="689" height="654"/>
->>>>>>> Stashed changes
                                 <color key="backgroundColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
@@ -559,11 +502,7 @@
                                 <variation key="heightClass=regular-widthClass=regular" hidden="NO"/>
                             </textView>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" borderStyle="bezel" textAlignment="natural" adjustsFontSizeToFit="NO" minimumFontSize="7" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="Gef-kk-vCx">
-<<<<<<< Updated upstream
-                                <rect key="frame" x="70" y="303.5" width="909.5" height="25"/>
-=======
                                 <rect key="frame" x="70" y="927" width="606.5" height="25"/>
->>>>>>> Stashed changes
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="25" id="8Fh-GB-qpQ"/>
@@ -576,11 +515,7 @@
                                 <variation key="heightClass=regular-widthClass=regular" hidden="NO"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gRL-6L-rfu">
-<<<<<<< Updated upstream
-                                <rect key="frame" x="982" y="304.5" width="121" height="25"/>
-=======
                                 <rect key="frame" x="679" y="928" width="80" height="25"/>
->>>>>>> Stashed changes
                                 <color key="backgroundColor" red="0.38492506100000001" green="0.53082029090000005" blue="0.77606865280000004" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                 <state key="normal" title="SEND">
@@ -594,12 +529,8 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="I9j-Ls-GVW">
-<<<<<<< Updated upstream
-                                <rect key="frame" x="1" y="0.0" width="1110" height="20"/>
-=======
                                 <rect key="frame" x="1" y="0.0" width="766" height="20"/>
                                 <color key="backgroundColor" red="0.25127173572806094" green="0.20878360207099333" blue="0.98565009715025909" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
->>>>>>> Stashed changes
                                 <constraints>
                                     <constraint firstAttribute="height" constant="20" id="PPM-ES-L57"/>
                                 </constraints>
