@@ -12,6 +12,9 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
+        <array key="Avenir.ttc">
+            <string>Avenir-Heavy</string>
+        </array>
         <array key="Helvetica.ttc">
             <string>Helvetica</string>
             <string>Helvetica-Bold</string>
@@ -32,7 +35,7 @@
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9dP-M2-HZP">
                                 <rect key="frame" x="0.0" y="433.5" width="1112" height="400.5"/>
                                 <connections>
-                                    <segue destination="mbb-Fd-USq" kind="embed" identifier="dashboardSegue" id="UyX-t7-4TI"/>
+                                    <segue destination="p37-4e-OO3" kind="embed" identifier="dashboardSegue" id="UyX-t7-4TI"/>
                                 </connections>
                             </containerView>
                             <button opaque="NO" alpha="0.59999999999999998" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dmD-yW-G1k">
@@ -741,6 +744,64 @@
             </objects>
             <point key="canvasLocation" x="-1701" y="1003"/>
         </scene>
+        <!--Dashboard View Controller-->
+        <scene sceneID="SqW-M6-EAl">
+            <objects>
+                <viewController id="p37-4e-OO3" customClass="DashboardViewController" customModule="GroundControl" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="c5g-El-Mdp">
+                        <rect key="frame" x="0.0" y="0.0" width="1112" height="400.5"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Vlf-CC-gDd">
+                                <rect key="frame" x="0.0" y="0.0" width="1112" height="30"/>
+                                <color key="backgroundColor" red="0.26322603132870048" green="0.33180022921105545" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <state key="normal" title="SHOW DASHBOARD">
+                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="toggleDashboard:" destination="p37-4e-OO3" eventType="touchUpInside" id="PfF-a6-uBt"/>
+                                </connections>
+                            </button>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mQ9-wq-bzD">
+                                <rect key="frame" x="0.0" y="637" width="768" height="28"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2Dz-Ui-BuS">
+                                        <rect key="frame" x="691" y="4" width="42" height="21"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RSU-HD-w6Y">
+                                        <rect key="frame" x="341" y="4" width="86" height="21"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" name="Avenir-Heavy" family="Avenir" pointSize="20"/>
+                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" red="0.46901112794876099" green="0.90137165784835815" blue="0.47202026844024658" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" red="0.84304505586624146" green="0.84319043159484863" blue="0.8430359959602356" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="Vlf-CC-gDd" firstAttribute="trailing" secondItem="O6S-At-9IP" secondAttribute="trailing" id="46n-ht-kRY"/>
+                            <constraint firstItem="Vlf-CC-gDd" firstAttribute="leading" secondItem="O6S-At-9IP" secondAttribute="leading" id="EYm-k3-XZ3"/>
+                            <constraint firstItem="Vlf-CC-gDd" firstAttribute="centerX" secondItem="c5g-El-Mdp" secondAttribute="centerX" id="TYL-YO-rww"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="O6S-At-9IP"/>
+                    </view>
+                    <connections>
+                        <outlet property="capsuleStateView" destination="mQ9-wq-bzD" id="G0y-g4-M4Q"/>
+                        <outlet property="serverStatusLabel" destination="RSU-HD-w6Y" id="Edh-A5-Gde"/>
+                        <outlet property="toggleDashboardButton" destination="Vlf-CC-gDd" id="VCQ-X6-3jm"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="X0E-eA-2x4" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-990" y="1354"/>
+        </scene>
         <!--View Controller-->
         <scene sceneID="6KS-de-jNz">
             <objects>
@@ -1324,14 +1385,6 @@ Cg
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3hh-ml-LCM" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-307.01438848920867" y="751.43884892086339"/>
-        </scene>
-        <!--Dashboard-->
-        <scene sceneID="uGq-QF-l7O">
-            <objects>
-                <viewControllerPlaceholder storyboardName="Dashboard" id="mbb-Fd-USq" sceneMemberID="viewController"/>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Tzd-K4-VVE" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-990" y="1354"/>
         </scene>
     </scenes>
 </document>
