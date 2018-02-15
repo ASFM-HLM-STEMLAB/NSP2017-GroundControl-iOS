@@ -39,6 +39,8 @@ class DashboardPage: UIView {
         
         let titleLabel = UILabel(frame: CGRect(x: 0, y: 0, width: titleView.frame.width, height: titleView.frame.height))
         titleLabel.text = pageTitle
+        titleLabel.font = UIFont(name: "Avenir-Heavy", size: 20)
+        titleLabel.textColor = .white
         titleLabel.textAlignment = .center
         
         titleView.addSubview(titleLabel)
