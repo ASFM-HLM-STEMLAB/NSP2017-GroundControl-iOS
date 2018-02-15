@@ -30,6 +30,7 @@ extension MapViewController {
                 }
             }
             self.focusOnAllReportsOnMap()
+            self.updateLastReportTime()
         }
     }
     
@@ -51,7 +52,6 @@ extension MapViewController {
             drawOverlayLine(from: firstPoint!, to: secondPoint!)
             updatePlotToOwnShip()
         }
-        
         
         updateLastReportTime()
     }
