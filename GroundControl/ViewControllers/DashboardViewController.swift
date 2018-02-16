@@ -32,6 +32,7 @@ class DashboardViewController: UIViewController, UITextFieldDelegate {
     var externalsPage = DashboardPage(frame: CGRect(x: 0, y: 0, width: 0, height: 0), pageTitle: "FLIGHT COMPUTER EXTERNALS")
     var terminalPage = DashboardPage(frame: CGRect(x: 0, y: 0, width: 0, height: 0), pageTitle: "COMMUNICATION TERMINAL")
     var commandsPage = DashboardPage(frame: CGRect(x: 0, y: 0, width: 0, height: 0), pageTitle: "ACTION COMMANDS")
+    var pageNumber = 1
     
     var notebookView = UIView(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
     
@@ -91,7 +92,7 @@ class DashboardViewController: UIViewController, UITextFieldDelegate {
             let course = String(report.course)
             let sonar = "-"
             
-            let info = ["Altitude" : altitude,
+            let internalsInfo = ["Altitude" : altitude,
                         "Speed" : speed,
                         "Battery" : battery,
                         "Temperature" : temperature,
@@ -100,10 +101,10 @@ class DashboardViewController: UIViewController, UITextFieldDelegate {
                         "Course" : course,
                         "Sonar Distance" : sonar]
             
-            internalsPage.setUp(withInfo: info)
-            externalsPage.setUp(withInfo: info)
-            terminalPage.setUp(withInfo: info)
-            commandsPage.setUp(withInfo: info)
+            internalsPage.setUp(withInfo: internalsInfo)
+            externalsPage.setUp(withInfo: internalsInfo)
+            terminalPage.setUp(withInfo: internalsInfo)
+            commandsPage.setUp(withInfo: internalsInfo)
         }
     }
     
@@ -135,28 +136,39 @@ class DashboardViewController: UIViewController, UITextFieldDelegate {
     
     @objc func handleSwipe(gestureRecognizer: UISwipeGestureRecognizer) {
         
-        if gestureRecognizer.direction == .left {
+        let animationDuration = 1.0
+        let delay = 0.0
+        let damping: CGFloat = 0.5
+        let initialSpringVelocity: CGFloat = 0.4
+        
+        if gestureRecognizer.direction == .left && self.pageNumber != 4 {
             
-            print("Swiped Left!")
-            let left = CGAffineTransform(translationX: -self.view.frame.width, y: 0)
-            UIView.animate(withDuration: 1.0, delay: 0, usingSpringWithDamping: 1.0, initialSpringVelocity: 0.1, options: [], animations: {
+            let left = CGAffineTransform(translationX: -(CGFloat(pageNumber)*self.view.frame.width), y: 0)
+            UIView.animate(withDuration: animationDuration, delay: delay, usingSpringWithDamping: damping, initialSpringVelocity: initialSpringVelocity, options: [], animations: {
                 self.notebookView.transform = left
                 self.view.layoutIfNeeded()
                 self.notebookView.updateConstraintsIfNeeded()
+                
+                self.pageNumber += 1
+                
             }, completion: nil)
             
-        } else if gestureRecognizer.direction == .right {
+            print("Swiped Left! Page number now \(pageNumber)")
             
-            print("Swiped Right!")
-            let right = CGAffineTransform(translationX: self.view.frame.width, y: 0)
-            UIView.animate(withDuration: 1.0, delay: 0, usingSpringWithDamping: 1.0, initialSpringVelocity: 0.1, options: [], animations: {
+        } else if gestureRecognizer.direction == .right && self.pageNumber != 1 {
+            
+            let right = CGAffineTransform(translationX: -(CGFloat(pageNumber-2)*self.view.frame.width), y: 0)
+            UIView.animate(withDuration: animationDuration, delay: delay, usingSpringWithDamping: damping, initialSpringVelocity: initialSpringVelocity, options: [], animations: {
                 self.notebookView.transform = right
                 self.view.layoutIfNeeded()
                 self.notebookView.updateConstraintsIfNeeded()
+                
+                self.pageNumber -= 1
+                
             }, completion: nil)
             
+            print("Swiped Right! Page number now \(pageNumber)")
         }
-        
     }
     
     // MARK: - IBActions
