@@ -136,7 +136,8 @@ class ReportInfoViewController: UIViewController {
     
     func sendMessageToSocket(message:String) {
         addLineToTerminal("> " + message)
-        SocketCenter.sendMessage(event: "TXC", data: [message])
+//        SocketCenter.sendMessage(event: "TXC", data: [message])
+        SocketCenter.send(event: "TXC", data: [message], onAck: nil)
     }
 }
 
@@ -146,8 +147,39 @@ extension ReportInfoViewController {
         if transmitMode == .cellular {
             self.transmitMode = .sattelite
         } else {
-            self.transmitMode = .cellular
+            self.transmitMode = .cellular            
         }
+    }
+    
+    @IBAction func helperMenuButtonPressed(_ sender: UIButton) {
+        let alertController = UIAlertController(title: "Commands", message: "", preferredStyle: .actionSheet)
+        
+        let setTimer = UIAlertAction(title: "timeset n", style: .default, handler: { (action) -> Void in
+            self.terminalInput.text = "timeset "
+        })
+        
+        let startTimer = UIAlertAction(title: "timestart", style: .default, handler: { (action) -> Void in
+            self.terminalInput.text = "timestart"
+            self.sendLineButtonPressed(sender)
+        })
+        
+        let pauseTimer = UIAlertAction(title: "timepause", style: .default, handler: { (action) -> Void in
+            self.terminalInput.text = "timepause"
+            self.sendLineButtonPressed(sender)
+        })
+        
+        let clearTimer = UIAlertAction(title: "timeclear", style: .default, handler: { (action) -> Void in
+            self.terminalInput.text = "timeclear"
+            self.sendLineButtonPressed(sender)
+        })
+        
+        alertController.addAction(setTimer)
+        alertController.addAction(startTimer)
+        alertController.addAction(pauseTimer)
+        alertController.addAction(clearTimer)
+        alertController.popoverPresentationController?.sourceView = sender
+        alertController.popoverPresentationController?.sourceRect = sender.bounds
+        self.present(alertController, animated: true, completion: nil)
     }
     
     @IBAction func buzzerButtonPressed(_ sender: Any) {

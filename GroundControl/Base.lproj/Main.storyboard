@@ -16,6 +16,9 @@
             <string>Helvetica</string>
             <string>Helvetica-Bold</string>
         </array>
+        <array key="HelveticaNeueLights.ttc">
+            <string>HelveticaNeue-Thin</string>
+        </array>
     </customFonts>
     <scenes>
         <!--Map View Controller-->
@@ -103,6 +106,12 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00:00:00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NvS-IM-LEJ">
+                                <rect key="frame" x="439.5" y="20" width="234" height="71"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="60"/>
+                                <color key="textColor" red="0.31475388999999998" green="0.44106104969999999" blue="0.78830075259999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
@@ -116,10 +125,12 @@
                             <constraint firstItem="5rr-7A-Chb" firstAttribute="top" secondItem="tVN-hv-pjG" secondAttribute="top" id="7aC-5J-fa9"/>
                             <constraint firstItem="9dP-M2-HZP" firstAttribute="trailing" secondItem="O18-TW-AaN" secondAttribute="trailing" id="DZN-vX-y7B"/>
                             <constraint firstItem="RYb-Ij-wDU" firstAttribute="height" secondItem="XS9-SQ-AeX" secondAttribute="height" id="Izk-X1-8yQ"/>
+                            <constraint firstItem="NvS-IM-LEJ" firstAttribute="top" secondItem="O18-TW-AaN" secondAttribute="top" id="KPE-SJ-aqk"/>
                             <constraint firstItem="RYb-Ij-wDU" firstAttribute="centerX" secondItem="XS9-SQ-AeX" secondAttribute="centerX" id="NAw-dh-aYD"/>
                             <constraint firstItem="LiV-SN-W68" firstAttribute="centerX" secondItem="dmD-yW-G1k" secondAttribute="centerX" id="Q3U-QT-Bz7"/>
                             <constraint firstItem="XS9-SQ-AeX" firstAttribute="height" secondItem="LiV-SN-W68" secondAttribute="height" id="Sj3-2g-hlU"/>
                             <constraint firstItem="Qcf-2g-VZ8" firstAttribute="top" secondItem="EYY-T2-ipJ" secondAttribute="bottom" constant="2" id="Xzq-2O-xk1"/>
+                            <constraint firstItem="NvS-IM-LEJ" firstAttribute="centerX" secondItem="tVN-hv-pjG" secondAttribute="centerX" id="ZwF-bC-P6f"/>
                             <constraint firstItem="xdP-5a-GR5" firstAttribute="top" secondItem="RYb-Ij-wDU" secondAttribute="bottom" constant="10" id="aBl-Oy-bwh"/>
                             <constraint firstItem="5rr-7A-Chb" firstAttribute="leading" secondItem="O18-TW-AaN" secondAttribute="leading" id="cne-Dl-tMH"/>
                             <constraint firstItem="5rr-7A-Chb" firstAttribute="bottom" secondItem="O18-TW-AaN" secondAttribute="bottom" id="e3v-xc-kvV"/>
@@ -144,6 +155,7 @@
                         <outlet property="lastUpdatedGPSLabel" destination="EYY-T2-ipJ" id="yg6-y7-Ta2"/>
                         <outlet property="lastUpdatedLabel" destination="JdF-F5-gMV" id="fat-d9-hMX"/>
                         <outlet property="mapView" destination="5rr-7A-Chb" id="xfX-SW-F4Y"/>
+                        <outlet property="missionTimerLabel" destination="NvS-IM-LEJ" id="snK-07-a6T"/>
                         <outlet property="onlineStatusLabel" destination="Qcf-2g-VZ8" id="POC-5Q-32I"/>
                         <outlet property="reportInfoView" destination="9dP-M2-HZP" id="Xj4-Ga-e1V"/>
                     </connections>
@@ -329,7 +341,7 @@
                                 <variation key="heightClass=compact-widthClass=compact" hidden="YES"/>
                                 <variation key="heightClass=compact-widthClass=regular" hidden="YES"/>
                                 <connections>
-                                    <action selector="forceReportButtonPressed:" destination="4uT-EQ-YDX" eventType="touchUpInside" id="5if-bt-hPW"/>
+                                    <action selector="forceReportButtonPressed:" destination="4uT-EQ-YDX" eventType="touchUpInside" id="gNo-gt-Wag"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="94B-8m-lgm">
@@ -338,13 +350,13 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="qQa-Nw-VGJ"/>
                                 </constraints>
-                                <state key="normal" title="CELL">
+                                <state key="normal" title="CMDS">
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <variation key="heightClass=compact-widthClass=compact" hidden="YES"/>
                                 <variation key="heightClass=compact-widthClass=regular" hidden="YES"/>
                                 <connections>
-                                    <action selector="transmitModeButtonPressed:" destination="4uT-EQ-YDX" eventType="touchUpInside" id="EYQ-dS-ZhA"/>
+                                    <action selector="helperMenuButtonPressed:" destination="4uT-EQ-YDX" eventType="touchUpInside" id="n9o-wi-Bu9"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0%" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gUh-fs-ZoY">
@@ -710,8 +722,6 @@
                         <outlet property="tempIndicator" destination="IGs-UX-0C0" id="cs1-kN-ot9"/>
                         <outlet property="terminalInput" destination="Gef-kk-vCx" id="DCm-mQ-k7o"/>
                         <outlet property="terminalTextView" destination="pGS-IW-4yf" id="vMT-L5-mof"/>
-                        <outlet property="transmitModeButton" destination="94B-8m-lgm" id="4MN-Hs-QOB"/>
-                        <outlet property="transmitModeSwitch" destination="94B-8m-lgm" id="ser-PB-sXj"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mJV-UH-WxA" userLabel="First Responder" sceneMemberID="firstResponder"/>
