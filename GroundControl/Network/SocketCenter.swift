@@ -40,6 +40,7 @@ import SocketIO
 class SocketCenter {
     let socket: SocketIOClient //Instantiate the SocketIOClient class from the official framework.
     private let manager = SocketManager(socketURL: URL(string: "http://movic.io:4200")!, config: [.log(false), .compress])
+//    private let manager = SocketManager(socketURL: URL(string: "http://127.0.0.1:4200")!, config: [.log(false), .compress])
     
     private let notificationCenter = NotificationCenter.default //Get the default iOS NotificationCenter
     
@@ -47,12 +48,16 @@ class SocketCenter {
     
     //Abstraction of the notification flags for easy referal.
     static let newMessageNotification = Notification.Name("com.GroundControl.Socket.NewMessage")
+    static let timeSyncNotification = Notification.Name("com.GroundControl.Socket.TimeSync")
     static let socketGotAllMessageNotification = Notification.Name("com.GroundControl.Socket.gotAllMessageNotification")
     static let socketConnectedNotification = Notification.Name("com.GroundControl.Socket.Connected")
     static let socketDisconnectedNotification = Notification.Name("com.GroundControl.Socket.Discconnected")
     static let socketResponseNotification = Notification.Name("com.GroundControl.Socket.NewResponse")
+    public var remoteTimerSeconds:TimeInterval = 0
     
     typealias CompletionHandler = ([Any]) -> Void
+    typealias AckHandler = (_ success: Bool, _ data: [Any])
+        -> Void
     
     init() {
         //When we instantiate this class, this method is executed to setup everything. (See AppDelegate.swift)
@@ -113,6 +118,19 @@ class SocketCenter {
             
         }
         
+        socket.on("TSYNC") { data, ack in
+            guard let rawData = data[0] as? String else { return }
+            let decodedTime = TimeInterval(rawData)
+            guard let time = decodedTime else { return }
+            self.remoteTimerSeconds = time
+            
+            let timer = Time(epoch: time)    
+            
+            self.notificationCenter.post(name:SocketCenter.timeSyncNotification,
+                                         object: nil,
+                                         userInfo: ["time":timer])
+        }
+        
         //----HELPERS----
         //A response was received from a request to the server. we have to see what is the date we got in order to identify what did the server sent.
         //Not used very much. We use it mostly to post to the terminal window messages that the server sends when we ask it to execute something.
@@ -122,7 +140,6 @@ class SocketCenter {
                                          object: nil,
                                          userInfo: ["response":rawData])
         }
-        
         
         print("[SocketCenter] Connecting...")
     }
@@ -169,6 +186,22 @@ class SocketCenter {
         sharedInstance.socket.emit(event, with: data)
     }
     
+    static func send(event: String, data:[Any], onAck ack: AckHandler?) {
+        sharedInstance.socket.emitWithAck(event, with:data) .timingOut(after: 10) {(data) in
+            guard let rawData = data[0] as? String else { return }
+            guard let ack = ack else { return }
+            
+            if (rawData == "NO ACK") {
+                print("[SocketCenter] Request TimedOut");
+                ack(false, [])
+                return
+            }
+            
+            ack(true, data)
+        }
+    }
+    
+
     
 }
 

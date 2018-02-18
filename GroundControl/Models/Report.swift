@@ -138,6 +138,19 @@ extension Report {
     }
 }
 
+extension Report {
+    static func sortReportsByAge(from array: [Report]) -> [Report] {
+        let sortedArray = array.sorted(by: {
+            if ($0.gpsTimeStamp < $1.gpsTimeStamp) {
+                return true;
+            }
+            return false;
+        })
+        
+        return sortedArray
+    }
+}
+
 extension Report: Hashable
 {
     var hashValue: Int {
@@ -246,6 +259,29 @@ extension Report {
 }
 
 
+extension Report {
+    func annotationIdentifierForStage() -> String {
+        var annotationIdentifier = "PinDotBlue"
+        
+        
+        switch self.missionStage
+        {
+        case .climb:
+            annotationIdentifier = "PinCapsuleBalloon"
+        case .descent:
+            annotationIdentifier = "PinCapsuleParachute"
+        case .recovery:
+            annotationIdentifier = "PinCapsuleRecovery"
+        case .ground:
+            annotationIdentifier = "PinCapsuleGround"
+        case .unknown:
+            annotationIdentifier = "PinCapsuleBalloon"
+        }
+        
+        return annotationIdentifier
+    }
+}
+
 //This extension to Date type will convert from GPS raw timestamp to something we can use in iOS
 extension Date {
     static func fromGPSString(_ gpsTime: String) -> Date {
@@ -286,4 +322,7 @@ extension Date {
             let dateString = stringFormatter.string(from: self)
             return dateString
     }
+    
 }
+
+
