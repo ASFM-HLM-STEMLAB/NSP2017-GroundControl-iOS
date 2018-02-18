@@ -821,7 +821,8 @@ SWIFT_CLASS("_TtC8SocketIO13SocketManager")
 ///
 - (void)parseEngineBinaryData:(NSData * _Nonnull)data;
 /// Tries to reconnect to the server.
-/// This will cause a <code>disconnect</code> event to be emitted, as well as an <code>reconnectAttempt</code> event.
+/// This will cause a <code>SocketClientEvent.reconnect</code> event to be emitted, as well as
+/// <code>SocketClientEvent.reconnectAttempt</code> events.
 - (void)reconnect;
 /// Removes the socket from the manager’s control. One of the disconnect methods should be called before calling this
 /// method.
