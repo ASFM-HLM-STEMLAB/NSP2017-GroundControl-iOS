@@ -26,7 +26,8 @@ class MapViewController: UIViewController  {
     var reports = [Report]()
     let notificationCenter = NotificationCenter.default
     var ownshipLine: MKPolyline?
-    var reportDetailViewController:ReportInfoViewController?
+//    var reportDetailViewController:ReportInfoViewController?
+    var dashboardViewController:DashboardViewController?
     
     var refreshTimer:Timer?
     
@@ -85,15 +86,16 @@ class MapViewController: UIViewController  {
                 report.index = self.reports.count
                 //Add a report to the report array and show the details)
                 self.addReportToMap(report: report)
-                self.reportDetailViewController?.setReport(report)
-                self.reportDetailViewController?.setMessageCount(self.reports.count)
+//                self.reportDetailViewController?.setReport(report)
+//                self.reportDetailViewController?.setMessageCount(self.reports.count)
             }
         }
         
         //Everytime we connect we change the connection label to let the user know we are connected.
         // AND WE GET ALL THE REPORTS in the history.
         notificationCenter.addObserver(forName:SocketCenter.socketConnectedNotification, object: nil, queue: nil) { (notification) in
-            self.reportDetailViewController?.setServerStatus(.connected)
+//            self.reportDetailViewController?.setServerStatus(.connected)
+            self.dashboardViewController?.setServerStatus(.connected)
             self.onlineStatusLabel.text = "ONLINE"
             self.onlineStatusLabel.textColor = UIColor(red: 0.2, green:0.8, blue:0.2, alpha:1)
             self.missionTimerLabel.textColor = UIColor(red: 0.310, green: 0.447, blue: 0.788, alpha: 1.00)
@@ -102,7 +104,8 @@ class MapViewController: UIViewController  {
         
         //When we disconnect we change the label to let the user know.
         notificationCenter.addObserver(forName:SocketCenter.socketDisconnectedNotification, object: nil, queue: nil) { (notification) in
-            self.reportDetailViewController?.setServerStatus(.disconnected)
+//            self.reportDetailViewController?.setServerStatus(.disconnected)
+            self.dashboardViewController?.setServerStatus(.disconnected)
             self.onlineStatusLabel.text = "OFFLINE"
             self.onlineStatusLabel.textColor = UIColor(red: 1, green:0.2, blue:0.2, alpha:1)
             self.missionTimerLabel.textColor = UIColor(red: 0.310, green: 0.447, blue: 0.788, alpha: 0.50)
@@ -111,7 +114,7 @@ class MapViewController: UIViewController  {
         //When we get a .response type of message we show it in the terminal as a raw string with a < to signify incoming.
         notificationCenter.addObserver(forName:SocketCenter.socketResponseNotification, object: nil, queue: nil) { (notification) in
             if let response = notification.userInfo?["response"] as? String {
-                self.reportDetailViewController?.addLineToTerminal("< \(response)")
+//                self.reportDetailViewController?.addLineToTerminal("< \(response)")
             }
         }
         
@@ -127,9 +130,9 @@ class MapViewController: UIViewController  {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if (segue.identifier == "reportDetailView") {
-            reportDetailViewController = segue.destination as? ReportInfoViewController
-            reportDetailViewController?.delegate = self
+        if (segue.identifier == "dashboardSegue") {
+            dashboardViewController = segue.destination as? DashboardViewController
+            dashboardViewController?.delegate = self
         }
     }
     
@@ -171,7 +174,7 @@ extension MapViewController {
     
 }
 
-extension MapViewController: ReportInfoDelegate {
+extension MapViewController: DashboardDelegate {
     func shouldTogglePanelView() {
         toggleDetails()
     }

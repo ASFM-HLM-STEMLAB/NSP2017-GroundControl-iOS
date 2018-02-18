@@ -16,6 +16,9 @@
             <string>Helvetica</string>
             <string>Helvetica-Bold</string>
         </array>
+        <array key="HelveticaNeueLights.ttc">
+            <string>HelveticaNeue-Light</string>
+        </array>
     </customFonts>
     <scenes>
         <!--Map View Controller-->
@@ -103,6 +106,12 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lHM-PF-yWx">
+                                <rect key="frame" x="514" y="20" width="84.5" height="42.5"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="36"/>
+                                <color key="textColor" red="0.46559298038482666" green="0.55729949474334717" blue="0.79612958431243896" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
@@ -114,12 +123,14 @@
                             <constraint firstItem="LiV-SN-W68" firstAttribute="height" secondItem="dmD-yW-G1k" secondAttribute="height" id="3uH-na-tTl"/>
                             <constraint firstItem="RYb-Ij-wDU" firstAttribute="top" secondItem="XS9-SQ-AeX" secondAttribute="bottom" constant="1" id="4jj-Wt-Gem"/>
                             <constraint firstItem="5rr-7A-Chb" firstAttribute="top" secondItem="tVN-hv-pjG" secondAttribute="top" id="7aC-5J-fa9"/>
+                            <constraint firstItem="lHM-PF-yWx" firstAttribute="centerX" secondItem="tVN-hv-pjG" secondAttribute="centerX" id="AiY-G6-cCI"/>
                             <constraint firstItem="9dP-M2-HZP" firstAttribute="trailing" secondItem="O18-TW-AaN" secondAttribute="trailing" id="DZN-vX-y7B"/>
                             <constraint firstItem="RYb-Ij-wDU" firstAttribute="height" secondItem="XS9-SQ-AeX" secondAttribute="height" id="Izk-X1-8yQ"/>
                             <constraint firstItem="RYb-Ij-wDU" firstAttribute="centerX" secondItem="XS9-SQ-AeX" secondAttribute="centerX" id="NAw-dh-aYD"/>
                             <constraint firstItem="LiV-SN-W68" firstAttribute="centerX" secondItem="dmD-yW-G1k" secondAttribute="centerX" id="Q3U-QT-Bz7"/>
                             <constraint firstItem="XS9-SQ-AeX" firstAttribute="height" secondItem="LiV-SN-W68" secondAttribute="height" id="Sj3-2g-hlU"/>
                             <constraint firstItem="Qcf-2g-VZ8" firstAttribute="top" secondItem="EYY-T2-ipJ" secondAttribute="bottom" constant="2" id="Xzq-2O-xk1"/>
+                            <constraint firstItem="lHM-PF-yWx" firstAttribute="top" secondItem="O18-TW-AaN" secondAttribute="top" id="ZWL-Fm-r5o"/>
                             <constraint firstItem="xdP-5a-GR5" firstAttribute="top" secondItem="RYb-Ij-wDU" secondAttribute="bottom" constant="10" id="aBl-Oy-bwh"/>
                             <constraint firstItem="5rr-7A-Chb" firstAttribute="leading" secondItem="O18-TW-AaN" secondAttribute="leading" id="cne-Dl-tMH"/>
                             <constraint firstItem="5rr-7A-Chb" firstAttribute="bottom" secondItem="O18-TW-AaN" secondAttribute="bottom" id="e3v-xc-kvV"/>
@@ -144,6 +155,7 @@
                         <outlet property="lastUpdatedGPSLabel" destination="EYY-T2-ipJ" id="yg6-y7-Ta2"/>
                         <outlet property="lastUpdatedLabel" destination="JdF-F5-gMV" id="fat-d9-hMX"/>
                         <outlet property="mapView" destination="5rr-7A-Chb" id="xfX-SW-F4Y"/>
+                        <outlet property="missionTimerLabel" destination="lHM-PF-yWx" id="iOn-ty-s08"/>
                         <outlet property="onlineStatusLabel" destination="Qcf-2g-VZ8" id="POC-5Q-32I"/>
                         <outlet property="reportInfoView" destination="9dP-M2-HZP" id="Xj4-Ga-e1V"/>
                     </connections>
@@ -741,71 +753,6 @@
             </objects>
             <point key="canvasLocation" x="-1701" y="1003"/>
         </scene>
-        <!--Dashboard View Controller-->
-        <scene sceneID="SqW-M6-EAl">
-            <objects>
-                <viewController id="p37-4e-OO3" customClass="DashboardViewController" customModule="GroundControl" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="c5g-El-Mdp">
-                        <rect key="frame" x="0.0" y="0.0" width="1112" height="567"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Vlf-CC-gDd">
-                                <rect key="frame" x="0.0" y="0.0" width="1112" height="30"/>
-                                <color key="backgroundColor" red="0.26322603132870048" green="0.33180022921105545" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <state key="normal" title="SHOW DASHBOARD">
-                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                </state>
-                                <connections>
-                                    <action selector="toggleDashboard:" destination="p37-4e-OO3" eventType="touchUpInside" id="PfF-a6-uBt"/>
-                                </connections>
-                            </button>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mQ9-wq-bzD">
-                                <rect key="frame" x="0.0" y="539" width="1112" height="28"/>
-                                <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RSU-HD-w6Y">
-                                        <rect key="frame" x="91" y="4" width="86" height="21"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" name="Avenir-Heavy" family="Avenir" pointSize="20"/>
-                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2Dz-Ui-BuS">
-                                        <rect key="frame" x="185" y="4" width="42" height="21"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                </subviews>
-                                <color key="backgroundColor" red="0.46901112794876099" green="0.90137165784835815" blue="0.47202026844024658" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                            </view>
-                        </subviews>
-                        <color key="backgroundColor" red="0.84304505586624146" green="0.84319043159484863" blue="0.8430359959602356" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <constraints>
-                            <constraint firstItem="Vlf-CC-gDd" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="O6S-At-9IP" secondAttribute="trailing" id="46n-ht-kRY"/>
-                            <constraint firstItem="mQ9-wq-bzD" firstAttribute="centerX" secondItem="c5g-El-Mdp" secondAttribute="centerX" id="5Qt-Iv-YNm"/>
-                            <constraint firstItem="Vlf-CC-gDd" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="O6S-At-9IP" secondAttribute="leading" id="EYm-k3-XZ3"/>
-                            <constraint firstItem="mQ9-wq-bzD" firstAttribute="leading" secondItem="O6S-At-9IP" secondAttribute="leading" id="PcL-IE-bgR"/>
-                            <constraint firstItem="Vlf-CC-gDd" firstAttribute="centerX" secondItem="c5g-El-Mdp" secondAttribute="centerX" id="TYL-YO-rww"/>
-                            <constraint firstItem="O6S-At-9IP" firstAttribute="bottom" secondItem="mQ9-wq-bzD" secondAttribute="bottom" id="VlC-Yz-Sia"/>
-                            <constraint firstItem="mQ9-wq-bzD" firstAttribute="top" secondItem="c5g-El-Mdp" secondAttribute="top" constant="539" id="rMC-3Y-Ot7"/>
-                            <constraint firstItem="mQ9-wq-bzD" firstAttribute="trailing" secondItem="O6S-At-9IP" secondAttribute="trailing" id="uih-wK-eZN"/>
-                            <constraint firstItem="Vlf-CC-gDd" firstAttribute="top" secondItem="c5g-El-Mdp" secondAttribute="top" id="zVg-Mo-e81"/>
-                        </constraints>
-                        <viewLayoutGuide key="safeArea" id="O6S-At-9IP"/>
-                    </view>
-                    <connections>
-                        <outlet property="capsuleStateView" destination="mQ9-wq-bzD" id="G0y-g4-M4Q"/>
-                        <outlet property="serverStatusLabel" destination="RSU-HD-w6Y" id="Edh-A5-Gde"/>
-                        <outlet property="toggleDashboardButton" destination="Vlf-CC-gDd" id="VCQ-X6-3jm"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="X0E-eA-2x4" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-990.10791366906483" y="1353.5971223021584"/>
-        </scene>
-=======
->>>>>>> a7133d47975de0a4cb54b57f091e12cb8c80f220
         <!--View Controller-->
         <scene sceneID="6KS-de-jNz">
             <objects>
