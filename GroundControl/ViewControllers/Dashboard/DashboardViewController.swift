@@ -48,7 +48,7 @@ class DashboardViewController: UIViewController, UITextFieldDelegate {
         rightSwipeRecognizer.direction = .right
 
         let x = view.frame.width*0.03
-        let y = toggleDashboardButton.frame.height + x
+        let y = toggleDashboardButton.frame.height + 10// + x
         let width = view.frame.width - (2*x)
         let height = 510 - (toggleDashboardButton.frame.height + capsuleStateView.frame.height + 2*x) // FIXME: 510 should be superview's height!! For later, incorporate all views into storyboard for auto-layout.
         
@@ -101,10 +101,16 @@ class DashboardViewController: UIViewController, UITextFieldDelegate {
                         "Course" : course,
                         "Sonar Distance" : sonar]
             
+            let externalsInfo = ["Temperature" : altitude,
+                                 "Pressure" : speed,
+                                 "Humidity" : battery,
+                                 "Ozone" : temperature]
+            
+            
             internalsPage.setUp(withInfo: internalsInfo)
-            externalsPage.setUp(withInfo: internalsInfo)
-            terminalPage.setUp(withInfo: internalsInfo)
-            commandsPage.setUp(withInfo: internalsInfo)
+            externalsPage.setUp(withInfo: externalsInfo)
+//            terminalPage.setUp(withInfo: internalsInfo)
+//            commandsPage.setUp(withInfo: internalsInfo)
         }
     }
     
@@ -112,10 +118,10 @@ class DashboardViewController: UIViewController, UITextFieldDelegate {
         switch serverStatus {
         case .connected:
             capsuleStateView.backgroundColor = UIColor(red: 122/255, green: 229/255, blue: 124/255, alpha: 1.0)
-            serverStatusLabel.text = "CAPSULE ONLINE"
+            serverStatusLabel.text = "ONLINE"
         case .disconnected:
             capsuleStateView.backgroundColor = UIColor(red: 100/255, green: 100/255, blue: 100/255, alpha: 1.0)
-            serverStatusLabel.text = "CAPSULE OFFLINE"
+            serverStatusLabel.text = "OFFLINE"
         }
     }
     

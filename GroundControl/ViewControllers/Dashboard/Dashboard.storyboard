@@ -23,7 +23,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Vlf-CC-gDd">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Vlf-CC-gDd">
                                 <rect key="frame" x="0.0" y="0.0" width="768" height="30"/>
                                 <color key="backgroundColor" red="0.26322603132870048" green="0.33180022921105545" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <state key="normal" title="SHOW DASHBOARD">
@@ -33,33 +33,43 @@
                                     <action selector="toggleDashboard:" destination="p37-4e-OO3" eventType="touchUpInside" id="PfF-a6-uBt"/>
                                 </connections>
                             </button>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mQ9-wq-bzD">
-                                <rect key="frame" x="0.0" y="637" width="768" height="28"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mQ9-wq-bzD">
+                                <rect key="frame" x="0.0" y="996" width="768" height="28"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2Dz-Ui-BuS">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2Dz-Ui-BuS">
                                         <rect key="frame" x="691" y="4" width="42" height="21"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RSU-HD-w6Y">
-                                        <rect key="frame" x="341" y="4" width="86" height="21"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RSU-HD-w6Y">
+                                        <rect key="frame" x="359" y="1" width="50.5" height="27.5"/>
                                         <fontDescription key="fontDescription" name="Avenir-Heavy" family="Avenir" pointSize="20"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
                                 <color key="backgroundColor" red="0.46901112794876099" green="0.90137165784835815" blue="0.47202026844024658" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstItem="2Dz-Ui-BuS" firstAttribute="centerY" secondItem="mQ9-wq-bzD" secondAttribute="centerY" id="6u0-c3-OjL"/>
+                                    <constraint firstItem="RSU-HD-w6Y" firstAttribute="centerY" secondItem="mQ9-wq-bzD" secondAttribute="centerY" id="E83-Ky-5Df"/>
+                                    <constraint firstItem="RSU-HD-w6Y" firstAttribute="centerX" secondItem="mQ9-wq-bzD" secondAttribute="centerX" id="I8x-Fn-0iw"/>
+                                    <constraint firstAttribute="height" constant="28" id="dtg-AJ-PGh"/>
+                                    <constraint firstAttribute="trailing" secondItem="2Dz-Ui-BuS" secondAttribute="trailing" constant="35" id="qJr-TZ-9ID"/>
+                                </constraints>
                             </view>
                         </subviews>
                         <color key="backgroundColor" red="0.84304505586624146" green="0.84319043159484863" blue="0.8430359959602356" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="Vlf-CC-gDd" firstAttribute="trailing" secondItem="O6S-At-9IP" secondAttribute="trailing" id="46n-ht-kRY"/>
+                            <constraint firstItem="mQ9-wq-bzD" firstAttribute="trailing" secondItem="O6S-At-9IP" secondAttribute="trailing" id="DLf-uG-pTt"/>
+                            <constraint firstItem="mQ9-wq-bzD" firstAttribute="bottom" secondItem="O6S-At-9IP" secondAttribute="bottom" id="EMJ-SF-WMH"/>
                             <constraint firstItem="Vlf-CC-gDd" firstAttribute="leading" secondItem="O6S-At-9IP" secondAttribute="leading" id="EYm-k3-XZ3"/>
+                            <constraint firstItem="Vlf-CC-gDd" firstAttribute="top" secondItem="c5g-El-Mdp" secondAttribute="top" id="T8t-24-RzA"/>
                             <constraint firstItem="Vlf-CC-gDd" firstAttribute="centerX" secondItem="c5g-El-Mdp" secondAttribute="centerX" id="TYL-YO-rww"/>
+                            <constraint firstItem="Vlf-CC-gDd" firstAttribute="trailing" secondItem="O6S-At-9IP" secondAttribute="trailing" id="Y5l-14-2jB"/>
+                            <constraint firstItem="mQ9-wq-bzD" firstAttribute="leading" secondItem="O6S-At-9IP" secondAttribute="leading" id="f0F-pI-o9N"/>
+                            <constraint firstItem="Vlf-CC-gDd" firstAttribute="leading" secondItem="O6S-At-9IP" secondAttribute="leading" id="sov-LH-G9M"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="O6S-At-9IP"/>
                     </view>

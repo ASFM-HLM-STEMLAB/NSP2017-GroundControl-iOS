@@ -114,6 +114,7 @@ class MapViewController: UIViewController  {
         //When we get a .response type of message we show it in the terminal as a raw string with a < to signify incoming.
         notificationCenter.addObserver(forName:SocketCenter.socketResponseNotification, object: nil, queue: nil) { (notification) in
             if let response = notification.userInfo?["response"] as? String {
+                print("TERMINAL INCOMING: \(response)" )
 //                self.reportDetailViewController?.addLineToTerminal("< \(response)")
             }
         }
