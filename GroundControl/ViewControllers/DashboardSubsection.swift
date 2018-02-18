@@ -28,16 +28,24 @@ class DashboardSubsection: UIView {
         title = "Title"
         info = "Info"
         
-        titleLabel = UILabel(frame: CGRect(x: 0, y: (0.22 * frame.height), width: frame.width, height: 20.0)) // FIXME: Height is wrong
+        titleLabel = UILabel(frame: CGRect(x: 0, y: 0, width: frame.width, height: 0.5*frame.height))
         titleLabel.text = title
         titleLabel.textAlignment = .center
+        titleLabel.baselineAdjustment = .alignCenters
+        titleLabel.font = UIFont(name: "Avenir-Heavy", size: 15)
         
-        infoLabel = UILabel(frame: CGRect(x: 0, y: (0.39 * frame.height), width: frame.width, height: 20.0)) // FIXME: Height is wrong
+        infoLabel = UILabel(frame: CGRect(x: 0, y: (0.2 * frame.height), width: frame.width, height: frame.height))
         infoLabel.text = info
         infoLabel.textAlignment = .center
+        infoLabel.baselineAdjustment = .alignCenters
+        infoLabel.font = UIFont(name: "Avenir-Heavy", size: 35)
         
         addSubview(titleLabel)
         addSubview(infoLabel)
+        
+        backgroundColor = .white
+        layer.borderColor = UIColor(red: 216/255, green: 216/255, blue: 216/255, alpha: 1.0).cgColor
+        layer.borderWidth = 0.3
     }
     
     // Use updateLabels after setting title and info variables as Strings so it is reflected in view

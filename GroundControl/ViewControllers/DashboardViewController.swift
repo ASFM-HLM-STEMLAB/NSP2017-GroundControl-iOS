@@ -29,24 +29,41 @@ class DashboardViewController: UIViewController, UITextFieldDelegate {
     }
     
     var internalsPage = DashboardPage(frame: CGRect(x: 0, y: 0, width: 0, height: 0), pageTitle: "FLIGHT COMPUTER INTERNALS")
-    // var externalsPage = DashboardPage(frame: CGRect(x: 0, y: 0, width: 0, height: 0), pageTitle: "FLIGHT COMPUTER EXTERNALS")
-    // var terminalPage = DashboardPage(frame: CGRect(x: 0, y: 0, width: 0, height: 0), pageTitle: "COMMUNICATION TERMINAL")
-    // var commandsPage = DashboardPage(frame: CGRect(x: 0, y: 0, width: 0, height: 0), pageTitle: "ACTION COMMANDS")
+    var externalsPage = DashboardPage(frame: CGRect(x: 0, y: 0, width: 0, height: 0), pageTitle: "FLIGHT COMPUTER EXTERNALS")
+    var terminalPage = DashboardPage(frame: CGRect(x: 0, y: 0, width: 0, height: 0), pageTitle: "COMMUNICATION TERMINAL")
+    var commandsPage = DashboardPage(frame: CGRect(x: 0, y: 0, width: 0, height: 0), pageTitle: "ACTION COMMANDS")
+    var pageNumber = 1
+    
+    var notebookView = UIView(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let leftSwipeRecognizer: UISwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipe))
+        self.view.addGestureRecognizer(leftSwipeRecognizer)
+        leftSwipeRecognizer.direction = .left
+        
+        let rightSwipeRecognizer: UISwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipe))
+        self.view.addGestureRecognizer(rightSwipeRecognizer)
+        rightSwipeRecognizer.direction = .right
 
         let x = view.frame.width*0.03
         let y = toggleDashboardButton.frame.height + x
         let width = view.frame.width - (2*x)
         let height = 510 - (toggleDashboardButton.frame.height + capsuleStateView.frame.height + 2*x) // FIXME: 510 should be superview's height!! For later, incorporate all views into storyboard for auto-layout.
         
-        internalsPage.frame = CGRect(x: x, y: y, width: width, height: height)
-        // externalsPage.frame = CGRect(x: x, y: y, width: width, height: height)
-        // terminalPage.frame = CGRect(x: x, y: y, width: width, height: height)
-        // commandsPage.frame = CGRect(x: x, y: y, width: width, height: height)
+        internalsPage.frame = CGRect(x: 0, y: 0, width: width, height: height)
+        externalsPage.frame = CGRect(x: (width + 2*x), y: 0, width: width, height: height)
+        terminalPage.frame = CGRect(x: externalsPage.frame.origin.x + (width + 2*x), y: y, width: width, height: height)
+        commandsPage.frame = CGRect(x: terminalPage.frame.origin.x + (width + 2*x), y: y, width: width, height: height)
         
-        view.addSubview(internalsPage)
+        notebookView.frame = CGRect(x: x, y: y, width: self.view.frame.width*4, height: height)
+        notebookView.addSubview(internalsPage)
+        notebookView.addSubview(externalsPage)
+        notebookView.addSubview(terminalPage)
+        notebookView.addSubview(commandsPage)
+        
+        view.addSubview(notebookView)
         
         capsuleStateView.frame = CGRect(x: 0.0, y: 510.0, width: view.frame.width, height: capsuleStateView.frame.height)
     }
@@ -75,7 +92,7 @@ class DashboardViewController: UIViewController, UITextFieldDelegate {
             let course = String(report.course)
             let sonar = "-"
             
-            let info = ["Altitude" : altitude,
+            let internalsInfo = ["Altitude" : altitude,
                         "Speed" : speed,
                         "Battery" : battery,
                         "Temperature" : temperature,
@@ -84,7 +101,10 @@ class DashboardViewController: UIViewController, UITextFieldDelegate {
                         "Course" : course,
                         "Sonar Distance" : sonar]
             
-            internalsPage.setUp(withInfo: info)
+            internalsPage.setUp(withInfo: internalsInfo)
+            externalsPage.setUp(withInfo: internalsInfo)
+            terminalPage.setUp(withInfo: internalsInfo)
+            commandsPage.setUp(withInfo: internalsInfo)
         }
     }
     
@@ -111,6 +131,47 @@ class DashboardViewController: UIViewController, UITextFieldDelegate {
         textField.resignFirstResponder()
         return true
     }
+    
+    // MARK: - UIGestureRecognizer + Delegate
+    
+    @objc func handleSwipe(gestureRecognizer: UISwipeGestureRecognizer) {
+        
+        let animationDuration = 1.0
+        let delay = 0.0
+        let damping: CGFloat = 0.5
+        let initialSpringVelocity: CGFloat = 0.4
+        
+        if gestureRecognizer.direction == .left && self.pageNumber != 4 {
+            
+            let left = CGAffineTransform(translationX: -(CGFloat(pageNumber)*self.view.frame.width), y: 0)
+            UIView.animate(withDuration: animationDuration, delay: delay, usingSpringWithDamping: damping, initialSpringVelocity: initialSpringVelocity, options: [], animations: {
+                self.notebookView.transform = left
+                self.view.layoutIfNeeded()
+                self.notebookView.updateConstraintsIfNeeded()
+                
+                self.pageNumber += 1
+                
+            }, completion: nil)
+            
+            print("Swiped Left! Page number now \(pageNumber)")
+            
+        } else if gestureRecognizer.direction == .right && self.pageNumber != 1 {
+            
+            let right = CGAffineTransform(translationX: -(CGFloat(pageNumber-2)*self.view.frame.width), y: 0)
+            UIView.animate(withDuration: animationDuration, delay: delay, usingSpringWithDamping: damping, initialSpringVelocity: initialSpringVelocity, options: [], animations: {
+                self.notebookView.transform = right
+                self.view.layoutIfNeeded()
+                self.notebookView.updateConstraintsIfNeeded()
+                
+                self.pageNumber -= 1
+                
+            }, completion: nil)
+            
+            print("Swiped Right! Page number now \(pageNumber)")
+        }
+    }
+    
+    // MARK: - IBActions
     
     @IBAction func toggleDashboard(_ sender: Any) {
         delegate?.shouldTogglePanelView()

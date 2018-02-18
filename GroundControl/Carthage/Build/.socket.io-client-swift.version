@@ -8,20 +8,20 @@
   "watchOS" : [
     {
       "name" : "SocketIO",
-      "hash" : "0fbe3e941fd42d1d30832e068ef57a24c15b7f7b03c5965dc57623f984f97151"
+      "hash" : "00f62b3a51554ac5b6e3bd0967557020737eeee8f635eae5195892a50eafce7c"
     }
   ],
   "tvOS" : [
     {
       "name" : "SocketIO",
-      "hash" : "12180c54a014faab4f6ed22c4c69dc476cb31c6a63eb6fce4be14a77371ce56c"
+      "hash" : "f041634e7677dad8bb460e67602b56ae4bb9ab697a06f6246415f93bbfcc93cd"
     }
   ],
   "commitish" : "v13.1.1",
   "iOS" : [
     {
       "name" : "SocketIO",
-      "hash" : "7f886ea4c737b61aa70bd62b949b5488ed32dcd5de03445970b51ee7972b172f"
+      "hash" : "2027f4ad03fa8812a763b039fc8357256f4cba9bbc27fe2a494cd234fa134cc2"
     }
   ]
 }
