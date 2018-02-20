@@ -2,26 +2,26 @@
   "Mac" : [
     {
       "name" : "SocketIO",
-      "hash" : "7cf0d4753d005f3c938584cf3ffdf68a500e1c4c85103eafe64bdfea29c7969d"
+      "hash" : "8ad251b410da0c1ed3108ab6b1d581642b458e9fba33166e8a1427a717c6d49e"
     }
   ],
   "watchOS" : [
     {
       "name" : "SocketIO",
-      "hash" : "9a7b4b34fc52f7c0ef285d9c0d206d98fff7735e9b9e3ee3d6fc001ef38e8375"
+      "hash" : "8746231454a44ee5a21897e087a3a402e743574cce4e7d7ab890f794d904a913"
     }
   ],
   "tvOS" : [
     {
       "name" : "SocketIO",
-      "hash" : "32fa070d0c8d09e52f557393f86a3c52f3eb2f001fa475255bc5bc0d4e9f82ed"
+      "hash" : "922e00f27cf8829673183833f7485aada2fb2491f0c21498d6b9379f752ca0f9"
     }
   ],
   "commitish" : "v13.1.1",
   "iOS" : [
     {
       "name" : "SocketIO",
-      "hash" : "aad7589ccdfe895461c05238bdfa4bf79aae67224940828fcc7254edbbc7b35e"
+      "hash" : "e248b3d05e0fb49c4a471ea79ba52db473e057d7b51329e045122f6fad14e7bd"
     }
   ]
 }
