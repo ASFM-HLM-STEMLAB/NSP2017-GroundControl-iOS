@@ -15,7 +15,7 @@ protocol DashboardDelegate {
 }
 
 class DashboardViewController: UIViewController, UITextFieldDelegate {
-
+    
     @IBOutlet weak var toggleDashboardButton: UIButton!
     @IBOutlet weak var capsuleStateView: UIView!
     @IBOutlet weak var serverStatusLabel: UILabel!
@@ -46,16 +46,16 @@ class DashboardViewController: UIViewController, UITextFieldDelegate {
         let rightSwipeRecognizer: UISwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipe))
         self.view.addGestureRecognizer(rightSwipeRecognizer)
         rightSwipeRecognizer.direction = .right
-
+        
         let x = view.frame.width*0.03
-        let y = toggleDashboardButton.frame.height + 10// + x
+        let y = toggleDashboardButton.frame.height + x
         let width = view.frame.width - (2*x)
         let height = 510 - (toggleDashboardButton.frame.height + capsuleStateView.frame.height + 2*x) // FIXME: 510 should be superview's height!! For later, incorporate all views into storyboard for auto-layout.
         
         internalsPage.frame = CGRect(x: 0, y: 0, width: width, height: height)
         externalsPage.frame = CGRect(x: (width + 2*x), y: 0, width: width, height: height)
-        terminalPage.frame = CGRect(x: externalsPage.frame.origin.x + (width + 2*x), y: y, width: width, height: height)
-        commandsPage.frame = CGRect(x: terminalPage.frame.origin.x + (width + 2*x), y: y, width: width, height: height)
+        terminalPage.frame = CGRect(x: externalsPage.frame.origin.x + (width + 2*x), y: 0, width: width, height: height)
+        commandsPage.frame = CGRect(x: terminalPage.frame.origin.x + (width + 2*x), y: 0, width: width, height: height)
         
         notebookView.frame = CGRect(x: x, y: y, width: self.view.frame.width*4, height: height)
         notebookView.addSubview(internalsPage)
@@ -67,7 +67,7 @@ class DashboardViewController: UIViewController, UITextFieldDelegate {
         
         capsuleStateView.frame = CGRect(x: 0.0, y: 510.0, width: view.frame.width, height: capsuleStateView.frame.height)
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -83,34 +83,48 @@ class DashboardViewController: UIViewController, UITextFieldDelegate {
         
         if (report.reportType == .pulse) {
             
+            // Internal Variables
             let altitude = String(report.altitude)
             let speed = String(report.speed)
-            let battery = String(report.batteryLevel)
+            let battery = String(report.batteryLevel) + "0 %"
             let temperature = String(report.internalTempC)
             let gps = String(report.horizontalPrecision)
             let sat = String(report.satModemSignal)
             let course = String(report.course)
             let sonar = "-"
             
+            // External Variables
+            let stage = String(describing: report.missionStage)
+            let extTemperature = "-"
+            let pressure = "-"
+            let externalHumidity = "-"
+            let coLevels = "-"
+            let methane = "-"
+            let contaminant = "-"
+            
+            
             let internalsInfo = ["Altitude" : altitude,
-                        "Speed" : speed,
-                        "Battery" : battery,
-                        "Temperature" : temperature,
-                        "GPS Quantity" : gps,
-                        "Satellite Modem Signal" : sat,
-                        "Course" : course,
-                        "Sonar Distance" : sonar]
+                                 "Speed" : speed,
+                                 "Battery" : battery,
+                                 "Internal Temperature" : temperature,
+                                 "GPS Quantity" : gps,
+                                 "Satellite Modem Signal" : sat,
+                                 "Course" : course,
+                                 "Sonar Distance" : sonar]
             
-            let externalsInfo = ["Temperature" : altitude,
-                                 "Pressure" : speed,
-                                 "Humidity" : battery,
-                                 "Ozone" : temperature]
-            
+            let externalsInfo = ["Stage" : stage,
+                                 "Altitude" : altitude,
+                                 "External Temperature" : extTemperature,
+                                 "Atmospheric Pressure" : pressure,
+                                 "External Humidity" : externalHumidity,
+                                 "CO2 Levels" : coLevels,
+                                 "Methane Levels" : methane,
+                                 "Contaminant Levels" : contaminant]
             
             internalsPage.setUp(withInfo: internalsInfo)
             externalsPage.setUp(withInfo: externalsInfo)
-//            terminalPage.setUp(withInfo: internalsInfo)
-//            commandsPage.setUp(withInfo: internalsInfo)
+            terminalPage.setUp(withInfo: internalsInfo)
+            commandsPage.setUp(withInfo: internalsInfo)
         }
     }
     
@@ -118,10 +132,10 @@ class DashboardViewController: UIViewController, UITextFieldDelegate {
         switch serverStatus {
         case .connected:
             capsuleStateView.backgroundColor = UIColor(red: 122/255, green: 229/255, blue: 124/255, alpha: 1.0)
-            serverStatusLabel.text = "ONLINE"
+            serverStatusLabel.text = "CAPSULE ONLINE"
         case .disconnected:
             capsuleStateView.backgroundColor = UIColor(red: 100/255, green: 100/255, blue: 100/255, alpha: 1.0)
-            serverStatusLabel.text = "OFFLINE"
+            serverStatusLabel.text = "CAPSULE OFFLINE"
         }
     }
     
@@ -142,7 +156,7 @@ class DashboardViewController: UIViewController, UITextFieldDelegate {
     
     @objc func handleSwipe(gestureRecognizer: UISwipeGestureRecognizer) {
         
-        let animationDuration = 1.0
+        let animationDuration = 0.7
         let delay = 0.0
         let damping: CGFloat = 0.5
         let initialSpringVelocity: CGFloat = 0.4
@@ -189,3 +203,4 @@ class DashboardViewController: UIViewController, UITextFieldDelegate {
     }
     
 }
+
