@@ -18,6 +18,8 @@ class DashboardPage: UIView, UITextFieldDelegate {
     var terminalInput: UITextField?
     var terminalTextView: UITextView?
     
+    var isExpanded: Bool = false
+    
     init(frame: CGRect, pageTitle: String) {
         super.init(frame: frame)
         
@@ -111,6 +113,8 @@ class DashboardPage: UIView, UITextFieldDelegate {
         if let input = self.terminalInput {
             
             input.delegate = self
+            input.returnKeyType = .done
+            input.font = UIFont(name: "Courier", size: 18)
             
             if let textView = self.terminalTextView {
                 
@@ -118,6 +122,7 @@ class DashboardPage: UIView, UITextFieldDelegate {
                 
                 textView.backgroundColor = .black
                 textView.textColor = .white
+                textView.font = input.font
                 
                 input.backgroundColor = .white
                 input.textColor = .black
@@ -135,35 +140,41 @@ class DashboardPage: UIView, UITextFieldDelegate {
     }
     
     @objc func keyboardWillChange(notification: NSNotification) {
+        if let input = self.terminalInput {
+            input.returnKeyType = .send
+        }
         
         if let keyboardSize = (notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
-            frame.origin.y = -keyboardSize.height
-            //            if (self.terminalInput.isFirstResponder) {
-            //                frame.origin.y = -keyboardSize.height
-            //            }
+            frame.origin.y = -keyboardSize.height + 90
         }
     }
     
     func sendMessageToSocket(message:String) {
-        // addLineToTerminal("> " + message)
+        addLineToTerminal("> " + message)
         SocketCenter.sendMessage(event: "TXC", data: [message])
     }
     
-    //    @IBAction func sendLineButtonPressed(_ sender: Any) {
-    //        if let input = self.terminalInput.text {
-    //            sendMessageToSocket(message:input)
-    //        }
-    //    }
-    
-    //    public func addLineToTerminal(_ line:String) {
-    //        terminalTextView.text = self.terminalTextView.text + "\n" + line
-    //        let bottom = self.terminalTextView.contentSize.height - self.terminalTextView.bounds.size.height
-    //        self.terminalTextView.setContentOffset(CGPoint(x: 0, y: bottom), animated: true)
-    //    }
+    public func addLineToTerminal(_ line:String) {
+        
+        if let terminal = terminalTextView {
+            terminal.text = terminal.text + "\n" + line
+            let bottom = terminal.contentSize.height - terminal.bounds.size.height
+            terminal.setContentOffset(CGPoint(x: 0, y: bottom), animated: true)
+        }
+        
+    }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        print("SHOULD HIDE KEYBOARD!")
+        
         textField.resignFirstResponder()
+        
+        if let input = self.terminalInput?.text {
+            sendMessageToSocket(message:input)
+        }
+        
+        self.terminalInput?.text = ""
+        self.terminalInput?.returnKeyType = .done
+        
         return true
     }
     
