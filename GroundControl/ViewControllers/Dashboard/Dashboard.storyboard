@@ -75,6 +75,7 @@
                     </view>
                     <connections>
                         <outlet property="capsuleStateView" destination="mQ9-wq-bzD" id="G0y-g4-M4Q"/>
+                        <outlet property="messagesLabel" destination="2Dz-Ui-BuS" id="eVy-tO-Qbg"/>
                         <outlet property="serverStatusLabel" destination="RSU-HD-w6Y" id="Edh-A5-Gde"/>
                         <outlet property="toggleDashboardButton" destination="Vlf-CC-gDd" id="VCQ-X6-3jm"/>
                     </connections>

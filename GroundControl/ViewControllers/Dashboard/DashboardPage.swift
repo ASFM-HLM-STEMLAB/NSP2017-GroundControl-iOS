@@ -10,6 +10,23 @@ import UIKit
 
 class DashboardPage: UIView, UITextFieldDelegate {
     
+    enum TransmitMode {
+        case cellular
+        case sattelite
+    }
+    
+    var transmissionToggle = UIButton(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
+    
+    private var transmitMode = TransmitMode.cellular {
+        didSet {
+            if transmitMode == .cellular {
+                self.transmissionToggle.setTitle("CELL", for: .normal)
+            } else {
+                self.transmissionToggle.setTitle("SAT", for: .normal)
+            }
+        }
+    }
+    
     var terminalEnabled = false
     var titleView: UIView = UIView()
     var pageTitle: String = ""
@@ -17,8 +34,6 @@ class DashboardPage: UIView, UITextFieldDelegate {
     
     var terminalInput: UITextField?
     var terminalTextView: UITextView?
-    
-    var isExpanded: Bool = false
     
     init(frame: CGRect, pageTitle: String) {
         super.init(frame: frame)
@@ -37,6 +52,8 @@ class DashboardPage: UIView, UITextFieldDelegate {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    // MARK: INFORMATION FUNCTIONS
     
     func setUp(withInfo info: [String : String]) {
         
@@ -63,7 +80,7 @@ class DashboardPage: UIView, UITextFieldDelegate {
             print("Terminal Initiated...")
             setUpTerminal()
         } else if pageTitle == "ACTION COMMANDS" {
-            
+            setUpCommands()
         }
         
     }
@@ -99,6 +116,8 @@ class DashboardPage: UIView, UITextFieldDelegate {
         }
     }
     
+    // MARK: TERMINAL FUNCTIONS
+    
     func setUpTerminal() {
         
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillChange(notification:)),
@@ -132,8 +151,6 @@ class DashboardPage: UIView, UITextFieldDelegate {
             }
         }
     }
-    
-    // MARK: TERMINAL FUNCTIONS
     
     @objc func keyboardWillHide() {
         frame.origin.y = 0
@@ -176,6 +193,90 @@ class DashboardPage: UIView, UITextFieldDelegate {
         self.terminalInput?.returnKeyType = .done
         
         return true
+    }
+    
+    // MARK: COMMANDS FUNCTIONS
+    
+    func setUpCommands() {
+        
+        let width = self.frame.width/2
+        let height = (self.frame.height - titleView.frame.height)/3
+        
+        let leftX: CGFloat = 0.0
+        let rightX: CGFloat = self.frame.width/2
+        
+        let y1: CGFloat = titleLabel.frame.height
+        let y2: CGFloat = height + y1
+        let y3: CGFloat = height + y2
+        
+        transmissionToggle = UIButton(frame: CGRect(x: leftX, y: y1, width: width, height: height))
+        let buzzerOn = UIButton(frame: CGRect(x: rightX, y: y1, width: width, height: height))
+        let cMute = UIButton(frame: CGRect(x: leftX, y: y2, width: width, height: height))
+        let sMute = UIButton(frame: CGRect(x: rightX, y: y2, width: width, height: height))
+        let forceReport = UIButton(frame: CGRect(x: leftX, y: y3, width: width, height: height))
+        
+        transmissionToggle.setTitle("CELL", for: .normal)
+        buzzerOn.setTitle("BUZZER", for: .normal)
+        cMute.setTitle("CMUTE", for: .normal)
+        sMute.setTitle("SMUTE", for: .normal)
+        forceReport.setTitle("FORCE", for: .normal)
+        
+        transmissionToggle.addTarget(self, action: #selector(DashboardPage.transmitModeButtonPressed(_:)), for: .touchUpInside)
+        buzzerOn.addTarget(self, action: #selector(DashboardPage.buzzerButtonPressed(_:)), for: .touchUpInside)
+        cMute.addTarget(self, action: #selector(DashboardPage.cmuteButtonPressed(_:)), for: .touchUpInside)
+        sMute.addTarget(self, action: #selector(DashboardPage.smuteButtonPressed(_:)), for: .touchUpInside)
+        forceReport.addTarget(self, action: #selector(DashboardPage.forceReportButtonPressed(_:)), for: .touchUpInside)
+        
+        beautifyButton(button: transmissionToggle)
+        beautifyButton(button: buzzerOn)
+        beautifyButton(button: cMute)
+        beautifyButton(button: sMute)
+        beautifyButton(button: forceReport)
+        
+        addSubview(transmissionToggle)
+        addSubview(buzzerOn)
+        addSubview(cMute)
+        addSubview(sMute)
+        addSubview(forceReport)
+        
+    }
+    
+    func beautifyButton(button: UIButton) {
+        button.backgroundColor = .white
+        button.layer.borderColor = UIColor(red: 216/255, green: 216/255, blue: 216/255, alpha: 1.0).cgColor
+        button.layer.borderWidth = 0.3
+        button.setTitleColor(.red, for: .normal)
+    }
+    
+    @objc func transmitModeButtonPressed(_ sender: Any) {
+        
+        if transmitMode == .cellular {
+            transmissionToggle.setTitle("CELL", for: .normal)
+        } else {
+            transmissionToggle.setTitle("SAT", for: .normal)
+        }
+    }
+    
+    @objc func buzzerButtonPressed(_ sender: Any) {
+        sendMessageToSocket(message: "buzzeron")
+        
+    }
+    
+    @objc func cmuteButtonPressed(_ sender: Any) {
+        sendMessageToSocket(message:"cellmute")
+    }
+    
+    @objc func smuteButtonPressed(_ sender: Any) {
+        sendMessageToSocket(message:"satmute")
+    }
+    
+    @objc func forceReportButtonPressed(_ sender: Any) {
+        if self.transmitMode == .cellular {
+            sendMessageToSocket(message:"$$")
+        } else {
+            //TODO: Send it thru SAT not CELL
+            sendMessageToSocket(message:"$$$")
+        }
     }
     
 }

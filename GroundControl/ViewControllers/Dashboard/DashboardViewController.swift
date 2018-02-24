@@ -19,6 +19,7 @@ class DashboardViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var toggleDashboardButton: UIButton!
     @IBOutlet weak var capsuleStateView: UIView!
     @IBOutlet weak var serverStatusLabel: UILabel!
+    @IBOutlet weak var messagesLabel: UILabel!
     
     var report: Report = Report(rawString: "")
     var delegate: DashboardDelegate?
@@ -123,7 +124,7 @@ class DashboardViewController: UIViewController, UITextFieldDelegate {
             
             internalsPage.setUp(withInfo: internalsInfo)
             externalsPage.setUp(withInfo: externalsInfo)
-            terminalPage.setUp(withInfo: internalsInfo)
+            terminalPage.setUp(withInfo: [:])
             commandsPage.setUp(withInfo: internalsInfo)
         }
     }
@@ -140,8 +141,7 @@ class DashboardViewController: UIViewController, UITextFieldDelegate {
     }
     
     public func setMessageCount(_ count:Int) {
-        // Need to insert label, reference it and change to this value
-        // networkMessageCountLabel.text =  "\(count) ✉️"
+        messagesLabel.text =  "\(count) ✉️"
     }
     
     // MARK: - UITextField Delegate
