@@ -10,6 +10,7 @@
 		00220A3F2005D3BC000B12DF /* TimeAgo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00220A3E2005D3BC000B12DF /* TimeAgo.swift */; };
 		00220A422005F639000B12DF /* PanGestureRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00220A412005F639000B12DF /* PanGestureRecognizer.swift */; };
 		003DE1422034093E00D6E06A /* Time.swift in Sources */ = {isa = PBXBuildFile; fileRef = 003DE1412034093E00D6E06A /* Time.swift */; };
+		005743532043DAE000AB9E73 /* Instruments.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 005743522043DAE000AB9E73 /* Instruments.storyboard */; };
 		005C5C981FCBD01B0055B110 /* Starscream.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 005C5C961FCBD01B0055B110 /* Starscream.framework */; };
 		005C5C991FCBD01B0055B110 /* Starscream.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 005C5C961FCBD01B0055B110 /* Starscream.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		005C5C9A1FCBD01B0055B110 /* SocketIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 005C5C971FCBD01B0055B110 /* SocketIO.framework */; };
@@ -53,6 +54,7 @@
 		00220A3E2005D3BC000B12DF /* TimeAgo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeAgo.swift; sourceTree = "<group>"; };
 		00220A412005F639000B12DF /* PanGestureRecognizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PanGestureRecognizer.swift; sourceTree = "<group>"; };
 		003DE1412034093E00D6E06A /* Time.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Time.swift; sourceTree = "<group>"; };
+		005743522043DAE000AB9E73 /* Instruments.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Instruments.storyboard; sourceTree = "<group>"; };
 		005C5C961FCBD01B0055B110 /* Starscream.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Starscream.framework; path = GroundControl/Carthage/Build/iOS/Starscream.framework; sourceTree = "<group>"; };
 		005C5C971FCBD01B0055B110 /* SocketIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SocketIO.framework; path = GroundControl/Carthage/Build/iOS/SocketIO.framework; sourceTree = "<group>"; };
 		005C5C9C1FCBD0480055B110 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
@@ -102,6 +104,7 @@
 		000A8DBB1FFD6FB900322310 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				005743512043DACC00AB9E73 /* Instruments */,
 				00C622992032D62200F09BE2 /* MapView */,
 				00EEB2142039646600B334DE /* Dashboard */,
 				005C5CA31FCBDD6D0055B110 /* ReportInfoViewController.swift */,
@@ -141,6 +144,14 @@
 				00220A412005F639000B12DF /* PanGestureRecognizer.swift */,
 			);
 			path = "Gesture Extensions";
+			sourceTree = "<group>";
+		};
+		005743512043DACC00AB9E73 /* Instruments */ = {
+			isa = PBXGroup;
+			children = (
+				005743522043DAE000AB9E73 /* Instruments.storyboard */,
+			);
+			path = Instruments;
 			sourceTree = "<group>";
 		};
 		005C5CA01FCBD8E10055B110 /* Frameworks */ = {
@@ -272,6 +283,7 @@
 			files = (
 				00DEF2F91FCBCD0C00F1F393 /* LaunchScreen.storyboard in Resources */,
 				00EEB20C2039643400B334DE /* Dashboard.storyboard in Resources */,
+				005743532043DAE000AB9E73 /* Instruments.storyboard in Resources */,
 				00DEF2F61FCBCD0C00F1F393 /* Assets.xcassets in Resources */,
 				00EEB20D2039643400B334DE /* Main.storyboard in Resources */,
 			);
@@ -429,7 +441,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = HSZTC8Z4L4;
+				DEVELOPMENT_TEAM = E92H7P5GDX;
 				ENABLE_BITCODE = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -449,7 +461,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = HSZTC8Z4L4;
+				DEVELOPMENT_TEAM = E92H7P5GDX;
 				ENABLE_BITCODE = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
