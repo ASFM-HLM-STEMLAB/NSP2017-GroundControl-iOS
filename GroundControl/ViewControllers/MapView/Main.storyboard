@@ -101,15 +101,15 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lHM-PF-yWx">
-                                <rect key="frame" x="514" y="20" width="84.5" height="42.5"/>
-                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="36"/>
+                                <rect key="frame" x="493" y="20" width="126.5" height="64"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="54"/>
                                 <color key="textColor" red="0.46559298038482666" green="0.55729949474334717" blue="0.79612958431243896" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9dP-M2-HZP">
                                 <rect key="frame" x="0.0" y="267" width="1112" height="567"/>
                                 <connections>
-                                    <segue destination="mbb-Fd-USq" kind="embed" identifier="dashboardSegue" id="UyX-t7-4TI"/>
+                                    <segue destination="bEh-ef-yYN" kind="embed" identifier="instrumentsSegue" id="37h-G6-ttn"/>
                                 </connections>
                             </containerView>
                         </subviews>
@@ -163,6 +163,14 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8qa-cM-5iP" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-990" y="464"/>
+        </scene>
+        <!--Instruments-->
+        <scene sceneID="9gA-KZ-2zh">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Instruments" id="bEh-ef-yYN" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="A7L-yV-VVS" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-990" y="927"/>
         </scene>
         <!--Report Info View Controller-->
         <scene sceneID="4VQ-bX-CPY">
@@ -1335,15 +1343,7 @@ Cg
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3hh-ml-LCM" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-307.01438848920867" y="751.43884892086339"/>
-        </scene>
-        <!--Dashboard-->
-        <scene sceneID="uGq-QF-l7O">
-            <objects>
-                <viewControllerPlaceholder storyboardName="Dashboard" id="mbb-Fd-USq" sceneMemberID="viewController"/>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Tzd-K4-VVE" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-990" y="1079"/>
+            <point key="canvasLocation" x="-1777" y="1692"/>
         </scene>
     </scenes>
 </document>

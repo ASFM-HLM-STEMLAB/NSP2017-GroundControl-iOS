@@ -18,7 +18,7 @@ extension MapViewController {
         
         let top = CGAffineTransform(translationX: 0, y: 0)
         infoViewShowed = true
-        UIView.animate(withDuration: infoViewAnimationTime, delay: 0, usingSpringWithDamping: 0.4, initialSpringVelocity: 0.2, options: [], animations: {
+        UIView.animate(withDuration: infoViewAnimationTime, delay: 0, options: [.curveEaseIn], animations: {
             self.reportInfoView.transform = top
             self.view.layoutIfNeeded()
             self.reportInfoView.updateConstraintsIfNeeded()
@@ -30,7 +30,7 @@ extension MapViewController {
         self.reportInfoView.updateConstraintsIfNeeded()
         let top = CGAffineTransform(translationX: 0, y: reportInfoView.bounds.height-65)
         infoViewShowed = false
-        UIView.animate(withDuration: infoViewAnimationTime, delay: 0, usingSpringWithDamping: 0.4, initialSpringVelocity: 0.2, options: [], animations: {
+        UIView.animate(withDuration: infoViewAnimationTime, delay: 0, options: [.curveEaseIn], animations: {
             self.reportInfoView.transform = top
             self.view.layoutIfNeeded()
             self.reportInfoView.updateConstraintsIfNeeded()

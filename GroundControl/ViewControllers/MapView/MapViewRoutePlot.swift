@@ -60,6 +60,8 @@ extension MapViewController {
     func addReportToDashboard(report: Report) {
         self.dashboardViewController?.setMessageCount(reports.count)
         self.dashboardViewController?.setReport(report)
+        self.instrumentsPageController?.setMessageCount(reports.count)
+        self.instrumentsPageController?.setReport(report)
     }
     
     
