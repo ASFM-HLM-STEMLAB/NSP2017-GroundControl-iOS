@@ -87,16 +87,16 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="vkb-La-52P" firstAttribute="trailing" secondItem="cil-Pv-7QY" secondAttribute="trailing" id="14D-Il-6yl"/>
-                            <constraint firstItem="cil-Pv-7QY" firstAttribute="leading" secondItem="vkb-La-52P" secondAttribute="leading" id="5Wb-SZ-rD8"/>
+                            <constraint firstAttribute="trailing" secondItem="cil-Pv-7QY" secondAttribute="trailing" id="14D-Il-6yl"/>
+                            <constraint firstItem="cil-Pv-7QY" firstAttribute="leading" secondItem="EH1-js-9L3" secondAttribute="leading" id="5Wb-SZ-rD8"/>
                             <constraint firstItem="4Dd-1W-5cO" firstAttribute="top" secondItem="cil-Pv-7QY" secondAttribute="bottom" id="GrX-gq-kba"/>
                             <constraint firstItem="H8j-dK-Gaf" firstAttribute="top" secondItem="EH1-js-9L3" secondAttribute="top" id="PYe-ns-SBl"/>
-                            <constraint firstItem="H8j-dK-Gaf" firstAttribute="leading" secondItem="vkb-La-52P" secondAttribute="leading" id="XYH-Up-6Xa"/>
+                            <constraint firstItem="H8j-dK-Gaf" firstAttribute="leading" secondItem="EH1-js-9L3" secondAttribute="leading" id="XYH-Up-6Xa"/>
                             <constraint firstItem="cil-Pv-7QY" firstAttribute="top" secondItem="H8j-dK-Gaf" secondAttribute="bottom" id="Ymh-eO-3m9"/>
-                            <constraint firstItem="vkb-La-52P" firstAttribute="trailing" secondItem="H8j-dK-Gaf" secondAttribute="trailing" id="Yq1-RX-qrS"/>
+                            <constraint firstAttribute="trailing" secondItem="H8j-dK-Gaf" secondAttribute="trailing" id="Yq1-RX-qrS"/>
                             <constraint firstItem="vkb-La-52P" firstAttribute="bottom" secondItem="4Dd-1W-5cO" secondAttribute="bottom" id="iuQ-pP-XV2"/>
-                            <constraint firstItem="vkb-La-52P" firstAttribute="trailing" secondItem="4Dd-1W-5cO" secondAttribute="trailing" id="n5I-mu-boe"/>
-                            <constraint firstItem="4Dd-1W-5cO" firstAttribute="leading" secondItem="vkb-La-52P" secondAttribute="leading" id="tZW-ud-HLC"/>
+                            <constraint firstAttribute="trailing" secondItem="4Dd-1W-5cO" secondAttribute="trailing" id="n5I-mu-boe"/>
+                            <constraint firstItem="4Dd-1W-5cO" firstAttribute="leading" secondItem="EH1-js-9L3" secondAttribute="leading" id="tZW-ud-HLC"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="vkb-La-52P"/>
                     </view>
