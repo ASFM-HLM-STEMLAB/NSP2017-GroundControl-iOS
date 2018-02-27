@@ -28,7 +28,7 @@ extension MapViewController {
     func hideDetails() { //Animate the ReportInfoView panel down.
         self.view.layoutIfNeeded()
         self.reportInfoView.updateConstraintsIfNeeded()
-        let top = CGAffineTransform(translationX: 0, y: reportInfoView.bounds.height-65)
+        let top = CGAffineTransform(translationX: 0, y: reportInfoView.bounds.height-35)
         infoViewShowed = false
         UIView.animate(withDuration: infoViewAnimationTime, delay: 0, options: [.curveEaseIn], animations: {
             self.reportInfoView.transform = top
