@@ -174,6 +174,37 @@ extension MapViewController {
         }
     }
     
+    @IBAction func moreButtonPressed(_ sender: Any) {
+        let alert = UIAlertController(title: "Login to continue", message: "", preferredStyle: .alert)
+        
+        let authenticateButton = UIAlertAction(title: "Continue", style: .default) { (action) in
+            let usernameTextField = alert.textFields![0] as UITextField
+            let passwordTextField = alert.textFields![1] as UITextField
+            
+            if usernameTextField.text == "me" && passwordTextField.text == "too" {
+                self.instrumentsPageController?.allowRestrictedArea()
+            }
+            
+        }
+        
+        let cancelButton = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        
+        alert.addTextField { (textField : UITextField!) -> Void in
+            textField.placeholder = "Username"
+        }
+        
+        alert.addTextField { (textField : UITextField!) -> Void in
+            textField.placeholder = "Password"
+            textField.isSecureTextEntry = true
+        }
+        
+        alert.addAction(authenticateButton)
+        alert.addAction(cancelButton)
+        
+        present(alert, animated: true, completion: nil)
+        
+    }
+    
     @IBAction func reloadButtonPressed(_ sender: Any) {
         getAllReports()
     }

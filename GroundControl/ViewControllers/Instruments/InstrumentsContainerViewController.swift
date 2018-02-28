@@ -25,11 +25,16 @@ class InstrumentsContainerViewController: UIViewController, ReportRenderable, Pa
     
     @IBOutlet weak var messageCountLabel: UILabel!
     @IBOutlet weak var onlineStatusLabel: UILabel!
+    
     func setReport(_ report: Report) {
         if let pageController = pageController {
             pageController.setReport(report)
             self.stageLabel.text = "\(report.missionStage.stringValue().uppercased())"
         }
+    }
+    
+    func allowRestrictedArea() {
+        pageController?.allowRestrictedArea()
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {        

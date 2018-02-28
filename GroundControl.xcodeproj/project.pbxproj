@@ -10,6 +10,7 @@
 		00220A3F2005D3BC000B12DF /* TimeAgo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00220A3E2005D3BC000B12DF /* TimeAgo.swift */; };
 		00220A422005F639000B12DF /* PanGestureRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00220A412005F639000B12DF /* PanGestureRecognizer.swift */; };
 		003DE1422034093E00D6E06A /* Time.swift in Sources */ = {isa = PBXBuildFile; fileRef = 003DE1412034093E00D6E06A /* Time.swift */; };
+		0040E1302046537B00C1AFFE /* CommandViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0040E12F2046537B00C1AFFE /* CommandViewController.swift */; };
 		005743532043DAE000AB9E73 /* Instruments.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 005743522043DAE000AB9E73 /* Instruments.storyboard */; };
 		005C5C981FCBD01B0055B110 /* Starscream.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 005C5C961FCBD01B0055B110 /* Starscream.framework */; };
 		005C5C991FCBD01B0055B110 /* Starscream.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 005C5C961FCBD01B0055B110 /* Starscream.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -59,6 +60,7 @@
 		00220A3E2005D3BC000B12DF /* TimeAgo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeAgo.swift; sourceTree = "<group>"; };
 		00220A412005F639000B12DF /* PanGestureRecognizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PanGestureRecognizer.swift; sourceTree = "<group>"; };
 		003DE1412034093E00D6E06A /* Time.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Time.swift; sourceTree = "<group>"; };
+		0040E12F2046537B00C1AFFE /* CommandViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommandViewController.swift; sourceTree = "<group>"; };
 		005743522043DAE000AB9E73 /* Instruments.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Instruments.storyboard; sourceTree = "<group>"; };
 		005C5C961FCBD01B0055B110 /* Starscream.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Starscream.framework; path = GroundControl/Carthage/Build/iOS/Starscream.framework; sourceTree = "<group>"; };
 		005C5C971FCBD01B0055B110 /* SocketIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SocketIO.framework; path = GroundControl/Carthage/Build/iOS/SocketIO.framework; sourceTree = "<group>"; };
@@ -161,6 +163,7 @@
 			isa = PBXGroup;
 			children = (
 				005743522043DAE000AB9E73 /* Instruments.storyboard */,
+				0040E12F2046537B00C1AFFE /* CommandViewController.swift */,
 				0062CAA9204530CB00E5BA41 /* InstrumentsContainerViewController.swift */,
 				0062CAA0204510F900E5BA41 /* InstrumentsPageController.swift */,
 				0062CAA22045116000E5BA41 /* InternalInstrumentsViewController.swift */,
@@ -329,6 +332,7 @@
 				00220A422005F639000B12DF /* PanGestureRecognizer.swift in Sources */,
 				00C707962039657700C804F1 /* DashboardSubsection.swift in Sources */,
 				00DEF2EF1FCBCD0C00F1F393 /* AppDelegate.swift in Sources */,
+				0040E1302046537B00C1AFFE /* CommandViewController.swift in Sources */,
 				0062CAA32045116000E5BA41 /* InternalInstrumentsViewController.swift in Sources */,
 				00C707982039657C00C804F1 /* DashboardPage.swift in Sources */,
 				003DE1422034093E00D6E06A /* Time.swift in Sources */,
