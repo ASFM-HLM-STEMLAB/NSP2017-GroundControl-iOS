@@ -22,13 +22,13 @@ class InternalInstrumentsViewController: UIViewController, ReportRenderable {
     @IBOutlet weak var sonarDistanceLabel: UILabel!
     
     func setReport(_ report: Report) {
-        self.altitudeLabel.text = "\(report.altitude) ft"
+        self.altitudeLabel.text = "\(report.altitude)ft"
         self.headingLabel.text = "\(report.course)°"
         self.tempLabel.text = "\(report.internalTempC) °C"
         self.iridiumSatsLabel.text = "\(report.satModemSignal)"
-        self.speedLabel.text = "\(report.speed) KTS"
+        self.speedLabel.text = "\(report.speed)kts"
         self.distanceLabel.text = "-"
-        self.batteryLabel.text = "\(report.batteryLevel) %"
+        self.batteryLabel.text = "\(report.batteryLevel)%"
         self.gpsQualityLabel.text = "\(report.horizontalPrecision)"
         self.gpsSatsLabel.text  = "\(report.satellitesInView)"
         self.sonarDistanceLabel.text  = "-"

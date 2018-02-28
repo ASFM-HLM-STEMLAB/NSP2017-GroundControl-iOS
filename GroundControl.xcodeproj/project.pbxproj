@@ -163,10 +163,10 @@
 			isa = PBXGroup;
 			children = (
 				005743522043DAE000AB9E73 /* Instruments.storyboard */,
-				0040E12F2046537B00C1AFFE /* CommandViewController.swift */,
 				0062CAA9204530CB00E5BA41 /* InstrumentsContainerViewController.swift */,
 				0062CAA0204510F900E5BA41 /* InstrumentsPageController.swift */,
 				0062CAA22045116000E5BA41 /* InternalInstrumentsViewController.swift */,
+				0040E12F2046537B00C1AFFE /* CommandViewController.swift */,
 				0062CAA42045151000E5BA41 /* ExternalInstrumentsViewController.swift */,
 			);
 			path = Instruments;

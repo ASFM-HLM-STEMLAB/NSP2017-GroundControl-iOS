@@ -79,10 +79,12 @@ extension InstrumentsPageController: UIPageViewControllerDataSource {
         if restricted != nil { return }
         
         restricted = UIStoryboard(name: "Instruments", bundle: nil).instantiateViewController(withIdentifier: "CommandPanel")
-        
-        self.setViewControllers([self.orderedPages.first!], direction: .forward, animated: true, completion: nil)
-        
+
         self.orderedPages.append(restricted!)
+        
+        self.setViewControllers([self.orderedPages.last!], direction: .forward, animated: true, completion: nil)
+        
+        
     }
     
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
