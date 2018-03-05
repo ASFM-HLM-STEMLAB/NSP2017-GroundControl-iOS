@@ -461,7 +461,7 @@
                             </stackView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="PRIMARY" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0oo-ub-z2f">
                                 <rect key="frame" x="0.0" y="0.0" width="768" height="25"/>
-                                <color key="backgroundColor" red="0.22303453087806702" green="0.19215553998947144" blue="0.19215479493141174" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="18"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
@@ -735,7 +735,7 @@
                             </stackView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ENVIRONMENTAL" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JNZ-WN-Gcf">
                                 <rect key="frame" x="0.0" y="0.0" width="768" height="25"/>
-                                <color key="backgroundColor" red="0.2230345309" green="0.19215554000000001" blue="0.19215479490000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="18"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
@@ -786,7 +786,7 @@
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="COMMAND" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7qZ-Rt-6zD">
                                 <rect key="frame" x="0.0" y="0.0" width="768" height="20"/>
-                                <color key="backgroundColor" red="0.2230345309" green="0.19215554000000001" blue="0.19215479490000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="20" id="oGu-Zr-BS3"/>
                                 </constraints>
@@ -820,10 +820,11 @@
                                 <rect key="frame" x="512" y="20" width="253" height="100"/>
                                 <color key="backgroundColor" red="0.42480395799999998" green="0.59633479990000005" blue="0.87408921630000003" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                <state key="normal" title="Heaters On">
+                                <state key="normal" title="Buzzer Chirp">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
                                 <connections>
+                                    <action selector="chirpButtonPressed:" destination="Zdf-lj-lwf" eventType="touchUpInside" id="u14-af-453"/>
                                     <action selector="heatersButtonPressed:" destination="Zdf-lj-lwf" eventType="touchUpInside" id="7Om-8v-s3h"/>
                                 </connections>
                             </button>
@@ -875,17 +876,23 @@
                                 <rect key="frame" x="258" y="236" width="253" height="100"/>
                                 <color key="backgroundColor" red="0.42480395799999998" green="0.59633479990000005" blue="0.87408921630000003" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                <state key="normal" title="-">
+                                <state key="normal" title="Cell Mute">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
+                                <connections>
+                                    <action selector="cellMutePressed:" destination="Zdf-lj-lwf" eventType="touchUpInside" id="5w0-UQ-biI"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mqQ-Bu-BaI">
                                 <rect key="frame" x="512" y="236" width="253" height="100"/>
                                 <color key="backgroundColor" red="0.42480395799999998" green="0.59633479990000005" blue="0.87408921630000003" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                <state key="normal" title="-">
+                                <state key="normal" title="Sat Mute">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
+                                <connections>
+                                    <action selector="satMutePressed:" destination="Zdf-lj-lwf" eventType="touchUpInside" id="cph-Wy-DI9"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -897,7 +904,7 @@
                             <constraint firstItem="HbH-CY-eNH" firstAttribute="width" secondItem="bOJ-Gv-Vum" secondAttribute="width" id="3DB-r1-kty"/>
                             <constraint firstItem="AEt-s3-Wo0" firstAttribute="height" secondItem="E2p-6Z-cKn" secondAttribute="height" multiplier="0.25" id="4fo-1r-Q3I"/>
                             <constraint firstItem="FdF-b4-5aF" firstAttribute="leading" secondItem="lMF-Hh-oEe" secondAttribute="leading" id="5Go-Fr-Ufm"/>
-                            <constraint firstItem="7qZ-Rt-6zD" firstAttribute="top" secondItem="lVn-ge-EN1" secondAttribute="top" constant="-20" id="7D9-jy-jor"/>
+                            <constraint firstItem="7qZ-Rt-6zD" firstAttribute="top" secondItem="E2p-6Z-cKn" secondAttribute="top" id="7D9-jy-jor"/>
                             <constraint firstAttribute="trailing" secondItem="7qZ-Rt-6zD" secondAttribute="trailing" id="8ia-Ao-QVU"/>
                             <constraint firstItem="HbH-CY-eNH" firstAttribute="height" secondItem="bOJ-Gv-Vum" secondAttribute="height" id="GJ5-uw-eY2"/>
                             <constraint firstItem="Rhm-T3-hRA" firstAttribute="top" secondItem="nuL-o7-Vfc" secondAttribute="top" id="Gi2-0J-bva"/>

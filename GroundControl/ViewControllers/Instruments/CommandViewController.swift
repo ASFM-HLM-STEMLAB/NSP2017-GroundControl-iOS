@@ -21,14 +21,24 @@ class CommandViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    @IBAction func cellMutePressed(_ sender: Any) {
+        SocketCenter.send(event: "cellmute", data: ["buzzeron"], onAck: nil)
+    }
+    
+    @IBAction func satMutePressed(_ sender: Any) {
+        SocketCenter.send(event: "satmute", data: ["buzzeron"], onAck: nil)
+    }
+    
     @IBAction func buzzerButtonPressed(_ sender: Any) {
+        SocketCenter.send(event: "TXC", data: ["buzzeron"], onAck: nil)
     }
     
-
     @IBAction func forceReportButtonPressed(_ sender: Any) {
+        SocketCenter.send(event: "$$", data: ["buzzeron"], onAck: nil)
     }
     
-    @IBAction func heatersButtonPressed(_ sender: Any) {
+    @IBAction func chirpButtonPressed(_ sender: Any) {
+       SocketCenter.send(event: "TXC", data: ["buzzerchirp"], onAck: nil)
     }
     
     @IBAction func startClockButtonPressed(_ sender: Any) {

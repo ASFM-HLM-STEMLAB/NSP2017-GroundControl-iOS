@@ -133,7 +133,7 @@ class ReportInfoViewController: UIViewController, UITextFieldDelegate {
     
     func sendMessageToSocket(message:String) {
         addLineToTerminal("> " + message)
-//        SocketCenter.sendMessage(event: "TXC", data: [message])
+//        SocketCenter.sendMessage(event: "TXC", data: [message])        
         SocketCenter.send(event: "TXC", data: [message], onAck: nil)
     }
     
