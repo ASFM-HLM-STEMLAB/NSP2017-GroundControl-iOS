@@ -7,12 +7,12 @@
 //
 
 import UIKit
-
-protocol DashboardDelegate {
-    func shouldTogglePanelView()
-    func shouldShowPanelView()
-    func shouldHidePanelView()
-}
+//
+//protocol PanelViewDelegate {
+//    func shouldTogglePanelView()
+//    func shouldShowPanelView()
+//    func shouldHidePanelView()
+//}
 
 class DashboardViewController: UIViewController, UITextFieldDelegate {
     
@@ -22,7 +22,7 @@ class DashboardViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var messagesLabel: UILabel!
     
     var report: Report = Report(rawString: "")
-    var delegate: DashboardDelegate?
+    var delegate: PanelViewDelegate?
     
     enum ServerConnectionStatus {
         case connected

@@ -28,6 +28,7 @@ class MapViewController: UIViewController  {
     var ownshipLine: MKPolyline?
 //    var reportDetailViewController:ReportInfoViewController?
     var dashboardViewController:DashboardViewController?
+    var instrumentsPageController:InstrumentsContainerViewController?
     
     var refreshTimer:Timer?
     
@@ -94,8 +95,8 @@ class MapViewController: UIViewController  {
         //Everytime we connect we change the connection label to let the user know we are connected.
         // AND WE GET ALL THE REPORTS in the history.
         notificationCenter.addObserver(forName:SocketCenter.socketConnectedNotification, object: nil, queue: nil) { (notification) in
-//            self.reportDetailViewController?.setServerStatus(.connected)
             self.dashboardViewController?.setServerStatus(.connected)
+            self.instrumentsPageController?.setConnectionStatus(.connected)
             self.onlineStatusLabel.text = "ONLINE"
             self.onlineStatusLabel.textColor = UIColor(red: 0.2, green:0.8, blue:0.2, alpha:1)
             self.missionTimerLabel.textColor = UIColor(red: 0.310, green: 0.447, blue: 0.788, alpha: 1.00)
@@ -104,8 +105,8 @@ class MapViewController: UIViewController  {
         
         //When we disconnect we change the label to let the user know.
         notificationCenter.addObserver(forName:SocketCenter.socketDisconnectedNotification, object: nil, queue: nil) { (notification) in
-//            self.reportDetailViewController?.setServerStatus(.disconnected)
             self.dashboardViewController?.setServerStatus(.disconnected)
+            self.instrumentsPageController?.setConnectionStatus(.disconnected)
             self.onlineStatusLabel.text = "OFFLINE"
             self.onlineStatusLabel.textColor = UIColor(red: 1, green:0.2, blue:0.2, alpha:1)
             self.missionTimerLabel.textColor = UIColor(red: 0.310, green: 0.447, blue: 0.788, alpha: 0.50)
@@ -135,8 +136,12 @@ class MapViewController: UIViewController  {
             dashboardViewController = segue.destination as? DashboardViewController
             dashboardViewController?.delegate = self
         }
-    }
-    
+        
+        if (segue.identifier == "instrumentsSegue") {
+            instrumentsPageController = segue.destination as? InstrumentsContainerViewController
+            instrumentsPageController?.panelViewDelegate = self
+        }
+    }    
 }
 
 
@@ -169,13 +174,45 @@ extension MapViewController {
         }
     }
     
+    @IBAction func moreButtonPressed(_ sender: Any) {
+//        let alert = UIAlertController(title: "Login to continue", message: "", preferredStyle: .alert)
+//        
+//        let authenticateButton = UIAlertAction(title: "Continue", style: .default) { (action) in
+//            let usernameTextField = alert.textFields![0] as UITextField
+//            let passwordTextField = alert.textFields![1] as UITextField
+//            
+//            if usernameTextField.text == "me" && passwordTextField.text == "too" {
+//                self.instrumentsPageController?.allowRestrictedArea()
+//            }
+//            
+//        }
+//        
+//        let cancelButton = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+//        
+//        alert.addTextField { (textField : UITextField!) -> Void in
+//            textField.placeholder = "Username"
+//        }
+//        
+//        alert.addTextField { (textField : UITextField!) -> Void in
+//            textField.placeholder = "Password"
+//            textField.isSecureTextEntry = true
+//        }
+//        
+//        alert.addAction(authenticateButton)
+//        alert.addAction(cancelButton)
+//        
+//        present(alert, animated: true, completion: nil)
+        
+    }
+    
     @IBAction func reloadButtonPressed(_ sender: Any) {
         getAllReports()
     }
     
 }
 
-extension MapViewController: DashboardDelegate {
+
+extension MapViewController: PanelViewDelegate {
     func shouldTogglePanelView() {
         toggleDetails()
     }
