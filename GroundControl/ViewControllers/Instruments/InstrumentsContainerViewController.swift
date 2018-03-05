@@ -54,7 +54,7 @@ class InstrumentsContainerViewController: UIViewController, ReportRenderable, Pa
         self.controlBar.addGestureRecognizer(tapRecognizer)
         
         let idTapRecognizer = UITapGestureRecognizer(target: self, action: #selector(idDidTap))
-        idTapRecognizer.numberOfTapsRequired = 2
+        idTapRecognizer.numberOfTapsRequired = 3
         self.statusBar.addGestureRecognizer(idTapRecognizer)
         
     }
@@ -96,7 +96,35 @@ class InstrumentsContainerViewController: UIViewController, ReportRenderable, Pa
     }
     
     @objc func idDidTap(_ gesture: UITapGestureRecognizer) {
-        self.pageController?.allowRestrictedArea()
+        let alert = UIAlertController(title: "Login to continue", message: "", preferredStyle: .alert)
+        
+        let authenticateButton = UIAlertAction(title: "Continue", style: .default) { (action) in
+            let usernameTextField = alert.textFields![0] as UITextField
+            let passwordTextField = alert.textFields![1] as UITextField
+            
+            if usernameTextField.text == "me" && passwordTextField.text == "too" {
+                self.pageController?.allowRestrictedArea()
+            }
+            
+        }
+        
+        let cancelButton = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        
+        alert.addTextField { (textField : UITextField!) -> Void in
+            textField.placeholder = "Username"
+        }
+        
+        alert.addTextField { (textField : UITextField!) -> Void in
+            textField.placeholder = "Password"
+            textField.isSecureTextEntry = true
+        }
+        
+        alert.addAction(authenticateButton)
+        alert.addAction(cancelButton)
+        
+        present(alert, animated: true, completion: nil)
+        
+        
     }
     
 

@@ -21,32 +21,47 @@ class CommandViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    @IBAction func cellMutePressed(_ sender: Any) {
-        SocketCenter.send(event: "cellmute", data: ["buzzeron"], onAck: nil)
+    @IBAction func cellMutePressed(_ sender: UIButton) {
+        sender.setTitleColor(UIColor.white, for: .normal)
+        SocketCenter.send(event: "TXC", data: ["cellmute"]) { (success, data) in
+            self .displayResponseFromServer(forButton: sender, success: success)
+        }
     }
     
-    @IBAction func satMutePressed(_ sender: Any) {
-        SocketCenter.send(event: "satmute", data: ["buzzeron"], onAck: nil)
+    @IBAction func satMutePressed(_ sender: UIButton) {
+        SocketCenter.send(event: "TXC", data: ["satmute"]) { (success, data) in
+            self .displayResponseFromServer(forButton: sender, success: success)
+        }
     }
     
-    @IBAction func buzzerButtonPressed(_ sender: Any) {
-        SocketCenter.send(event: "TXC", data: ["buzzeron"], onAck: nil)
+    @IBAction func buzzerButtonPressed(_ sender: UIButton) {
+        SocketCenter.send(event: "TXC", data: ["buzzeron"]) { (success, data) in
+            self .displayResponseFromServer(forButton: sender, success: success)
+        }
     }
     
-    @IBAction func forceReportButtonPressed(_ sender: Any) {
-        SocketCenter.send(event: "$$", data: ["buzzeron"], onAck: nil)
+    @IBAction func forceReportButtonPressed(_ sender: UIButton) {
+        SocketCenter.send(event: "TXC", data: ["$$"]) { (success, data) in
+            self .displayResponseFromServer(forButton: sender, success: success)
+        }
     }
     
-    @IBAction func chirpButtonPressed(_ sender: Any) {
-       SocketCenter.send(event: "TXC", data: ["buzzerchirp"], onAck: nil)
+    @IBAction func chirpButtonPressed(_ sender: UIButton) {
+        SocketCenter.send(event: "TXC", data: ["buzzerchirp"]) { (success, data) in
+            self .displayResponseFromServer(forButton: sender, success: success)
+        }
     }
     
-    @IBAction func startClockButtonPressed(_ sender: Any) {
-        SocketCenter.send(event: "TXC", data: ["timestart"], onAck: nil)
+    @IBAction func startClockButtonPressed(_ sender: UIButton) {
+        SocketCenter.send(event: "TXC", data: ["timestart"]) { (success, data) in
+            self .displayResponseFromServer(forButton: sender, success: success)
+        }
     }
     
-    @IBAction func stopClockButtonPressed(_ sender: Any) {
-        SocketCenter.send(event: "TXC", data: ["timepause"], onAck: nil)
+    @IBAction func stopClockButtonPressed(_ sender: UIButton) {
+        SocketCenter.send(event: "TXC", data: ["timepause"]) { (success, data) in
+            self .displayResponseFromServer(forButton: sender, success: success)
+        }
     }
     
     @IBAction func setClockButtonPressed(_ sender: Any) {
@@ -71,7 +86,18 @@ class CommandViewController: UIViewController {
         present(alert, animated: true, completion: nil)
     }
     
+    
     @IBAction func terminalButtonPressed(_ sender: Any) {
+        
+    }
+    
+    func displayResponseFromServer(forButton sender: UIButton, success:Bool) {
+        //####TODO [NEEDS SERVER SIDE IMPLEMENTATION FOR THE ACK]
+//        if (success != true) {
+//            sender.setTitleColor(UIColor.red, for: .normal)
+//        } else {
+//            sender.setTitleColor(UIColor.green, for: .normal)
+//        }
     }
     
 }
