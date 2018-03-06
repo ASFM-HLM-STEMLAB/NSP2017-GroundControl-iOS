@@ -11,7 +11,7 @@ import UIKit
 class ExternalInstrumentsViewController: UIViewController, ReportRenderable {
 
     func setReport(_ report: Report) {
-        
+        //TODO
     }
     
     override func viewDidLoad() {

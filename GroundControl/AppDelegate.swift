@@ -16,17 +16,16 @@
 // Report.swift = Struct [Model] to abstract all report data in an easy to read, write and display object.
 // SocketCenter.swift = Singleton class used to encapsulate and centralize all network communications.
 //
-// TODO : DONE
-// TODO : DONE
-// TODO : Include telemetry values in InfoView
-// TODO : Test load history vs new values
+
 // TODO : Test Mission Stage Changing
-// TODO : Update bottom commands to more useful ones.
+// TODO : External Sensor Parsing in ExtInstrumentsVC
 // TODO : Implement in server sending messages thru satcom
+// TODO : Update only relevant data in instrument display
+//B= TimeStamp, Lat, Lon, Alt, ExtTemp, ExtHum, ExtPress
+//A= TimeStamp, Lat, Lon, Alt, Speed, HDG, GPS_SATS, GPS_PRECISION, BATTLVL, IRIDIUM_SATS, INT_TEMP, STAGE
+
 
 //COMPUTER.println("-------------------------.--------------------------");
-//COMPUTER.println("Status Sentence (1hz):");
-//COMPUTER.println("TIME,LAT,LON,ALT,SPEED,COURSE,SATS,HDOP,BATT,SAT,STAGE");
 //COMPUTER.println("-------------------------.--------------------------");
 //COMPUTER.println("deboff = Debug Off");
 //COMPUTER.println("debon = Debug On");

@@ -79,16 +79,12 @@ class MapViewController: UIViewController  {
     }
     
     func subscribeForSystemNotifications() {
-        //Let's subscribe to events we care for this particular VC
-        
+        //Let's subscribe to events we care for this particular VC        
         //Everytime we receive a new message we:
         notificationCenter.addObserver(forName:SocketCenter.newMessageNotification, object: nil, queue: nil) { (notification) in
             if var report = notification.userInfo?["report"] as? Report {
                 report.index = self.reports.count
-                //Add a report to the report array and show the details)
                 self.addReportToMap(report: report)
-//                self.reportDetailViewController?.setReport(report)
-//                self.reportDetailViewController?.setMessageCount(self.reports.count)
             }
         }
         

@@ -187,7 +187,7 @@ class SocketCenter {
     }
     
     static func send(event: String, data:[Any], onAck ack: AckHandler?) {
-        sharedInstance.socket.emitWithAck(event, with:data) .timingOut(after: 10) {(data) in
+        sharedInstance.socket.emitWithAck(event, with:data) .timingOut(after: 30) {(data) in
             guard let rawData = data[0] as? String else { return }
             guard let ack = ack else { return }
             

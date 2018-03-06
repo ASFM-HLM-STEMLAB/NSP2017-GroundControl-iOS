@@ -62,15 +62,15 @@ public func timeAgoSince(_ date: Date) -> String {
     }
     
     if let minute = components.minute, minute >= 2 {
-        return "\(minute) minutes ago"
+        return "\(minute) min ago"
     }
     
     if let minute = components.minute, minute >= 1 {
-        return "A minute ago"
+        return "A min ago"
     }
     
     if let second = components.second, second >= 3 {
-        return "\(second) seconds ago"
+        return "\(second) sec ago"
     }
     
     return "Just now"
