@@ -8,8 +8,13 @@
 
 import UIKit
 
+//TIME,LAT,LON,ALT,SPEED,COURSE,SATS,HDOP,BATT,SAT,STAGE
+//A= TimeStamp, Lat, Lon, Alt, Speed, HDG, GPS_SATS, GPS_PRECISION, BATTLVL, IRIDIUM_SATS, INT_TEMP, STAGE
+//B= TimeStamp, Lat, Lon, Alt, ExtTemp, ExtHum, ExtPress
+
 class InternalInstrumentsViewController: UIViewController, ReportRenderable {
 
+    @IBOutlet weak var dataBeaconView: UIView!
     @IBOutlet weak var altitudeLabel: UILabel!
     @IBOutlet weak var headingLabel: UILabel!
     @IBOutlet weak var tempLabel: UILabel!
@@ -21,22 +26,37 @@ class InternalInstrumentsViewController: UIViewController, ReportRenderable {
     @IBOutlet weak var gpsSatsLabel: UILabel!
     @IBOutlet weak var sonarDistanceLabel: UILabel!
     
-    func setReport(_ report: Report) {
+    func setReport(_ report: Report) {                
         self.altitudeLabel.text = "\(report.altitude)ft"
-        self.headingLabel.text = "\(report.course)°"
-        self.tempLabel.text = "\(report.internalTempC) °C"
-        self.iridiumSatsLabel.text = "\(report.satModemSignal)"
-        self.speedLabel.text = "\(report.speed)kts"
-        self.distanceLabel.text = "-"
-        self.batteryLabel.text = "\(report.batteryLevel)%"
-        self.gpsQualityLabel.text = "\(report.horizontalPrecision)"
-        self.gpsSatsLabel.text  = "\(report.satellitesInView)"
-        self.sonarDistanceLabel.text  = "-"
+        
+        guard report.reportType == .pulse else { return } //We only update on A message (PULSE)
+        
+        dataBeaconView.alpha = 1.0;
+        headingLabel.text = "\(report.course)°"
+        tempLabel.text = "\(report.internalTempC) °C"
+        iridiumSatsLabel.text = "\(report.satModemSignal)"
+        speedLabel.text = "\(report.speed)kts"
+        distanceLabel.text = "-"
+        batteryLabel.text = "\(report.batteryLevel * 10)%"
+        gpsQualityLabel.text = "\(report.horizontalPrecision)"
+        gpsSatsLabel.text  = "\(report.satellitesInView)"
+        sonarDistanceLabel.text  = "-"
+        
+        self.view.layer .removeAllAnimations()
+        UIView.animate(withDuration: 50) {
+            self.dataBeaconView.alpha = 0.0
+        }
+        
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        dataBeaconView.layer.cornerRadius = dataBeaconView.bounds.size.width / 2
+        dataBeaconView.layer.shadowColor = UIColor.green.cgColor
+        dataBeaconView.layer.shadowOffset = CGSize.zero
+        dataBeaconView.layer.shadowRadius = 5
+        dataBeaconView.layer.shadowOpacity = 1.0
+        
         // Do any additional setup after loading the view.
     }
 
