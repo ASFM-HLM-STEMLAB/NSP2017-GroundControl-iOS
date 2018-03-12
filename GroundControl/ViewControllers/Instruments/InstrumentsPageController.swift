@@ -30,9 +30,7 @@ class InstrumentsPageController: UIPageViewController, ReportRenderable {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.dataSource = self
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
+        
         internalInstruments = UIStoryboard(name: "Instruments", bundle: nil).instantiateViewController(withIdentifier: "InternalInstruments") as? InternalInstrumentsViewController
         
         externalInstruments = UIStoryboard(name: "Instruments", bundle: nil).instantiateViewController(withIdentifier: "ExternalInstruments") as? ExternalInstrumentsViewController
@@ -41,6 +39,10 @@ class InstrumentsPageController: UIPageViewController, ReportRenderable {
         self.orderedPages.append(externalInstruments!)
         
         self.setViewControllers([self.orderedPages.first!], direction: .forward, animated: true, completion: nil)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+      super.viewWillAppear(animated)
         
         
     }
