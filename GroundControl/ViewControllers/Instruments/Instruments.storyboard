@@ -16,6 +16,7 @@
             <string>Avenir-Heavy</string>
         </array>
         <array key="AvenirNext.ttc">
+            <string>AvenirNext-Heavy</string>
             <string>AvenirNext-Medium</string>
             <string>AvenirNext-Regular</string>
         </array>
@@ -844,6 +845,7 @@
                                                 </state>
                                                 <connections>
                                                     <action selector="terminalButtonPressed:" destination="Zdf-lj-lwf" eventType="touchUpInside" id="J0A-7S-Zko"/>
+                                                    <segue destination="pbm-M4-AJd" kind="presentation" id="J9Q-XQ-RsF"/>
                                                 </connections>
                                             </button>
                                         </subviews>
@@ -959,6 +961,69 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hcd-jf-0xc" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2435.9375" y="962.69531249999989"/>
+        </scene>
+        <!--Terminal View Controller-->
+        <scene sceneID="8dP-mp-fzz">
+            <objects>
+                <viewController id="pbm-M4-AJd" customClass="TerminalViewController" customModule="GroundControl" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="upY-Oj-HmV">
+                        <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" pagingEnabled="YES" bouncesZoom="NO" editable="NO" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Zyc-2n-5Q6">
+                                <rect key="frame" x="0.0" y="20" width="768" height="973"/>
+                                <color key="backgroundColor" red="0.16102516650000001" green="0.16817283629999999" blue="0.2039299607" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <color key="textColor" red="0.70152050259999998" green="0.25172144169999999" blue="0.59218937159999996" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <fontDescription key="fontDescription" name="AvenirNext-Heavy" family="Avenir Next" pointSize="17"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="bezel" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="B8v-jG-LOr">
+                                <rect key="frame" x="0.0" y="994" width="670" height="30"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardAppearance="alert" returnKeyType="send" smartDashesType="no" smartInsertDeleteType="no" smartQuotesType="no"/>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bpQ-ha-zqc">
+                                <rect key="frame" x="671" y="994" width="97" height="30"/>
+                                <color key="backgroundColor" red="0.42480395799999998" green="0.59633479990000005" blue="0.87408921630000003" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="FFZ-3A-uc6"/>
+                                    <constraint firstAttribute="width" constant="97" id="XAS-b3-DPy"/>
+                                </constraints>
+                                <state key="normal" title="Send">
+                                    <color key="titleColor" cocoaTouchSystemColor="lightTextColor"/>
+                                </state>
+                                <connections>
+                                    <action selector="sendButtonPressed:" destination="pbm-M4-AJd" eventType="touchUpInside" id="jAm-hV-xaU"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="Zyc-2n-5Q6" firstAttribute="trailing" secondItem="R5p-fc-L2p" secondAttribute="trailing" id="2Jp-Xn-9Rv"/>
+                            <constraint firstItem="bpQ-ha-zqc" firstAttribute="leading" secondItem="B8v-jG-LOr" secondAttribute="trailing" constant="1" id="CrK-tc-7YJ"/>
+                            <constraint firstItem="R5p-fc-L2p" firstAttribute="bottom" secondItem="B8v-jG-LOr" secondAttribute="bottom" id="ElL-sF-0j5"/>
+                            <constraint firstItem="B8v-jG-LOr" firstAttribute="top" secondItem="Zyc-2n-5Q6" secondAttribute="bottom" constant="1" id="IE0-q0-QLJ"/>
+                            <constraint firstItem="Zyc-2n-5Q6" firstAttribute="leading" secondItem="R5p-fc-L2p" secondAttribute="leading" id="KTb-lp-D6V"/>
+                            <constraint firstItem="B8v-jG-LOr" firstAttribute="leading" secondItem="R5p-fc-L2p" secondAttribute="leading" id="Zd4-Uz-g9v"/>
+                            <constraint firstItem="bpQ-ha-zqc" firstAttribute="top" secondItem="B8v-jG-LOr" secondAttribute="top" id="aCN-Yu-AQD"/>
+                            <constraint firstItem="Zyc-2n-5Q6" firstAttribute="top" secondItem="R5p-fc-L2p" secondAttribute="top" id="czO-p9-1HG"/>
+                            <constraint firstItem="bpQ-ha-zqc" firstAttribute="trailing" secondItem="R5p-fc-L2p" secondAttribute="trailing" id="etp-qk-myG"/>
+                            <constraint firstItem="B8v-jG-LOr" firstAttribute="height" secondItem="bpQ-ha-zqc" secondAttribute="height" id="gUp-SQ-lvr"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="R5p-fc-L2p"/>
+                    </view>
+                    <connections>
+                        <outlet property="bottomHeight" destination="ElL-sF-0j5" id="Rcp-Ug-lDP"/>
+                        <outlet property="inputTextField" destination="B8v-jG-LOr" id="12F-2E-Yq6"/>
+                        <outlet property="sendButton" destination="bpQ-ha-zqc" id="3RB-dy-e6c"/>
+                        <outlet property="terminalTextView" destination="Zyc-2n-5Q6" id="l2r-fW-pwF"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="fnS-kl-WPa" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3233" y="963"/>
         </scene>
     </scenes>
     <resources>

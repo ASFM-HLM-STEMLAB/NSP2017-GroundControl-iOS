@@ -26,10 +26,6 @@ class CommandViewController: UIViewController {
         }
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
     
     @IBAction func cellMutePressed(_ sender: UIButton) {
         addLineToMiniTerminal("> TXCA: cellmute")
@@ -137,10 +133,6 @@ class CommandViewController: UIViewController {
     
     func addLineToMiniTerminal(_ line: String) {
         self.miniTerminalTextView.text = self.miniTerminalTextView.text + line + "\n"
-        
-//        let bottom = self.miniTerminalTextView.contentSize.height - self.miniTerminalTextView.bounds.size.height
-//        self.miniTerminalTextView.setContentOffset(CGPoint(x: 0, y: bottom), animated: f)
-//
         let textCount = self.miniTerminalTextView.text.count
 
         guard textCount >= 1 else { return }
