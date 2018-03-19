@@ -29,10 +29,21 @@ import MapKit
 //       This are the values:
 //            |--   SERVER TIMESTAMP --||-- THIS DATA COMES FROM THE CAPSULE -----------------|
 //                                        source, kind of msg (S) , timestamp, lat, lon, alt
-//                                        source, kind of msg (X) , timestamp, lat, lon, alt, speed, course, horizontal prec, gps sats,
+//                                        source, kind of msg (X) , timestamp, lat, lon, alt, speed, course, gps sats, horizontal prec
 //                                             battery level, sat signal, internal temp.
 //
 // This protocol messages can evolve and the server app and this app should evolve accordingly!
+//String(gpsParser.location.lat(), 4) + "," +
+//    String(gpsParser.location.lng(), 4) + "," +
+//    String(gpsParser.altitude.feet(),0) + "," +
+//    String(gpsParser.speed.knots(),0) + "," +
+//    String(gpsParser.course.deg(),0) + "," +
+//    String(gpsParser.satellites.value()) + "," +
+//    String(gpsParser.hdop.value()) +  "," +
+//    String(batteryLevel/10,0) +  "," +
+//    String(satcomSignal) +  "," +
+//    String(internalTempC,0) +  "," +
+//    missionStageShortString();
 
 
 // Report MODEL
@@ -231,11 +242,21 @@ extension Report {
         if (reportType == .pulse) {
             speed = Int(dataFields.components(separatedBy: ",")[6]) ?? 0
             course = Int(dataFields.components(separatedBy: ",")[7]) ?? 0
-            horizontalPrecision = Int(dataFields.components(separatedBy: ",")[8]) ?? 0
-            satellitesInView = Int(dataFields.components(separatedBy: ",")[9]) ?? 0
+            satellitesInView = Int(dataFields.components(separatedBy: ",")[8]) ?? 0
+            horizontalPrecision = Int(dataFields.components(separatedBy: ",")[9]) ?? 0
             batteryLevel =  Int(dataFields.components(separatedBy: ",")[10]) ?? 0
             satModemSignal =  Int(dataFields.components(separatedBy: ",")[11]) ?? 0
             internalTempC =  Int(dataFields.components(separatedBy: ",")[12]) ?? 0
+            
+            print("-------VARIABLES INCOMING---------")
+            print(speed)
+            print(course)
+            print(horizontalPrecision)
+            print(satellitesInView)
+            print(batteryLevel)
+            print(satModemSignal)
+            print(internalTempC)
+            
             
             let rawMissionStage = dataFields.components(separatedBy: ",")[13]
             switch rawMissionStage {

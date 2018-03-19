@@ -26,7 +26,9 @@ class MapViewController: UIViewController  {
     var reports = [Report]()
     let notificationCenter = NotificationCenter.default
     var ownshipLine: MKPolyline?
-    var reportDetailViewController:ReportInfoViewController?
+//    var reportDetailViewController:ReportInfoViewController?
+    var dashboardViewController:DashboardViewController?
+    var instrumentsPageController:InstrumentsContainerViewController?
     
     var refreshTimer:Timer?
     
@@ -54,14 +56,15 @@ class MapViewController: UIViewController  {
             mapView.userTrackingMode = .followWithHeading
         }
         
+        self.onlineStatusLabel.text = "CONNECTING..."
+        self.onlineStatusLabel.textColor = UIColor(red: 0.9, green:0.71, blue:0.01, alpha:1)
+
         //Only call this once for every instance of this VC
         subscribeForSystemNotifications()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        self.onlineStatusLabel.text = "CONNECTING..."
-        self.onlineStatusLabel.textColor = UIColor(red: 0.9, green:0.71, blue:0.01, alpha:1)
         hideDetails()
         SocketCenter.connect()
         //iOS Devices need user permission for app to access device locations
@@ -77,23 +80,20 @@ class MapViewController: UIViewController  {
     }
     
     func subscribeForSystemNotifications() {
-        //Let's subscribe to events we care for this particular VC
-        
+        //Let's subscribe to events we care for this particular VC        
         //Everytime we receive a new message we:
         notificationCenter.addObserver(forName:SocketCenter.newMessageNotification, object: nil, queue: nil) { (notification) in
             if var report = notification.userInfo?["report"] as? Report {
                 report.index = self.reports.count
-                //Add a report to the report array and show the details)
                 self.addReportToMap(report: report)
-                self.reportDetailViewController?.setReport(report)
-                self.reportDetailViewController?.setMessageCount(self.reports.count)
             }
         }
         
         //Everytime we connect we change the connection label to let the user know we are connected.
         // AND WE GET ALL THE REPORTS in the history.
         notificationCenter.addObserver(forName:SocketCenter.socketConnectedNotification, object: nil, queue: nil) { (notification) in
-            self.reportDetailViewController?.setServerStatus(.connected)
+            self.dashboardViewController?.setServerStatus(.connected)
+            self.instrumentsPageController?.setConnectionStatus(.connected)
             self.onlineStatusLabel.text = "ONLINE"
             self.onlineStatusLabel.textColor = UIColor(red: 0.2, green:0.8, blue:0.2, alpha:1)
             self.missionTimerLabel.textColor = UIColor(red: 0.310, green: 0.447, blue: 0.788, alpha: 1.00)
@@ -102,7 +102,8 @@ class MapViewController: UIViewController  {
         
         //When we disconnect we change the label to let the user know.
         notificationCenter.addObserver(forName:SocketCenter.socketDisconnectedNotification, object: nil, queue: nil) { (notification) in
-            self.reportDetailViewController?.setServerStatus(.disconnected)
+            self.dashboardViewController?.setServerStatus(.disconnected)
+            self.instrumentsPageController?.setConnectionStatus(.disconnected)
             self.onlineStatusLabel.text = "OFFLINE"
             self.onlineStatusLabel.textColor = UIColor(red: 1, green:0.2, blue:0.2, alpha:1)
             self.missionTimerLabel.textColor = UIColor(red: 0.310, green: 0.447, blue: 0.788, alpha: 0.50)
@@ -111,7 +112,8 @@ class MapViewController: UIViewController  {
         //When we get a .response type of message we show it in the terminal as a raw string with a < to signify incoming.
         notificationCenter.addObserver(forName:SocketCenter.socketResponseNotification, object: nil, queue: nil) { (notification) in
             if let response = notification.userInfo?["response"] as? String {
-                self.reportDetailViewController?.addLineToTerminal("< \(response)")
+                print("TERMINAL INCOMING: \(response)" )
+//                self.reportDetailViewController?.addLineToTerminal("< \(response)")
             }
         }
         
@@ -127,12 +129,16 @@ class MapViewController: UIViewController  {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if (segue.identifier == "reportDetailView") {
-            reportDetailViewController = segue.destination as? ReportInfoViewController
-            reportDetailViewController?.delegate = self
+        if (segue.identifier == "dashboardSegue") {
+            dashboardViewController = segue.destination as? DashboardViewController
+            dashboardViewController?.delegate = self
         }
-    }
-    
+        
+        if (segue.identifier == "instrumentsSegue") {
+            instrumentsPageController = segue.destination as? InstrumentsContainerViewController
+            instrumentsPageController?.panelViewDelegate = self
+        }
+    }    
 }
 
 
@@ -165,13 +171,45 @@ extension MapViewController {
         }
     }
     
+    @IBAction func moreButtonPressed(_ sender: Any) {
+//        let alert = UIAlertController(title: "Login to continue", message: "", preferredStyle: .alert)
+//        
+//        let authenticateButton = UIAlertAction(title: "Continue", style: .default) { (action) in
+//            let usernameTextField = alert.textFields![0] as UITextField
+//            let passwordTextField = alert.textFields![1] as UITextField
+//            
+//            if usernameTextField.text == "me" && passwordTextField.text == "too" {
+//                self.instrumentsPageController?.allowRestrictedArea()
+//            }
+//            
+//        }
+//        
+//        let cancelButton = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+//        
+//        alert.addTextField { (textField : UITextField!) -> Void in
+//            textField.placeholder = "Username"
+//        }
+//        
+//        alert.addTextField { (textField : UITextField!) -> Void in
+//            textField.placeholder = "Password"
+//            textField.isSecureTextEntry = true
+//        }
+//        
+//        alert.addAction(authenticateButton)
+//        alert.addAction(cancelButton)
+//        
+//        present(alert, animated: true, completion: nil)
+        
+    }
+    
     @IBAction func reloadButtonPressed(_ sender: Any) {
         getAllReports()
     }
     
 }
 
-extension MapViewController: ReportInfoDelegate {
+
+extension MapViewController: PanelViewDelegate {
     func shouldTogglePanelView() {
         toggleDetails()
     }

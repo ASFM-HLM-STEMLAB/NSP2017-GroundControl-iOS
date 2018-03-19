@@ -39,7 +39,7 @@ import SocketIO
 
 class SocketCenter {
     let socket: SocketIOClient //Instantiate the SocketIOClient class from the official framework.
-    private let manager = SocketManager(socketURL: URL(string: "http://movic.io:4200")!, config: [.log(false), .compress])
+    private let manager = SocketManager(socketURL: URL(string: "http://asfmstemlab.com:81")!, config: [.log(false), .compress])
 //    private let manager = SocketManager(socketURL: URL(string: "http://127.0.0.1:4200")!, config: [.log(false), .compress])
     
     private let notificationCenter = NotificationCenter.default //Get the default iOS NotificationCenter
@@ -187,7 +187,7 @@ class SocketCenter {
     }
     
     static func send(event: String, data:[Any], onAck ack: AckHandler?) {
-        sharedInstance.socket.emitWithAck(event, with:data) .timingOut(after: 10) {(data) in
+        sharedInstance.socket.emitWithAck(event, with:data) .timingOut(after: 30) {(data) in
             guard let rawData = data[0] as? String else { return }
             guard let ack = ack else { return }
             

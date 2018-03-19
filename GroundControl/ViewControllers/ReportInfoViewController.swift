@@ -20,15 +20,13 @@ protocol ReportInfoDelegate {
     func shouldHidePanelView()
 }
 
-class ReportInfoViewController: UIViewController {
+class ReportInfoViewController: UIViewController, UITextFieldDelegate {
     enum TransmitMode {
         case cellular
         case sattelite
     }
     
-  
- 
-    
+    @IBOutlet weak var toggleDashboardButton: UIButton!
     @IBOutlet weak var transmitModeButton: UIButton!
     @IBOutlet weak var serverStatusLabel: UILabel!
     @IBOutlet weak var speedLabel: UILabel!
@@ -50,8 +48,6 @@ class ReportInfoViewController: UIViewController {
     @IBOutlet weak var tempIndicator: GraphicalIndicator!
     @IBOutlet weak var climbIndicator: GraphicalIndicator!
     @IBOutlet weak var battIndicator: GraphicalIndicator!
-    
-    
     
     private var previousAltitude:Int = 0
     var delegate: ReportInfoDelegate?
@@ -96,9 +92,10 @@ class ReportInfoViewController: UIViewController {
         tempIndicator.minValue =  -110 //DegC
         tempIndicator.maxValue =  70 //DegC
         
-        
         climbIndicator.indicatorColor = UIColor.white
         tempIndicator.indicatorColor = UIColor.white
+        
+        terminalInput.delegate = self
         
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillChange(notification:)),
                                                name: NSNotification.Name.UIKeyboardWillChangeFrame, object: nil)
@@ -136,13 +133,23 @@ class ReportInfoViewController: UIViewController {
     
     func sendMessageToSocket(message:String) {
         addLineToTerminal("> " + message)
-//        SocketCenter.sendMessage(event: "TXC", data: [message])
+//        SocketCenter.sendMessage(event: "TXC", data: [message])        
         SocketCenter.send(event: "TXC", data: [message], onAck: nil)
+    }
+    
+    // MARK: - UITextField Delegate
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        print("SHOULD HIDE KEYBOARD!")
+        textField.resignFirstResponder()
+        return true
     }
 }
 
+// MARK: - ReportInfoViewController (ext)
 
 extension ReportInfoViewController {
+    
     @IBAction func transmitModeButtonPressed(_ sender: Any) {
         if transmitMode == .cellular {
             self.transmitMode = .sattelite
@@ -210,6 +217,11 @@ extension ReportInfoViewController {
     
     @IBAction func hideButtonToggle(_ sender: Any) {
         delegate?.shouldTogglePanelView()
+        if toggleDashboardButton.titleLabel?.text == "SHOW DASHBOARD" {
+            toggleDashboardButton.setTitle("HIDE DASHBOARD", for: .normal)
+        } else {
+            toggleDashboardButton.setTitle("SHOW DASHBOARD", for: .normal)
+        }
     }
     
     @IBAction func didPan(_ gesture: UIPanGestureRecognizer) {
@@ -226,10 +238,6 @@ extension ReportInfoViewController {
         }
     }
     
-}
-
-
-extension ReportInfoViewController {
     public func setReport(_ report:Report) {
         altitudeLabel.text = String(report.altitude)
         print("RAW: \(report.rawReport)")
@@ -270,7 +278,7 @@ extension ReportInfoViewController {
     }
     
     public func addLineToTerminal(_ line:String) {
-        terminalTextView.text = self.terminalTextView.text + "\n" + line        
+        terminalTextView.text = self.terminalTextView.text + "\n" + line
         let bottom = self.terminalTextView.contentSize.height - self.terminalTextView.bounds.size.height
         self.terminalTextView.setContentOffset(CGPoint(x: 0, y: bottom), animated: true)
     }
@@ -278,11 +286,11 @@ extension ReportInfoViewController {
     public func setServerStatus(_ serverStatus:ServerConnectionStatus) {
         switch serverStatus {
         case .connected:
-                serverStatusLabel.textColor = UIColor(red: 228/255, green: 255/255, blue: 101/255, alpha: 1)
-                serverStatusLabel.text = "ONLINE"
+            serverStatusLabel.textColor = UIColor(red: 228/255, green: 255/255, blue: 101/255, alpha: 1)
+            serverStatusLabel.text = "ONLINE"
         case .disconnected:
-                serverStatusLabel.textColor = UIColor(red: 209/255, green: 88/255, blue: 23/255, alpha: 1)
-                serverStatusLabel.text = "OFFLINE"
+            serverStatusLabel.textColor = UIColor(red: 209/255, green: 88/255, blue: 23/255, alpha: 1)
+            serverStatusLabel.text = "OFFLINE"
         }
     }
     

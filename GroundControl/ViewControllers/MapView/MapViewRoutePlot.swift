@@ -25,8 +25,8 @@ extension MapViewController {
                 let sortedReports = Report.sortReportsByAge(from: inReports)
                 for report in sortedReports {
                     self.addReportToMap(report: report)
-                    self.reportDetailViewController?.setReport(report)
-                    self.reportDetailViewController?.setMessageCount(self.reports.count)
+//                    self.reportDetailViewController?.setReport(report)
+//                    self.reportDetailViewController?.setMessageCount(self.reports.count)
                 }
             }
             self.focusOnAllReportsOnMap()
@@ -54,6 +54,14 @@ extension MapViewController {
         }
         
         updateLastReportTime()
+        addReportToDashboard(report: report)
+    }
+    
+    func addReportToDashboard(report: Report) {
+        self.dashboardViewController?.setMessageCount(reports.count)
+        self.dashboardViewController?.setReport(report)
+        self.instrumentsPageController?.setMessageCount(reports.count)
+        self.instrumentsPageController?.setReport(report)
     }
     
     
