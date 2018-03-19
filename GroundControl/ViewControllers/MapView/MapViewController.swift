@@ -56,14 +56,15 @@ class MapViewController: UIViewController  {
             mapView.userTrackingMode = .followWithHeading
         }
         
+        self.onlineStatusLabel.text = "CONNECTING..."
+        self.onlineStatusLabel.textColor = UIColor(red: 0.9, green:0.71, blue:0.01, alpha:1)
+
         //Only call this once for every instance of this VC
         subscribeForSystemNotifications()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        self.onlineStatusLabel.text = "CONNECTING..."
-        self.onlineStatusLabel.textColor = UIColor(red: 0.9, green:0.71, blue:0.01, alpha:1)
         hideDetails()
         SocketCenter.connect()
         //iOS Devices need user permission for app to access device locations
