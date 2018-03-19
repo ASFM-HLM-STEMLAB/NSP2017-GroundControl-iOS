@@ -37,7 +37,7 @@ class InternalInstrumentsViewController: UIViewController, ReportRenderable {
         iridiumSatsLabel.text = "\(report.satModemSignal)"
         speedLabel.text = "\(report.speed)kts"
         distanceLabel.text = "-"
-        batteryLabel.text = "\(report.batteryLevel * 10)%"
+        batteryLabel.text = "\(report.batteryLevel)%"
         gpsQualityLabel.text = "\(report.horizontalPrecision)"
         gpsSatsLabel.text  = "\(report.satellitesInView)"
         sonarDistanceLabel.text  = "-"
