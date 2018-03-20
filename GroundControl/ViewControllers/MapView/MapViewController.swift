@@ -203,6 +203,7 @@ extension MapViewController {
     }
     
     @IBAction func reloadButtonPressed(_ sender: Any) {
+        instrumentsPageController?.clearLatestReport()
         getAllReports()
     }
     

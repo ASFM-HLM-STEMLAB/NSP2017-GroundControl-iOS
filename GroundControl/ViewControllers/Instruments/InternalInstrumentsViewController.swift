@@ -14,6 +14,8 @@ import UIKit
 
 class InternalInstrumentsViewController: UIViewController, ReportRenderable {
 
+    private var latestReport:Report?
+    
     @IBOutlet weak var dataBeaconView: UIView!
     @IBOutlet weak var altitudeLabel: UILabel!
     @IBOutlet weak var headingLabel: UILabel!
@@ -24,12 +26,27 @@ class InternalInstrumentsViewController: UIViewController, ReportRenderable {
     @IBOutlet weak var batteryLabel: UILabel!
     @IBOutlet weak var gpsQualityLabel: UILabel!
     @IBOutlet weak var gpsSatsLabel: UILabel!
-    @IBOutlet weak var sonarDistanceLabel: UILabel!
+    @IBOutlet weak var timeAgoLabel: UILabel!
+    @IBOutlet weak var sourceLabel: UILabel!
+    @IBOutlet weak var battIndicator: GraphicalIndicator!
+    @IBOutlet weak var hdopIndicator: GraphicalIndicator!
     
-    func setReport(_ report: Report) {                
-        self.altitudeLabel.text = "\(report.altitude)ft"
-        
+    let refreshTimeReportsEvery:TimeInterval = 1
+    var refreshTimer:Timer?
+
+    
+    func setReport(_ report: Report) {
         guard report.reportType == .pulse else { return } //We only update on A message (PULSE)
+        
+        if let latestReport = latestReport {
+            guard report.gpsTimeStamp > latestReport.gpsTimeStamp else {
+                print("[InternalInstrumentsVC] New report is older than current")
+                return
+            }
+        }
+        print("[InternalInstrumentsVC] Updated")
+        
+        self.altitudeLabel.text = "\(report.altitude)ft"
         
         dataBeaconView.alpha = 1.0;
         headingLabel.text = "\(report.course)°"
@@ -40,14 +57,33 @@ class InternalInstrumentsViewController: UIViewController, ReportRenderable {
         batteryLabel.text = "\(report.batteryLevel)%"
         gpsQualityLabel.text = "\(report.horizontalPrecision)"
         gpsSatsLabel.text  = "\(report.satellitesInView)"
-        sonarDistanceLabel.text  = "-"
         
-        self.view.layer .removeAllAnimations()
+        var sourceString = "Cellular"
+        if report.originator == .satellite {
+            sourceString = "Satellite"
+        }
+        
+        sourceLabel.text = sourceString
+        
+        
+        DispatchQueue.main.async {
+            self.battIndicator.value = report.batteryLevel
+            
+            let inverseHDOP = (self.hdopIndicator.maxValue - report.horizontalPrecision)
+            self.hdopIndicator.value = inverseHDOP
+        }
+        
+        
+        
+        view.layer .removeAllAnimations()
         UIView.animate(withDuration: 50) {
             self.dataBeaconView.alpha = 0.0
         }
         
+        latestReport = report
+        updateLastReportTime()
     }
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -57,23 +93,50 @@ class InternalInstrumentsViewController: UIViewController, ReportRenderable {
         dataBeaconView.layer.shadowRadius = 5
         dataBeaconView.layer.shadowOpacity = 1.0
         
+        battIndicator.indicatorDirection = .horizontal
+        battIndicator.indicatorType = .bar
+        battIndicator.redRange = 0.0...20
+        battIndicator.yellowRange = 21...40
+        battIndicator.minimumIndication = 7
+        
+        hdopIndicator.indicatorDirection = .horizontal
+        hdopIndicator.indicatorType = .bar
+        hdopIndicator.minimumIndication = 7
+        hdopIndicator.maxValue = 350
+        
+        
+        hdopIndicator.redRange = 0...20 //501-2000 (1499)
+        hdopIndicator.yellowRange = 21...50 // 300-500 (1500-1700)
+//
+        
+        
+        
+        hdopIndicator.minimumIndication = 5
+//        hdopIndicator.maxValue = 50
+//        hdopIndicator.minValue = 1
+        
         // Do any additional setup after loading the view.
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        refreshTimer = Timer(timeInterval: refreshTimeReportsEvery, target: self, selector: #selector(updateLastReportTime), userInfo: [], repeats: true)
+        RunLoop.main.add(refreshTimer!, forMode: RunLoopMode.commonModes)
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        refreshTimer!.invalidate()
     }
-    */
+    
+    // ======================================================
+    @objc func updateLastReportTime() {
+        if let report = latestReport {
+            self.timeAgoLabel.text = "[\(report.gpsTimeStamp.timeAgo().uppercased())]"
+        }
+    }
+    
+    func clearLatestReport() {
+        self.latestReport = nil
+    }
 
 }

@@ -152,6 +152,10 @@ class InstrumentsContainerViewController: UIViewController, ReportRenderable, Pa
             })
         }
     }
+    
+    func clearLatestReport() {
+        pageController?.clearLatestReport()
+    }
 }
 
 extension InstrumentsContainerViewController {
