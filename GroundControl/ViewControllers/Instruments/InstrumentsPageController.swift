@@ -51,6 +51,11 @@ class InstrumentsPageController: UIPageViewController, ReportRenderable {
         super.viewDidAppear(animated)
     }
     
+    func clearLatestReport() {
+        internalInstruments?.clearLatestReport()
+        externalInstruments?.clearLatestReport()
+    }
+    
 }
 
 

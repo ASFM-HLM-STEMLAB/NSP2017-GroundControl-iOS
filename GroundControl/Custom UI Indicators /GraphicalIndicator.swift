@@ -32,15 +32,17 @@ class GraphicalIndicator: UIView {
     public var indicatorColor = UIColor.green
     public var maxValue = 100
     public var minValue = 0
+    private var _percent = 0
     
     var value: Int = 0 {
         didSet {
             
-            let range = maxValue - minValue
+            let range = maxValue - minValue            
             let correctedStartValue = value - minValue
             let percentage = (correctedStartValue * 100) / range
+            _percent = percentage
+            setIndicatorValue(percent: percentage)
             
-            setValue(percent: percentage)
         }
     }
     
@@ -64,15 +66,16 @@ class GraphicalIndicator: UIView {
     
     override func layoutSubviews() {
         super .layoutSubviews()
-        setValue(percent: value)
+
     }
     
-    private func setValue(percent: Int) {
+    private func setIndicatorValue(percent: Int) {
         var percent = CGFloat(percent)
         
         if percent > 100  { percent = 100 }
         
         if percent <= minimumIndication { percent = minimumIndication }
+        
         
         let fillDiv:CGFloat = 100 / percent
         var newFrame = CGRect(x: 0, y: 0, width: 0, height: 0)
@@ -96,25 +99,31 @@ class GraphicalIndicator: UIView {
                 newFrame = CGRect(x: (frame.width/fillDiv), y: 0, width: needleWidth, height: frame.height)
             }
         }
-        
-        var staticIndicatorColor = indicatorColor
-        if yellowRange.contains(Double(percent)) {
-            staticIndicatorColor = UIColor.yellow
-        }
-        
-        if redRange.contains(Double(percent)) {
-            staticIndicatorColor = UIColor.red
-        }
+            
         
         UIView.animate(withDuration: transitionDuration, animations: {
             self.indicatorView.frame = newFrame
             if self.interpolateColor == true {
-                self.indicatorView.backgroundColor = staticIndicatorColor
+                if self.yellowRange.contains(Double(self._percent)) {
+                    self.indicatorView.backgroundColor = UIColor.yellow
+                } else if self.redRange.contains(Double(self._percent)) {
+                   self.indicatorView.backgroundColor = UIColor.red
+                } else {
+                    self.indicatorView.backgroundColor = self.indicatorColor
+                }
+                
             }
-        }) { (finished) in
-            self.indicatorView.backgroundColor = staticIndicatorColor
+        }) { (finished) in            
+            if self.yellowRange.contains(Double(self._percent)) {
+                self.indicatorView.backgroundColor = UIColor.yellow
+            } else if self.redRange.contains(Double(self._percent)) {
+                self.indicatorView.backgroundColor = UIColor.red
+            } else {
+                self.indicatorView.backgroundColor = self.indicatorColor
+            }
         }
-    }
+        }
+    
     
     
 }
