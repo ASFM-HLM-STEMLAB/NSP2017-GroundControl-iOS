@@ -16,6 +16,7 @@ class InternalInstrumentsViewController: UIViewController, ReportRenderable {
 
     private var latestReport:Report?
     
+    @IBOutlet weak var verticalSpeedIndicator: GraphicalIndicator!
     @IBOutlet weak var secondaryAltitudeLabel: UILabel!
     @IBOutlet weak var dataBeaconView: UIView!
     @IBOutlet weak var altitudeLabel: UILabel!
@@ -33,6 +34,7 @@ class InternalInstrumentsViewController: UIViewController, ReportRenderable {
     @IBOutlet weak var battIndicator: GraphicalIndicator!
     @IBOutlet weak var hdopIndicator: GraphicalIndicator!
     
+    @IBOutlet weak var altitudeChangeLabel: UILabel!
     let refreshTimeReportsEvery:TimeInterval = 1
     var refreshTimer:Timer?
 
@@ -45,7 +47,13 @@ class InternalInstrumentsViewController: UIViewController, ReportRenderable {
                 print("[InternalInstrumentsVC] New report is older than current")
                 return
             }
+            
+            let altitudeChange = Report.altitudeGainPerSecond(oldestReport: latestReport, newestReport: report) * 60
+            let metersPerMinute = altitudeChange *  0.3048
+            verticalSpeedIndicator.value = Int(metersPerMinute)
+            altitudeChangeLabel.text = "\(Int(metersPerMinute) ) mpm"
         }
+        
         print("[InternalInstrumentsVC] Updated")
         
         self.altitudeLabel.text = "\(report.altitudeInMeters)m"
@@ -108,6 +116,12 @@ class InternalInstrumentsViewController: UIViewController, ReportRenderable {
         hdopIndicator.indicatorType = .bar
         hdopIndicator.minimumIndication = 7
         hdopIndicator.maxValue = 350
+
+        verticalSpeedIndicator.indicatorDirection = .horizontal
+        verticalSpeedIndicator.indicatorType = .needle
+        verticalSpeedIndicator.minimumIndication = 1
+        verticalSpeedIndicator.minValue = -700
+        verticalSpeedIndicator.maxValue = 700
         
         
         hdopIndicator.redRange = 0...20 //501-2000 (1499)

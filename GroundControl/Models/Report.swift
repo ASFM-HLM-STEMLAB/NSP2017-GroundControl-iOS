@@ -313,6 +313,13 @@ extension Report {
         
         return annotationIdentifier
     }
+    
+    static func altitudeGainPerSecond(oldestReport: Report, newestReport: Report) -> Double {
+        let timeChange = newestReport.gpsTimeStamp.timeIntervalSince1970 - oldestReport.gpsTimeStamp.timeIntervalSince1970        
+        let altitudeChange = Double(newestReport.altitude) - Double(oldestReport.altitude)
+        let altitudePerPeriod = altitudeChange / timeChange
+        return altitudePerPeriod
+    }
 }
 
 //This extension to Date type will convert from GPS raw timestamp to something we can use in iOS

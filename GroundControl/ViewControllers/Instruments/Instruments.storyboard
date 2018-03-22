@@ -133,11 +133,11 @@
             <objects>
                 <viewController storyboardIdentifier="InternalInstruments" id="S8N-Mw-jAa" customClass="InternalInstrumentsViewController" customModule="GroundControl" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="chz-2G-vg7">
-                        <rect key="frame" x="0.0" y="0.0" width="768" height="400"/>
+                        <rect key="frame" x="0.0" y="0.0" width="768" height="454"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Fds-V6-MMf">
-                                <rect key="frame" x="384" y="25" width="1" height="375"/>
+                                <rect key="frame" x="384" y="25" width="1" height="429"/>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="1" id="7Do-Aa-5GH"/>
@@ -310,6 +310,52 @@
                                     <constraint firstAttribute="trailing" secondItem="8O0-3H-xqm" secondAttribute="trailing" id="ZKe-4I-quc"/>
                                     <constraint firstItem="ABC-9F-0V3" firstAttribute="leading" secondItem="f4G-8Z-Ti3" secondAttribute="leading" id="pvz-He-wf2"/>
                                     <constraint firstAttribute="trailing" secondItem="ABC-9F-0V3" secondAttribute="trailing" id="sYQ-TV-TEf"/>
+                                </constraints>
+                            </stackView>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="gTt-IZ-Td4">
+                                <rect key="frame" x="0.0" y="377.5" width="384" height="69.5"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Altitude Change" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="X6h-4x-dO4">
+                                        <rect key="frame" x="0.0" y="0.0" width="384" height="20.5"/>
+                                        <fontDescription key="fontDescription" name="Avenir-Heavy" family="Avenir" pointSize="15"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="--" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4Es-af-gne">
+                                        <rect key="frame" x="0.0" y="20.5" width="384" height="38"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="38" id="pYI-eU-3l4"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="35"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="82v-e5-V7V" customClass="GraphicalIndicator" customModule="GroundControl" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="58.5" width="383.5" height="10"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="10" id="TFN-VG-na3"/>
+                                            <constraint firstAttribute="height" constant="10" id="csJ-lv-ll1"/>
+                                        </constraints>
+                                    </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="r1U-RX-hrr">
+                                        <rect key="frame" x="0.0" y="68.5" width="384" height="1"/>
+                                        <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="1" id="E5c-xF-tn6"/>
+                                        </constraints>
+                                    </view>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="4Es-af-gne" firstAttribute="centerX" secondItem="X6h-4x-dO4" secondAttribute="centerX" id="46p-VO-J10"/>
+                                    <constraint firstAttribute="trailing" secondItem="r1U-RX-hrr" secondAttribute="trailing" id="5OY-BV-NOe"/>
+                                    <constraint firstAttribute="trailing" secondItem="82v-e5-V7V" secondAttribute="trailing" id="6vj-Px-Z0z"/>
+                                    <constraint firstAttribute="trailing" secondItem="X6h-4x-dO4" secondAttribute="trailing" id="CeN-br-UFA"/>
+                                    <constraint firstItem="X6h-4x-dO4" firstAttribute="leading" secondItem="gTt-IZ-Td4" secondAttribute="leading" id="WhW-Uq-hFE"/>
+                                    <constraint firstItem="82v-e5-V7V" firstAttribute="leading" secondItem="gTt-IZ-Td4" secondAttribute="leading" id="cQq-y0-cFT"/>
+                                    <constraint firstItem="r1U-RX-hrr" firstAttribute="leading" secondItem="gTt-IZ-Td4" secondAttribute="leading" id="ecT-Tm-uUf"/>
+                                    <constraint firstItem="4Es-af-gne" firstAttribute="width" secondItem="X6h-4x-dO4" secondAttribute="width" id="frQ-fv-ohB"/>
+                                    <constraint firstItem="4Es-af-gne" firstAttribute="top" secondItem="X6h-4x-dO4" secondAttribute="bottom" id="vaL-6q-UnG"/>
+                                    <constraint firstItem="82v-e5-V7V" firstAttribute="top" secondItem="4Es-af-gne" secondAttribute="bottom" id="y9O-ea-Ggo"/>
                                 </constraints>
                             </stackView>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="GRB-a4-3q4">
@@ -531,6 +577,7 @@
                             <constraint firstAttribute="trailing" secondItem="0oo-ub-z2f" secondAttribute="trailing" id="4NN-ko-N0b"/>
                             <constraint firstItem="Fds-V6-MMf" firstAttribute="leading" secondItem="FJ4-0o-gyp" secondAttribute="trailing" id="5rA-u7-8WZ"/>
                             <constraint firstItem="i8D-XN-hbI" firstAttribute="leading" secondItem="bLa-Gt-ZrX" secondAttribute="trailing" constant="14" id="6AA-hq-gyx"/>
+                            <constraint firstItem="gTt-IZ-Td4" firstAttribute="top" secondItem="f4G-8Z-Ti3" secondAttribute="bottom" id="6pH-g5-H17"/>
                             <constraint firstItem="f4G-8Z-Ti3" firstAttribute="top" secondItem="FJ4-0o-gyp" secondAttribute="bottom" constant="1" id="7Nx-HJ-B2u"/>
                             <constraint firstItem="LQD-7g-4uG" firstAttribute="leading" secondItem="chz-2G-vg7" secondAttribute="leading" id="7R2-Tm-mAO"/>
                             <constraint firstAttribute="trailing" secondItem="i8D-XN-hbI" secondAttribute="trailing" constant="6" id="7pi-t2-MnD"/>
@@ -546,10 +593,12 @@
                             <constraint firstItem="50a-Oo-Lqn" firstAttribute="top" secondItem="xPU-G7-gaS" secondAttribute="bottom" constant="1" id="I8S-on-gDq"/>
                             <constraint firstItem="u8Z-Ro-Hv7" firstAttribute="leading" secondItem="Fds-V6-MMf" secondAttribute="trailing" id="IYb-To-C3Q"/>
                             <constraint firstItem="0oo-ub-z2f" firstAttribute="leading" secondItem="chz-2G-vg7" secondAttribute="leading" id="Imn-l2-ptL"/>
+                            <constraint firstItem="gTt-IZ-Td4" firstAttribute="leading" secondItem="egs-D2-c0i" secondAttribute="leading" id="Qqw-PM-TAN"/>
                             <constraint firstItem="d9y-Rh-XjN" firstAttribute="top" secondItem="0oo-ub-z2f" secondAttribute="bottom" constant="1" id="Rfq-zV-ici"/>
                             <constraint firstAttribute="trailing" secondItem="u8Z-Ro-Hv7" secondAttribute="trailing" id="SFe-1D-Nue"/>
                             <constraint firstAttribute="trailing" secondItem="d9y-Rh-XjN" secondAttribute="trailing" id="X94-Zm-xZQ"/>
                             <constraint firstItem="Fds-V6-MMf" firstAttribute="top" secondItem="0oo-ub-z2f" secondAttribute="bottom" id="XvP-k5-84K"/>
+                            <constraint firstItem="Fds-V6-MMf" firstAttribute="leading" secondItem="gTt-IZ-Td4" secondAttribute="trailing" id="Xyg-Mf-4KI"/>
                             <constraint firstItem="Fds-V6-MMf" firstAttribute="leading" secondItem="LQD-7g-4uG" secondAttribute="trailing" id="ZJr-oL-J7c"/>
                             <constraint firstAttribute="trailing" secondItem="GRB-a4-3q4" secondAttribute="trailing" id="aUn-Y4-pxS"/>
                             <constraint firstItem="xPU-G7-gaS" firstAttribute="leading" secondItem="chz-2G-vg7" secondAttribute="leading" id="bjr-Hx-LXd"/>
@@ -572,8 +621,9 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="egs-D2-c0i"/>
                     </view>
-                    <size key="freeformSize" width="768" height="400"/>
+                    <size key="freeformSize" width="768" height="454"/>
                     <connections>
+                        <outlet property="altitudeChangeLabel" destination="4Es-af-gne" id="AyL-P6-cCo"/>
                         <outlet property="altitudeLabel" destination="EDU-lZ-iL9" id="udV-4g-RLz"/>
                         <outlet property="battIndicator" destination="XBx-vu-QpN" id="NAE-yR-C9D"/>
                         <outlet property="batteryLabel" destination="LP3-ZT-hPZ" id="YfX-BZ-egf"/>
@@ -590,6 +640,7 @@
                         <outlet property="speedLabel" destination="9Ca-NK-L6Y" id="A7b-hT-Zew"/>
                         <outlet property="tempLabel" destination="rhV-KF-gI8" id="pK2-ap-yok"/>
                         <outlet property="timeAgoLabel" destination="bLa-Gt-ZrX" id="YiV-NP-3Qe"/>
+                        <outlet property="verticalSpeedIndicator" destination="82v-e5-V7V" id="lo9-Z0-bw1"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="z2m-aP-ynz" userLabel="First Responder" sceneMemberID="firstResponder"/>
