@@ -16,12 +16,14 @@ class InternalInstrumentsViewController: UIViewController, ReportRenderable {
 
     private var latestReport:Report?
     
+    @IBOutlet weak var secondaryAltitudeLabel: UILabel!
     @IBOutlet weak var dataBeaconView: UIView!
     @IBOutlet weak var altitudeLabel: UILabel!
     @IBOutlet weak var headingLabel: UILabel!
     @IBOutlet weak var tempLabel: UILabel!
     @IBOutlet weak var iridiumSatsLabel: UILabel!
     @IBOutlet weak var speedLabel: UILabel!
+    @IBOutlet weak var secondarySpeedLabel: UILabel!
     @IBOutlet weak var distanceLabel: UILabel!
     @IBOutlet weak var batteryLabel: UILabel!
     @IBOutlet weak var gpsQualityLabel: UILabel!
@@ -46,13 +48,16 @@ class InternalInstrumentsViewController: UIViewController, ReportRenderable {
         }
         print("[InternalInstrumentsVC] Updated")
         
-        self.altitudeLabel.text = "\(report.altitude)ft"
+        self.altitudeLabel.text = "\(report.altitudeInMeters)m"
+        self.secondaryAltitudeLabel.text = "\(report.altitude)ft"
+        
+        speedLabel.text = "\(report.speedInKilometersPerHour)kph"
+        secondarySpeedLabel.text = "\(report.speed)kts"
         
         dataBeaconView.alpha = 1.0;
         headingLabel.text = "\(report.course)°"
         tempLabel.text = "\(report.internalTempC) °C"
         iridiumSatsLabel.text = "\(report.satModemSignal)"
-        speedLabel.text = "\(report.speed)kts"
         distanceLabel.text = "-"
         batteryLabel.text = "\(report.batteryLevel)%"
         gpsQualityLabel.text = "\(report.horizontalPrecision)"

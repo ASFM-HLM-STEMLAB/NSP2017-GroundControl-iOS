@@ -114,6 +114,18 @@ struct Report  {
     var internalTempC:Int = 0
     var missionStage:MissionStage = .unknown
     
+    var altitudeInMeters:Int {
+        get {
+           return Int(Float(self.altitude) *  0.3048)
+        }
+    }
+    
+    var speedInKilometersPerHour: Int {
+        get {
+            return Int(Float(self.speed) *  1.852)
+        }
+    }
+    
 //    var mapAnnotationTitle:String = ""
 //    var mapAnnotationSubTitle:String = ""
     private var _mapAnnotation = MapAnnotation()
