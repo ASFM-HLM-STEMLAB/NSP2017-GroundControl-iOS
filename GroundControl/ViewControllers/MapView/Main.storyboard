@@ -100,7 +100,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9dP-M2-HZP">
-                                <rect key="frame" x="0.0" y="375.5" width="1112" height="458.5"/>
+                                <rect key="frame" x="0.0" y="167" width="1112" height="667"/>
                                 <connections>
                                     <segue destination="bEh-ef-yYN" kind="embed" identifier="instrumentsSegue" id="37h-G6-ttn"/>
                                 </connections>
@@ -148,7 +148,7 @@
                             <constraint firstItem="xdP-5a-GR5" firstAttribute="leading" secondItem="RYb-Ij-wDU" secondAttribute="leading" id="iqw-bG-K7f"/>
                             <constraint firstItem="LiV-SN-W68" firstAttribute="top" secondItem="dmD-yW-G1k" secondAttribute="bottom" constant="1" id="kqG-kC-4Ui"/>
                             <constraint firstItem="LiV-SN-W68" firstAttribute="width" secondItem="dmD-yW-G1k" secondAttribute="width" id="nHX-Be-8sU"/>
-                            <constraint firstItem="9dP-M2-HZP" firstAttribute="height" secondItem="5rr-7A-Chb" secondAttribute="height" multiplier="0.55" id="oNr-By-34L"/>
+                            <constraint firstItem="9dP-M2-HZP" firstAttribute="height" secondItem="5rr-7A-Chb" secondAttribute="height" multiplier="0.8" id="oNr-By-34L"/>
                             <constraint firstItem="9dP-M2-HZP" firstAttribute="leading" secondItem="tVN-hv-pjG" secondAttribute="leading" id="onQ-o1-ess"/>
                             <constraint firstItem="Qcf-2g-VZ8" firstAttribute="leading" secondItem="EYY-T2-ipJ" secondAttribute="leading" id="sJa-a5-0Me"/>
                             <constraint firstItem="XS9-SQ-AeX" firstAttribute="centerX" secondItem="LiV-SN-W68" secondAttribute="centerX" id="tad-Cz-AD5"/>
