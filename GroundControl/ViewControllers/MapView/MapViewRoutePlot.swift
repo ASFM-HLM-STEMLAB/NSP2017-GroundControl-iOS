@@ -89,7 +89,7 @@ extension MapViewController {
     }
     
     func focusOnAllReportsOnMap() {
-        let annotations = reports.flatMap { (report) -> MapAnnotation? in
+        let annotations = reports.compactMap { (report) -> MapAnnotation? in
             if (report.coordinate.latitude == 0 || report.coordinate.longitude == 0) {
                 return nil
             }

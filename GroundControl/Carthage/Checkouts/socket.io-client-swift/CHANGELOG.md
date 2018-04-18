@@ -1,4 +1,15 @@
-# 13.1.1
+# v13.1.3
+
+- Fix setting reconnectAttempts [#989]((https://github.com/socketio/socket.io-client-swift/issues/989))
+
+
+# v13.1.2
+
+- Fix [#950](https://github.com/socketio/socket.io-client-swift/issues/950)
+- Conforming to `SocketEngineWebsocket` no longer requires conforming to `WebsocketDelegate`
+
+
+# v13.1.1
 
 - Fix [#923](https://github.com/socketio/socket.io-client-swift/issues/923)
 - Fix [#894](https://github.com/socketio/socket.io-client-swift/issues/894)
@@ -23,7 +34,7 @@ Checkout out the migration guide in Usage Docs for a more detailed guide on how 
 What's new:
 ---
 
-- Adds a new `SocketManager` class that multiplexes multiple namespaces through a single engine. 
+- Adds a new `SocketManager` class that multiplexes multiple namespaces through a single engine.
 - Adds `.sentPing` and `.gotPong` client events for tracking ping/pongs.
 - watchOS support.
 
