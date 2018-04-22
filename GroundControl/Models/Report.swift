@@ -51,6 +51,7 @@ import MapKit
 enum Originator {
     case satellite
     case cellular
+    case radio
     case unknown
 }
 
@@ -229,6 +230,9 @@ extension Report {
         }
         if originatorRaw == "sat" {
             originator = .satellite
+        }
+        if originatorRaw == "rad" {
+            originator = .radio
         }
         
         //Report Kind [See Capsule SourceCode for values]
