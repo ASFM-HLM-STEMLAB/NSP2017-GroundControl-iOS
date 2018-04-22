@@ -24,6 +24,7 @@ class ReportInfoViewController: UIViewController, UITextFieldDelegate {
     enum TransmitMode {
         case cellular
         case sattelite
+        case radio
     }
     
     @IBOutlet weak var toggleDashboardButton: UIButton!
@@ -56,8 +57,10 @@ class ReportInfoViewController: UIViewController, UITextFieldDelegate {
         didSet {
             if transmitMode == .cellular {
                 self.transmitModeButton.setTitle("CELL", for: .normal)
-            } else {
+            } else if transmitMode == .sattelite {
                 self.transmitModeButton.setTitle("SAT", for: .normal)
+            } else if transmitMode == .radio {
+                self.transmitModeButton.setTitle("RAD", for: .normal)
             }
         }
     }

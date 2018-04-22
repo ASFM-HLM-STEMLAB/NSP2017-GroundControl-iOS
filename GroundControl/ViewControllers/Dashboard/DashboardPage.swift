@@ -12,7 +12,8 @@ class DashboardPage: UIView, UITextFieldDelegate {
     
     enum TransmitMode {
         case cellular
-        case sattelite
+        case satellite
+        case radio
     }
     
     var transmissionToggle = UIButton(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
@@ -21,8 +22,10 @@ class DashboardPage: UIView, UITextFieldDelegate {
         didSet {
             if transmitMode == .cellular {
                 self.transmissionToggle.setTitle("CELL", for: .normal)
-            } else {
+            } else if (transmitMode == .satellite) {
                 self.transmissionToggle.setTitle("SAT", for: .normal)
+            } else if (transmitMode == .radio) {
+                self.transmissionToggle.setTitle("RAD", for: .normal)
             }
         }
     }
@@ -252,8 +255,10 @@ class DashboardPage: UIView, UITextFieldDelegate {
         
         if transmitMode == .cellular {
             transmissionToggle.setTitle("CELL", for: .normal)
-        } else {
+        } else if (transmitMode == .satellite) {
             transmissionToggle.setTitle("SAT", for: .normal)
+        } else if (transmitMode == .radio) {
+            transmissionToggle.setTitle("RAD", for: .normal)
         }
     }
     

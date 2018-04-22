@@ -76,6 +76,10 @@ class InternalInstrumentsViewController: UIViewController, ReportRenderable {
             sourceString = "Satellite"
         }
         
+        if report.originator == .radio {
+            sourceString = "Radio"
+        }
+        
         sourceLabel.text = sourceString
         
         
