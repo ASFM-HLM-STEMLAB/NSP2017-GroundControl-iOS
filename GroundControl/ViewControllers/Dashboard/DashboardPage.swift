@@ -8,27 +8,26 @@
 
 import UIKit
 
-class DashboardPage: UIView, UITextFieldDelegate {
+enum TransmitMode: String {
+    case cellular = "TXCA"
+    case satellite = "TXCS"
+    case radio = "TXCR"
     
-    enum TransmitMode {
-        case cellular
-        case satellite
-        case radio
+    var modeForRawCommand: String {
+        get {
+            if self == .satellite { return "TXS" }
+            if self == .radio { return "TXR" }
+            // Default == .cellular
+            return "TXC"
+        }
     }
+}
+
+class DashboardPage: UIView, UITextFieldDelegate {
     
     var transmissionToggle = UIButton(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
     
-    private var transmitMode = TransmitMode.cellular {
-        didSet {
-            if transmitMode == .cellular {
-                self.transmissionToggle.setTitle("CELL", for: .normal)
-            } else if (transmitMode == .satellite) {
-                self.transmissionToggle.setTitle("SAT", for: .normal)
-            } else if (transmitMode == .radio) {
-                self.transmissionToggle.setTitle("RAD", for: .normal)
-            }
-        }
-    }
+    private var transmitMode = TransmitMode.cellular
     
     var terminalEnabled = false
     var titleView: UIView = UIView()
@@ -170,8 +169,8 @@ class DashboardPage: UIView, UITextFieldDelegate {
     }
     
     func sendMessageToSocket(message:String) {
-        addLineToTerminal("> " + message)
-        SocketCenter.sendMessage(event: "TXC", data: [message])
+        addLineToTerminal("> \(self.transmitMode.modeForRawCommand) " + message)
+        SocketCenter.sendMessage(event: self.transmitMode.modeForRawCommand, data: [message])
     }
     
     public func addLineToTerminal(_ line:String) {

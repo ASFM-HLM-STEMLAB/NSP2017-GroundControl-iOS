@@ -21,17 +21,17 @@ protocol ReportInfoDelegate {
 }
 
 class ReportInfoViewController: UIViewController, UITextFieldDelegate {
-    enum TransmitMode {
-        case cellular
-        case sattelite
-        case radio
-    }
+//    enum TransmitMode {
+//        case cellular
+//        case sattelite
+//        case radio
+//    }
     
     @IBOutlet weak var toggleDashboardButton: UIButton!
-    @IBOutlet weak var transmitModeButton: UIButton!
+//    @IBOutlet weak var transmitModeButton: UIButton!
     @IBOutlet weak var serverStatusLabel: UILabel!
     @IBOutlet weak var speedLabel: UILabel!
-    @IBOutlet weak var transmitModeSwitch: UIButton!
+//    @IBOutlet weak var transmitModeSwitch: UIButton!
     @IBOutlet weak var courseLabel: UILabel!
     @IBOutlet weak var altitudeLabel: UILabel!
     @IBOutlet weak var networkMessageCountLabel: UILabel!
@@ -53,17 +53,8 @@ class ReportInfoViewController: UIViewController, UITextFieldDelegate {
     private var previousAltitude:Int = 0
     var delegate: ReportInfoDelegate?
     
-    private var transmitMode = TransmitMode.cellular {
-        didSet {
-            if transmitMode == .cellular {
-                self.transmitModeButton.setTitle("CELL", for: .normal)
-            } else if transmitMode == .sattelite {
-                self.transmitModeButton.setTitle("SAT", for: .normal)
-            } else if transmitMode == .radio {
-                self.transmitModeButton.setTitle("RAD", for: .normal)
-            }
-        }
-    }
+    private var transmitMode = TransmitMode.cellular
+    
  
     
     enum ServerConnectionStatus {
@@ -135,9 +126,8 @@ class ReportInfoViewController: UIViewController, UITextFieldDelegate {
 
     
     func sendMessageToSocket(message:String) {
-        addLineToTerminal("> " + message)
-//        SocketCenter.sendMessage(event: "TXC", data: [message])        
-        SocketCenter.send(event: "TXC", data: [message], onAck: nil)
+        addLineToTerminal("> \(self.transmitMode.modeForRawCommand) " + message)
+        SocketCenter.send(event: self.transmitMode.modeForRawCommand, data: [message], onAck: nil)
     }
     
     // MARK: - UITextField Delegate
@@ -153,13 +143,13 @@ class ReportInfoViewController: UIViewController, UITextFieldDelegate {
 
 extension ReportInfoViewController {
     
-    @IBAction func transmitModeButtonPressed(_ sender: Any) {
-        if transmitMode == .cellular {
-            self.transmitMode = .sattelite
-        } else {
-            self.transmitMode = .cellular            
-        }
-    }
+//    @IBAction func transmitModeButtonPressed(_ sender: Any) {
+//        if transmitMode == .cellular {
+//            self.transmitMode = .satellite
+//        } else {
+//            self.transmitMode = .cellular
+//        }
+//    }
     
     @IBAction func helperMenuButtonPressed(_ sender: UIButton) {
         let alertController = UIAlertController(title: "Commands", message: "", preferredStyle: .actionSheet)

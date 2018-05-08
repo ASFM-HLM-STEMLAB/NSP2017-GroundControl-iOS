@@ -116,7 +116,7 @@ extension MapViewController: MKMapViewDelegate {
                 }
                 
                 if (report.originator == .radio) {
-                    source = "Rad"
+                    source = "rdio"
                 }
                 
                 
