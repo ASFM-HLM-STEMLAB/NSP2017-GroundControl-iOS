@@ -54,7 +54,7 @@ class InstrumentsContainerViewController: UIViewController, ReportRenderable, Pa
         self.controlBar.addGestureRecognizer(tapRecognizer)
         
         let idTapRecognizer = UITapGestureRecognizer(target: self, action: #selector(idDidTap))
-        idTapRecognizer.numberOfTapsRequired = 3
+        idTapRecognizer.numberOfTapsRequired = 4
         self.statusBar.addGestureRecognizer(idTapRecognizer)
         
     }

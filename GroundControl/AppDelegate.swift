@@ -21,9 +21,20 @@
 // TODO : External Sensor Parsing in ExtInstrumentsVC
 // TODO : Implement in server sending messages thru satcom
 // TODO : Update only relevant data in instrument display
-//B= TimeStamp, Lat, Lon, Alt, ExtTemp, ExtHum, ExtPress
-//A= TimeStamp, Lat, Lon, Alt, Speed, HDG, GPS_SATS, GPS_PRECISION, BATTLVL, IRIDIUM_SATS, INT_TEMP, STAGE
-
+// Protocol 2.0 datafield coma delimited:
+// 0 Source String
+// 1 GPS timestamp
+// 2 lat
+// 3 lon
+// 4 alt
+// 5 speed
+// 6 heading
+// 7 # of GPS Sats
+// 8 GPS HDOP Value
+// 9 Capsule Battery Level
+// 10 Iridium Satellites
+// 11 Capsule Internal Temp
+// 12 Mission Stage String
 
 //COMPUTER.println("-------------------------.--------------------------");
 //COMPUTER.println("-------------------------.--------------------------");
@@ -82,7 +93,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-                
+        Thread.sleep(forTimeInterval: 2.5)
         return true
     }
 

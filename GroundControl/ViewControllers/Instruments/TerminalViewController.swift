@@ -21,6 +21,8 @@ class TerminalViewController: UIViewController, UITextFieldDelegate {
     }
     
     
+    var transmitMode: TransmitMode = .cellular
+    
     @IBOutlet weak var terminalTextView: UITextView!
     
     @IBOutlet weak var sendButton: UIButton!
@@ -75,22 +77,6 @@ class TerminalViewController: UIViewController, UITextFieldDelegate {
     
     @objc func keyboardWillHide() {
         self.bottomHeight.constant = 0
-    }
-    
-    
-    
-    
-    
-    func addLineToMiniTerminal(_ line: String) {
-        self.terminalTextView.text = self.terminalTextView.text + line + "\n"
-        
-        let textCount = self.terminalTextView.text.count
-        
-        guard textCount >= 1 else { return }
-        DispatchQueue.main.async {
-            self.terminalTextView.scrollRangeToVisible(NSMakeRange(textCount - 4, 4))
-        }
-        
     }
     
     
@@ -151,8 +137,22 @@ class TerminalViewController: UIViewController, UITextFieldDelegate {
             return
         }
         
-        self.addLineToTerminal(line: "TXCA: \(command)", kind: .transmit)
-        SocketCenter.send(event: "TXCA", data: [command]) { (success, data) in
+        if command == "radiomode" {
+            self.transmitMode = .radio
+            self.addLineToTerminal(line: "<L> Radio Mode Set", kind: .akn)
+            return;
+        }
+        
+        if command == "cellmode" {
+            self.transmitMode = .cellular
+            self.addLineToTerminal(line: "<L> Cellular Mode Set", kind: .akn)
+            return;
+            
+        }
+        
+        
+        self.addLineToTerminal(line: "\(transmitMode.rawValue) \(command)", kind: .transmit)
+        SocketCenter.send(event: transmitMode.rawValue, data: [command]) { (success, data) in
             if data.count <= 0 {
                 self.addLineToTerminal(line: "\(command) = \(data)", kind: .error)
             } else {

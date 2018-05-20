@@ -8,10 +8,12 @@
 
 import UIKit
 
+
 class CommandViewController: UIViewController {
 
     @IBOutlet weak var miniTerminalTextView: UITextView!
     let notificationCenter = NotificationCenter.default
+    var transmitMode:  TransmitMode = .cellular
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,56 +30,56 @@ class CommandViewController: UIViewController {
 
     
     @IBAction func cellMutePressed(_ sender: UIButton) {
-        addLineToMiniTerminal("> TXCA: cellmute")
-        SocketCenter.send(event: "TXCA", data: ["cellmute"]) { (success, data) in
+        addLineToMiniTerminal("\(transmitMode.rawValue): cellmute")
+        SocketCenter.send(event: transmitMode.rawValue, data: ["cellmute"]) { (success, data) in
             self .displayResponseFromServer(forButton: sender, success: success)
             self.addLineToMiniTerminal("AK: \(data)")
         }
     }
     
     @IBAction func satMutePressed(_ sender: UIButton) {
-        addLineToMiniTerminal("TXCA: satmute")
-        SocketCenter.send(event: "TXCA", data: ["satmute"]) { (success, data) in
+        addLineToMiniTerminal("\(transmitMode.rawValue): satmute")
+        SocketCenter.send(event: transmitMode.rawValue, data: ["satmute"]) { (success, data) in
             self .displayResponseFromServer(forButton: sender, success: success)
             self.addLineToMiniTerminal("AK: \(data)")
         }
     }
     
     @IBAction func buzzerButtonPressed(_ sender: UIButton) {
-        addLineToMiniTerminal("TXCA: buzzeron")
-        SocketCenter.send(event: "TXCA", data: ["buzzeron"]) { (success, data) in
+        addLineToMiniTerminal("\(transmitMode.rawValue): buzzeron")
+        SocketCenter.send(event: transmitMode.rawValue, data: ["buzzeron"]) { (success, data) in
             self .displayResponseFromServer(forButton: sender, success: success)
             self.addLineToMiniTerminal("AK: \(data)")
         }
     }
     
     @IBAction func forceReportButtonPressed(_ sender: UIButton) {
-        addLineToMiniTerminal("TXCA: $$")
-        SocketCenter.send(event: "TXCA", data: ["$$"]) { (success, data) in
+        addLineToMiniTerminal("\(transmitMode.rawValue): $$")
+        SocketCenter.send(event: transmitMode.rawValue, data: ["$$"]) { (success, data) in
             self .displayResponseFromServer(forButton: sender, success: success)
             self.addLineToMiniTerminal("AK: \(data)")
         }
     }
     
     @IBAction func chirpButtonPressed(_ sender: UIButton) {
-        addLineToMiniTerminal("TXCA: buzzerchirp")
-        SocketCenter.send(event: "TXCA", data: ["buzzerchirp"]) { (success, data) in
+        addLineToMiniTerminal("\(transmitMode.rawValue): buzzerchirp")
+        SocketCenter.send(event: transmitMode.rawValue, data: ["buzzerchirp"]) { (success, data) in
             self .displayResponseFromServer(forButton: sender, success: success)
             self.addLineToMiniTerminal("AK: \(data)")
         }
     }
     
     @IBAction func startClockButtonPressed(_ sender: UIButton) {
-        addLineToMiniTerminal("TXCA: timestart")
-        SocketCenter.send(event: "TXCA", data: ["timestart"]) { (success, data) in
+        addLineToMiniTerminal("\(transmitMode.rawValue): timestart")
+        SocketCenter.send(event: transmitMode.rawValue, data: ["timestart"]) { (success, data) in
             self .displayResponseFromServer(forButton: sender, success: success)
             self.addLineToMiniTerminal("AK: \(data)")
         }
     }
     
     @IBAction func stopClockButtonPressed(_ sender: UIButton) {
-        addLineToMiniTerminal("TXCA: timepause")
-        SocketCenter.send(event: "TXCA", data: ["timepause"]) { (success, data) in
+        addLineToMiniTerminal("\(transmitMode.rawValue): timepause")
+        SocketCenter.send(event: transmitMode.rawValue, data: ["timepause"]) { (success, data) in
             self .displayResponseFromServer(forButton: sender, success: success)
             self.addLineToMiniTerminal("AK: \(data)")
         }
@@ -90,8 +92,8 @@ class CommandViewController: UIViewController {
         let setButton = UIAlertAction(title: "Continue", style: .default) { (action) in
             let timeInSeconds = alert.textFields![0] as UITextField
             let value = "timeset \(timeInSeconds.text ?? "0")"
-            self.addLineToMiniTerminal("TXCA: \(value)")
-            SocketCenter.send(event: "TXCA", data: [value]) { (success, data) in
+            self.addLineToMiniTerminal("\(self.transmitMode.rawValue): \(value)")
+            SocketCenter.send(event: self.transmitMode.rawValue, data: [value]) { (success, data) in
                 self .displayResponseFromServer(forButton: sender, success: success)
                 self.addLineToMiniTerminal("AK: \(data)")
             }

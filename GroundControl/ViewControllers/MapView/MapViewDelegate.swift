@@ -115,6 +115,10 @@ extension MapViewController: MKMapViewDelegate {
                     source = "Sat"
                 }
                 
+                if (report.originator == .radio) {
+                    source = "Rad"
+                }
+                
                 
                 let body = """
                 Lat: \(report.latitude) - Lon: \(report.longitude)
