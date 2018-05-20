@@ -114,6 +114,7 @@ struct Report  {
     var satModemSignal:Int = 0
     var internalTempC:Int = 0
     var missionStage:MissionStage = .unknown
+    var reportValid = false
     
     var altitudeInMeters:Int {
         get {
@@ -194,12 +195,13 @@ extension Report: Hashable
 //          This extension will provide an initializer to parse or assign all values to appropriate fields in the model.
 extension Report {
     init(rawString:String) {
-        rawReport = rawString
         
+        rawReport = rawString        
         let validateTS = rawString.components(separatedBy: "|")
         let validateDT = rawString.components(separatedBy: ",")
         
         if validateTS.count < 2 || validateDT.count < 5  {
+            print("[Report] Invalid Init: \(rawReport)")
             gpsTimeStamp = Date(timeIntervalSince1970: 0)
             serverTimeStamp = Date(timeIntervalSince1970: 0)
             originator  = .unknown
@@ -207,13 +209,14 @@ extension Report {
             longitude = 0.0
             latitude = 0.0
             altitude = -1
+            reportValid = false
             return
         }
         
+        reportValid = true
         
-        
-        let dataFields = rawString.components(separatedBy: "|")[1]
         let serverTimeStampString = rawString.components(separatedBy: "|")[0]
+        let dataFields = rawString.components(separatedBy: "|")[1]
         
         //Parse the server timestamp
         if let serverTime = Date.fromServerString(serverTimeStampString) {
@@ -235,34 +238,45 @@ extension Report {
             originator = .radio
         }
         
-        //Report Kind [See Capsule SourceCode for values]
-        if dataFields.components(separatedBy: ",")[1] == "A" {
-            reportType = .pulse
-        }
-        if dataFields.components(separatedBy: ",")[1] == "B" {
-            reportType = .telemetry
-        }
+        reportType = .pulse
+
         
-        let gpsTimeStampString = dataFields.components(separatedBy: ",")[2]
+        let gpsTimeStampString = dataFields.components(separatedBy: ",")[1]
         gpsTimeStamp = Date.fromGPSString(gpsTimeStampString)        
         
-        let rawLat = dataFields.components(separatedBy: ",")[3]
-        let rawLon = dataFields.components(separatedBy: ",")[4]
-        let rawAlt = dataFields.components(separatedBy: ",")[5]
+        let rawLat = dataFields.components(separatedBy: ",")[2]
+        let rawLon = dataFields.components(separatedBy: ",")[3]
+        let rawAlt = dataFields.components(separatedBy: ",")[4]
         
         latitude = Double(rawLat) ?? 0.0
         longitude = Double(rawLon) ?? 0.0
         altitude = Int(rawAlt) ?? 0
         
+        // PARSING (Protocol 2.0):
+        // 0 Source String
+        // 1 GPS timestamp
+        // 2 lat
+        // 3 lon
+        // 4 alt
+        // 5 speed
+        // 6 heading
+        // 7 # of GPS Sats
+        // 8 GPS HDOP Value
+        // 9 Capsule Battery Level
+        // 10 Iridium Satellites
+        // 11 Capsule Internal Temp
+        // 12 Mission Stage String
+        
+        
         //Assign data for .pulse type
         if (reportType == .pulse) {
-            speed = Int(dataFields.components(separatedBy: ",")[6]) ?? 0
-            course = Int(dataFields.components(separatedBy: ",")[7]) ?? 0
-            satellitesInView = Int(dataFields.components(separatedBy: ",")[8]) ?? 0
-            horizontalPrecision = Int(dataFields.components(separatedBy: ",")[9]) ?? 0
-            batteryLevel =  Int(dataFields.components(separatedBy: ",")[10]) ?? 0
-            satModemSignal =  Int(dataFields.components(separatedBy: ",")[11]) ?? 0
-            internalTempC =  Int(dataFields.components(separatedBy: ",")[12]) ?? 0
+            speed = Int(dataFields.components(separatedBy: ",")[5]) ?? 0
+            course = Int(dataFields.components(separatedBy: ",")[6]) ?? 0
+            satellitesInView = Int(dataFields.components(separatedBy: ",")[7]) ?? 0
+            horizontalPrecision = Int(dataFields.components(separatedBy: ",")[8]) ?? 0
+            batteryLevel =  Int(dataFields.components(separatedBy: ",")[9]) ?? 0
+            satModemSignal =  Int(dataFields.components(separatedBy: ",")[10]) ?? 0
+            internalTempC =  Int(dataFields.components(separatedBy: ",")[11]) ?? 0
             
             print("-------VARIABLES INCOMING---------")
             print(speed)
@@ -274,7 +288,7 @@ extension Report {
             print(internalTempC)
             
             
-            let rawMissionStage = dataFields.components(separatedBy: ",")[13]
+            let rawMissionStage = dataFields.components(separatedBy: ",")[12]
             switch rawMissionStage {
             case "G":
                 missionStage = .ground
