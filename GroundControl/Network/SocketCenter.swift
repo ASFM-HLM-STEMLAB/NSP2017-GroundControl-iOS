@@ -112,9 +112,11 @@ class SocketCenter {
             
             let report = Report(rawString: rawData)
             //And let all observers or subscribers know and send them that message (for instance the MapView or ReportInfoView
-            self.notificationCenter.post(name:SocketCenter.newMessageNotification,
-                                    object: nil,
-                                    userInfo: ["payload":rawData, "report":report])
+            if (report.reportValid) {
+                self.notificationCenter.post(name:SocketCenter.newMessageNotification,
+                                        object: nil,
+                                        userInfo: ["payload":rawData, "report":report])
+            }
             
         }
         
@@ -163,7 +165,8 @@ class SocketCenter {
             print("[SocketCenter] LogFile Arrived")
             
             //We get all the contents in the logFile from the server and we separate each line of the file \n in an array logFileByLine
-            let logFileByLine = rawData.split(separator: "\n")
+//            let logFileByLine = rawData.split(separator: "\r")
+            let logFileByLine = rawData.components(separatedBy: .newlines)
             
             var reports = [Report]() //An Array of Report structs [models] see Report.swift
             for (idx, line) in logFileByLine.enumerated() { //We iterate on everyline and then use the Report initializer to create an array of Report structs. Each one corresponds to a line in the logFile, which in turn corresponds to an individual report event from the capsule.

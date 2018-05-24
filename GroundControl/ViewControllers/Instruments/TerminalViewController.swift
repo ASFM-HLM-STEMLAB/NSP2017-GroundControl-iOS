@@ -140,12 +140,14 @@ class TerminalViewController: UIViewController, UITextFieldDelegate {
         if command == "radiomode" {
             self.transmitMode = .radio
             self.addLineToTerminal(line: "<L> Radio Mode Set", kind: .akn)
+            self.inputTextField.text = ""
             return;
         }
         
         if command == "cellmode" {
             self.transmitMode = .cellular
             self.addLineToTerminal(line: "<L> Cellular Mode Set", kind: .akn)
+            self.inputTextField.text = ""
             return;
             
         }

@@ -9,25 +9,48 @@
 import UIKit
 
 class ExternalInstrumentsViewController: UIViewController, ReportRenderable {
-
+    
+    private var latestReport:Report?
+    private var initialized = false
+    
+    @IBOutlet weak var extDTempLabel: UILabel!
+    @IBOutlet weak var humidityLabel: UILabel!
+    @IBOutlet weak var extATempLabel: UILabel!
+    @IBOutlet weak var atmosPressureLabel: UILabel!
+    
     func setReport(_ report: Report) {
-        //TODO
+        guard report.reportValid == true else { return } //Ignore improperly formatted messages
+        self.latestReport = report
+        
+        if initialized == false { return }
+        updateReportView(report: report)
     }
+  
+    
+    func updateReportView(report: Report) {
+        self.extDTempLabel.text = "\(report.externalDigitalTemp) °C"
+        self.extATempLabel.text = "\(report.externalAnalogTemp) °C"
+        self.humidityLabel.text = "\(report.externalDigitalHumidity)%"
+        self.atmosPressureLabel.text = "\(report.externalDigitalPressure)"
+    }
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        initialized = true
+        if let latestReport = self.latestReport {
+            updateReportView(report: latestReport)
+        }
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
     
 
     func clearLatestReport() {
-//        self.latestReport = nil
+        self.extDTempLabel.text = ""
+        self.extATempLabel.text = ""
+        self.humidityLabel.text = ""
+        self.atmosPressureLabel.text = ""
+        self.latestReport = nil
     }
 
 }

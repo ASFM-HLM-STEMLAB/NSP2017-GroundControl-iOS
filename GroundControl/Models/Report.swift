@@ -113,8 +113,14 @@ struct Report  {
     var batteryLevel:Int = 0
     var satModemSignal:Int = 0
     var internalTempC:Int = 0
+    var externalDigitalTemp = 0
+    var externalAnalogTemp = 0
+    var externalDigitalHumidity = 0
+    var externalDigitalPressure = 0
+    
     var missionStage:MissionStage = .unknown
     var reportValid = false
+    
     
     var altitudeInMeters:Int {
         get {
@@ -196,11 +202,12 @@ extension Report: Hashable
 extension Report {
     init(rawString:String) {
         
-        rawReport = rawString        
+        rawReport = rawString.trimmingCharacters(in: .newlines)
+                
         let validateTS = rawString.components(separatedBy: "|")
         let validateDT = rawString.components(separatedBy: ",")
         
-        if validateTS.count < 2 || validateDT.count < 5  {
+        if validateTS.count < 2 || validateDT.count < 16  {
             print("[Report] Invalid Init: \(rawReport)")
             gpsTimeStamp = Date(timeIntervalSince1970: 0)
             serverTimeStamp = Date(timeIntervalSince1970: 0)
@@ -252,7 +259,7 @@ extension Report {
         longitude = Double(rawLon) ?? 0.0
         altitude = Int(rawAlt) ?? 0
         
-        // PARSING (Protocol 2.0):
+        // PARSING (Protocol 2.1):
         // 0 Source String
         // 1 GPS timestamp
         // 2 lat
@@ -265,9 +272,15 @@ extension Report {
         // 9 Capsule Battery Level
         // 10 Iridium Satellites
         // 11 Capsule Internal Temp
-        // 12 Mission Stage String
+        // 12 External Digital Temperature
+        // 13 External Digital Humidity
+        // 14 External Analog Temperature
+        // 15 External Digital Pressure
+        // 16 Mission Stage String
         
         
+        
+
         //Assign data for .pulse type
         if (reportType == .pulse) {
             speed = Int(dataFields.components(separatedBy: ",")[5]) ?? 0
@@ -277,18 +290,22 @@ extension Report {
             batteryLevel =  Int(dataFields.components(separatedBy: ",")[9]) ?? 0
             satModemSignal =  Int(dataFields.components(separatedBy: ",")[10]) ?? 0
             internalTempC =  Int(dataFields.components(separatedBy: ",")[11]) ?? 0
+            externalDigitalTemp =  Int(dataFields.components(separatedBy: ",")[12]) ?? 0
+            externalDigitalHumidity = Int(dataFields.components(separatedBy: ",")[13]) ?? 0
+            externalAnalogTemp = Int(dataFields.components(separatedBy: ",")[14]) ?? 0
+            externalDigitalPressure = Int(dataFields.components(separatedBy: ",")[15]) ?? 0
             
-            print("-------VARIABLES INCOMING---------")
+            print("-------INCOMING VARIABLES---------")
             print(speed)
             print(course)
             print(horizontalPrecision)
             print(satellitesInView)
             print(batteryLevel)
             print(satModemSignal)
-            print(internalTempC)
             
             
-            let rawMissionStage = dataFields.components(separatedBy: ",")[12]
+            let rawMissionStage = dataFields.components(separatedBy: ",")[16]
+            
             switch rawMissionStage {
             case "G":
                 missionStage = .ground
@@ -300,7 +317,11 @@ extension Report {
                 missionStage = .recovery
             default:
                 missionStage = .unknown
+                print("[Report] Unexpected missionStage value found")
             }
+            
+            print(">>> \(missionStage.stringValue())")
+            
         }
         
         //Computed Assignments

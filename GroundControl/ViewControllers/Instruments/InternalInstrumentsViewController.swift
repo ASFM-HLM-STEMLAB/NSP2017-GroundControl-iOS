@@ -41,6 +41,7 @@ class InternalInstrumentsViewController: UIViewController, ReportRenderable {
     
     func setReport(_ report: Report) {
         guard report.reportType == .pulse else { return } //We only update on A message (PULSE)
+        guard report.reportValid == true else { return } //Ignore improperly formatted messages
         
         if let latestReport = latestReport {
             guard report.gpsTimeStamp > latestReport.gpsTimeStamp else {

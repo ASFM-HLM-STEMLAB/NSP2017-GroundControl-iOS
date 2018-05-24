@@ -15,18 +15,18 @@ import CoreLocation
 extension MapViewController {
     
     func getAllReports() {
-        self.reports = [Report]() //Initialize the array with a clean one.
         self.mapView.removeAnnotations(self.mapView.annotations)
         self.mapView.removeOverlays(self.mapView.overlays)
+        self.reports = [Report]() //Initialize the array with a clean one.
         
         SocketCenter.getAllReports { (data) in //Ask the SocketCenter singleton to get all past reports.
             if let inReports = data as? [Report] {
                 
                 let sortedReports = Report.sortReportsByAge(from: inReports)
                 for report in sortedReports {
-                    self.addReportToMap(report: report)
-//                    self.reportDetailViewController?.setReport(report)
-//                    self.reportDetailViewController?.setMessageCount(self.reports.count)
+                    if (report.reportValid) {
+                        self.addReportToMap(report: report)
+                    }
                 }
             }
             self.focusOnAllReportsOnMap()
