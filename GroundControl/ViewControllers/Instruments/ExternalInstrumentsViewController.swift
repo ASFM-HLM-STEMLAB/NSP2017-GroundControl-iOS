@@ -31,7 +31,12 @@ class ExternalInstrumentsViewController: UIViewController, ReportRenderable {
         self.extDTempLabel.text = "\(report.externalDigitalTemp) °C"
         self.extATempLabel.text = "\(report.externalAnalogTemp) °C"
         self.humidityLabel.text = "\(report.externalDigitalHumidity)%"
-        self.atmosPressureLabel.text = "\(report.externalDigitalPressure)"
+        
+        if (report.externalDigitalPressure == -1) {
+            self.atmosPressureLabel.text = "N/A"
+        } else {
+            self.atmosPressureLabel.text = "\(report.externalDigitalPressure)"
+        }
     }
     
     

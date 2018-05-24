@@ -113,8 +113,8 @@ struct Report  {
     var batteryLevel:Int = 0
     var satModemSignal:Int = 0
     var internalTempC:Int = 0
-    var externalDigitalTemp = 0
-    var externalAnalogTemp = 0
+    var externalDigitalTemp = 0.0
+    var externalAnalogTemp = 0.0
     var externalDigitalHumidity = 0
     var externalDigitalPressure = 0
     
@@ -203,7 +203,7 @@ extension Report {
     init(rawString:String) {
         
         rawReport = rawString.trimmingCharacters(in: .newlines)
-                
+        
         let validateTS = rawString.components(separatedBy: "|")
         let validateDT = rawString.components(separatedBy: ",")
         
@@ -290,18 +290,18 @@ extension Report {
             batteryLevel =  Int(dataFields.components(separatedBy: ",")[9]) ?? 0
             satModemSignal =  Int(dataFields.components(separatedBy: ",")[10]) ?? 0
             internalTempC =  Int(dataFields.components(separatedBy: ",")[11]) ?? 0
-            externalDigitalTemp =  Int(dataFields.components(separatedBy: ",")[12]) ?? 0
+            externalDigitalTemp =  Double(dataFields.components(separatedBy: ",")[12]) ?? 0.0
             externalDigitalHumidity = Int(dataFields.components(separatedBy: ",")[13]) ?? 0
-            externalAnalogTemp = Int(dataFields.components(separatedBy: ",")[14]) ?? 0
+            externalAnalogTemp = Double(dataFields.components(separatedBy: ",")[14]) ?? 0.0
             externalDigitalPressure = Int(dataFields.components(separatedBy: ",")[15]) ?? 0
             
-            print("-------INCOMING VARIABLES---------")
-            print(speed)
-            print(course)
-            print(horizontalPrecision)
-            print(satellitesInView)
-            print(batteryLevel)
-            print(satModemSignal)
+//            print("-------INCOMING VARIABLES---------")
+//            print(speed)
+//            print(course)
+//            print(horizontalPrecision)
+//            print(satellitesInView)
+//            print(batteryLevel)
+//            print(satModemSignal)
             
             
             let rawMissionStage = dataFields.components(separatedBy: ",")[16]

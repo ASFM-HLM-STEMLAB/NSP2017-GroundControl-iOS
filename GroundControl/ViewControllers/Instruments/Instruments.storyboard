@@ -523,13 +523,13 @@
                                 </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="NEVER" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bLa-Gt-ZrX">
-                                <rect key="frame" x="696.5" y="4.5" width="38.5" height="16.5"/>
+                                <rect key="frame" x="705.5" y="4.5" width="38.5" height="16.5"/>
                                 <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="12"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="NO SOURCE" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3D0-OB-H1E">
-                                <rect key="frame" x="7" y="4.5" width="71" height="16.5"/>
+                                <rect key="frame" x="5" y="4.5" width="71" height="16.5"/>
                                 <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="12"/>
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
@@ -539,7 +539,7 @@
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="0oo-ub-z2f" secondAttribute="trailing" id="4NN-ko-N0b"/>
                             <constraint firstItem="Fds-V6-MMf" firstAttribute="leading" secondItem="FJ4-0o-gyp" secondAttribute="trailing" id="5rA-u7-8WZ"/>
-                            <constraint firstItem="i8D-XN-hbI" firstAttribute="leading" secondItem="bLa-Gt-ZrX" secondAttribute="trailing" constant="14" id="6AA-hq-gyx"/>
+                            <constraint firstItem="i8D-XN-hbI" firstAttribute="leading" secondItem="bLa-Gt-ZrX" secondAttribute="trailing" constant="5" id="6AA-hq-gyx"/>
                             <constraint firstItem="LQD-7g-4uG" firstAttribute="leading" secondItem="chz-2G-vg7" secondAttribute="leading" id="7R2-Tm-mAO"/>
                             <constraint firstAttribute="trailing" secondItem="i8D-XN-hbI" secondAttribute="trailing" constant="6" id="7pi-t2-MnD"/>
                             <constraint firstItem="LQD-7g-4uG" firstAttribute="top" secondItem="50a-Oo-Lqn" secondAttribute="bottom" constant="1" id="9pa-mr-m7W"/>
@@ -555,7 +555,7 @@
                             <constraint firstItem="u8Z-Ro-Hv7" firstAttribute="leading" secondItem="Fds-V6-MMf" secondAttribute="trailing" id="IYb-To-C3Q"/>
                             <constraint firstItem="0oo-ub-z2f" firstAttribute="leading" secondItem="chz-2G-vg7" secondAttribute="leading" id="Imn-l2-ptL"/>
                             <constraint firstItem="gTt-IZ-Td4" firstAttribute="leading" secondItem="egs-D2-c0i" secondAttribute="leading" id="Qqw-PM-TAN"/>
-                            <constraint firstItem="3D0-OB-H1E" firstAttribute="leading" secondItem="egs-D2-c0i" secondAttribute="leading" constant="7" id="RRf-pZ-Sa0"/>
+                            <constraint firstItem="3D0-OB-H1E" firstAttribute="leading" secondItem="egs-D2-c0i" secondAttribute="leading" constant="5" id="RRf-pZ-Sa0"/>
                             <constraint firstItem="d9y-Rh-XjN" firstAttribute="top" secondItem="0oo-ub-z2f" secondAttribute="bottom" constant="1" id="Rfq-zV-ici"/>
                             <constraint firstAttribute="trailing" secondItem="u8Z-Ro-Hv7" secondAttribute="trailing" id="SFe-1D-Nue"/>
                             <constraint firstAttribute="trailing" secondItem="d9y-Rh-XjN" secondAttribute="trailing" id="X94-Zm-xZQ"/>
